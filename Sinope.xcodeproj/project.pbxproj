@@ -1,0 +1,393 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		89C8E69E1D2F672F00E09EDB /* Sinope.h in Headers */ = {isa = PBXBuildFile; fileRef = 89C8E69D1D2F672F00E09EDB /* Sinope.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		89C8E6A51D2F672F00E09EDB /* Sinope.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E69A1D2F672F00E09EDB /* Sinope.framework */; };
+		89C8E6AA1D2F672F00E09EDB /* SinopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6A91D2F672F00E09EDB /* SinopeTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		89C8E6A61D2F672F00E09EDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 89C8E6911D2F672F00E09EDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89C8E6991D2F672F00E09EDB;
+			remoteInfo = Sinope;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		89C8E69A1D2F672F00E09EDB /* Sinope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sinope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		89C8E69D1D2F672F00E09EDB /* Sinope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sinope.h; sourceTree = "<group>"; };
+		89C8E69F1D2F672F00E09EDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89C8E6A41D2F672F00E09EDB /* SinopeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SinopeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		89C8E6A91D2F672F00E09EDB /* SinopeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinopeTests.swift; sourceTree = "<group>"; };
+		89C8E6AB1D2F672F00E09EDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		89C8E6961D2F672F00E09EDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89C8E6A11D2F672F00E09EDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89C8E6A51D2F672F00E09EDB /* Sinope.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		89C8E6901D2F672F00E09EDB = {
+			isa = PBXGroup;
+			children = (
+				89C8E69C1D2F672F00E09EDB /* Sinope */,
+				89C8E6A81D2F672F00E09EDB /* SinopeTests */,
+				89C8E69B1D2F672F00E09EDB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		89C8E69B1D2F672F00E09EDB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				89C8E69A1D2F672F00E09EDB /* Sinope.framework */,
+				89C8E6A41D2F672F00E09EDB /* SinopeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		89C8E69C1D2F672F00E09EDB /* Sinope */ = {
+			isa = PBXGroup;
+			children = (
+				89C8E69D1D2F672F00E09EDB /* Sinope.h */,
+				89C8E69F1D2F672F00E09EDB /* Info.plist */,
+			);
+			path = Sinope;
+			sourceTree = "<group>";
+		};
+		89C8E6A81D2F672F00E09EDB /* SinopeTests */ = {
+			isa = PBXGroup;
+			children = (
+				89C8E6A91D2F672F00E09EDB /* SinopeTests.swift */,
+				89C8E6AB1D2F672F00E09EDB /* Info.plist */,
+			);
+			path = SinopeTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		89C8E6971D2F672F00E09EDB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89C8E69E1D2F672F00E09EDB /* Sinope.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		89C8E6991D2F672F00E09EDB /* Sinope */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89C8E6AE1D2F672F00E09EDB /* Build configuration list for PBXNativeTarget "Sinope" */;
+			buildPhases = (
+				89C8E6951D2F672F00E09EDB /* Sources */,
+				89C8E6961D2F672F00E09EDB /* Frameworks */,
+				89C8E6971D2F672F00E09EDB /* Headers */,
+				89C8E6981D2F672F00E09EDB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Sinope;
+			productName = Sinope;
+			productReference = 89C8E69A1D2F672F00E09EDB /* Sinope.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		89C8E6A31D2F672F00E09EDB /* SinopeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89C8E6B11D2F672F00E09EDB /* Build configuration list for PBXNativeTarget "SinopeTests" */;
+			buildPhases = (
+				89C8E6A01D2F672F00E09EDB /* Sources */,
+				89C8E6A11D2F672F00E09EDB /* Frameworks */,
+				89C8E6A21D2F672F00E09EDB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				89C8E6A71D2F672F00E09EDB /* PBXTargetDependency */,
+			);
+			name = SinopeTests;
+			productName = SinopeTests;
+			productReference = 89C8E6A41D2F672F00E09EDB /* SinopeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		89C8E6911D2F672F00E09EDB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Rachel Brindle";
+				TargetAttributes = {
+					89C8E6991D2F672F00E09EDB = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					89C8E6A31D2F672F00E09EDB = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 89C8E6941D2F672F00E09EDB /* Build configuration list for PBXProject "Sinope" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 89C8E6901D2F672F00E09EDB;
+			productRefGroup = 89C8E69B1D2F672F00E09EDB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				89C8E6991D2F672F00E09EDB /* Sinope */,
+				89C8E6A31D2F672F00E09EDB /* SinopeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		89C8E6981D2F672F00E09EDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89C8E6A21D2F672F00E09EDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		89C8E6951D2F672F00E09EDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89C8E6A01D2F672F00E09EDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89C8E6AA1D2F672F00E09EDB /* SinopeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		89C8E6A71D2F672F00E09EDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89C8E6991D2F672F00E09EDB /* Sinope */;
+			targetProxy = 89C8E6A61D2F672F00E09EDB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		89C8E6AC1D2F672F00E09EDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		89C8E6AD1D2F672F00E09EDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		89C8E6AF1D2F672F00E09EDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Sinope/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rachelbrindle.Sinope;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		89C8E6B01D2F672F00E09EDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Sinope/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rachelbrindle.Sinope;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		89C8E6B21D2F672F00E09EDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SinopeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rachelbrindle.SinopeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		89C8E6B31D2F672F00E09EDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SinopeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rachelbrindle.SinopeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		89C8E6941D2F672F00E09EDB /* Build configuration list for PBXProject "Sinope" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89C8E6AC1D2F672F00E09EDB /* Debug */,
+				89C8E6AD1D2F672F00E09EDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		89C8E6AE1D2F672F00E09EDB /* Build configuration list for PBXNativeTarget "Sinope" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89C8E6AF1D2F672F00E09EDB /* Debug */,
+				89C8E6B01D2F672F00E09EDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		89C8E6B11D2F672F00E09EDB /* Build configuration list for PBXNativeTarget "SinopeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89C8E6B21D2F672F00E09EDB /* Debug */,
+				89C8E6B31D2F672F00E09EDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 89C8E6911D2F672F00E09EDB /* Project object */;
+}
