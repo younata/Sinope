@@ -9,7 +9,26 @@
 /* Begin PBXBuildFile section */
 		89C8E69E1D2F672F00E09EDB /* Sinope.h in Headers */ = {isa = PBXBuildFile; fileRef = 89C8E69D1D2F672F00E09EDB /* Sinope.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		89C8E6A51D2F672F00E09EDB /* Sinope.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E69A1D2F672F00E09EDB /* Sinope.framework */; };
-		89C8E6AA1D2F672F00E09EDB /* SinopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6A91D2F672F00E09EDB /* SinopeTests.swift */; };
+		89C8E6B61D2F69AA00E09EDB /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6B41D2F69AA00E09EDB /* Nimble.framework */; };
+		89C8E6B71D2F69AA00E09EDB /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6B51D2F69AA00E09EDB /* Quick.framework */; };
+		89C8E6BA1D2F69CD00E09EDB /* Nimble.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6B41D2F69AA00E09EDB /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		89C8E6BB1D2F69CD00E09EDB /* Quick.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6B51D2F69AA00E09EDB /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		89C8E6BE1D2F6A3800E09EDB /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6BD1D2F6A3800E09EDB /* Feed.swift */; };
+		89C8E6C01D2F6A3E00E09EDB /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6BF1D2F6A3E00E09EDB /* Article.swift */; };
+		89C8E6C31D2F6B7500E09EDB /* CBGPromise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6C11D2F6B7500E09EDB /* CBGPromise.framework */; };
+		89C8E6C41D2F6B7500E09EDB /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6C21D2F6B7500E09EDB /* Result.framework */; };
+		89C8E6C71D2F6BA200E09EDB /* CBGPromise.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6C11D2F6B7500E09EDB /* CBGPromise.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		89C8E6C81D2F6BA200E09EDB /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6C21D2F6B7500E09EDB /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		89C8E6CA1D2F6C4900E09EDB /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6C91D2F6C4900E09EDB /* Author.swift */; };
+		89C8E6CC1D2F6D6200E09EDB /* FeedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6CB1D2F6D6200E09EDB /* FeedSpec.swift */; };
+		89C8E6CD1D2F6DDD00E09EDB /* CBGPromise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6C11D2F6B7500E09EDB /* CBGPromise.framework */; };
+		89C8E6CE1D2F6DDD00E09EDB /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6C21D2F6B7500E09EDB /* Result.framework */; };
+		89C8E6D01D2F6E2700E09EDB /* Freddy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6CF1D2F6E2700E09EDB /* Freddy.framework */; };
+		89C8E6D11D2F6E2B00E09EDB /* Freddy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6CF1D2F6E2700E09EDB /* Freddy.framework */; };
+		89C8E6D21D2F6E3000E09EDB /* Freddy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6CF1D2F6E2700E09EDB /* Freddy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		89C8E6D41D2FEAC700E09EDB /* ArticleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6D31D2FEAC700E09EDB /* ArticleSpec.swift */; };
+		89C8E6D71D3040FA00E09EDB /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6D61D3040FA00E09EDB /* DateFormatter.swift */; };
+		89C8E6D91D30439100E09EDB /* AuthorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6D81D30439100E09EDB /* AuthorSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -22,13 +41,42 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		89C8E6B91D2F69BE00E09EDB /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				89C8E6BA1D2F69CD00E09EDB /* Nimble.framework in Embed Frameworks */,
+				89C8E6BB1D2F69CD00E09EDB /* Quick.framework in Embed Frameworks */,
+				89C8E6C71D2F6BA200E09EDB /* CBGPromise.framework in Embed Frameworks */,
+				89C8E6C81D2F6BA200E09EDB /* Result.framework in Embed Frameworks */,
+				89C8E6D21D2F6E3000E09EDB /* Freddy.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		89C8E69A1D2F672F00E09EDB /* Sinope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sinope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C8E69D1D2F672F00E09EDB /* Sinope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sinope.h; sourceTree = "<group>"; };
 		89C8E69F1D2F672F00E09EDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89C8E6A41D2F672F00E09EDB /* SinopeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SinopeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		89C8E6A91D2F672F00E09EDB /* SinopeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinopeTests.swift; sourceTree = "<group>"; };
 		89C8E6AB1D2F672F00E09EDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89C8E6B41D2F69AA00E09EDB /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = ../Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		89C8E6B51D2F69AA00E09EDB /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = ../Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		89C8E6BD1D2F6A3800E09EDB /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
+		89C8E6BF1D2F6A3E00E09EDB /* Article.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
+		89C8E6C11D2F6B7500E09EDB /* CBGPromise.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CBGPromise.framework; path = ../Carthage/Build/iOS/CBGPromise.framework; sourceTree = "<group>"; };
+		89C8E6C21D2F6B7500E09EDB /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = ../Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		89C8E6C91D2F6C4900E09EDB /* Author.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
+		89C8E6CB1D2F6D6200E09EDB /* FeedSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSpec.swift; sourceTree = "<group>"; };
+		89C8E6CF1D2F6E2700E09EDB /* Freddy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Freddy.framework; path = Carthage/Build/iOS/Freddy.framework; sourceTree = SOURCE_ROOT; };
+		89C8E6D31D2FEAC700E09EDB /* ArticleSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleSpec.swift; sourceTree = "<group>"; };
+		89C8E6D61D3040FA00E09EDB /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		89C8E6D81D30439100E09EDB /* AuthorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +84,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89C8E6C31D2F6B7500E09EDB /* CBGPromise.framework in Frameworks */,
+				89C8E6D01D2F6E2700E09EDB /* Freddy.framework in Frameworks */,
+				89C8E6C41D2F6B7500E09EDB /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +95,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				89C8E6A51D2F672F00E09EDB /* Sinope.framework in Frameworks */,
+				89C8E6B61D2F69AA00E09EDB /* Nimble.framework in Frameworks */,
+				89C8E6CD1D2F6DDD00E09EDB /* CBGPromise.framework in Frameworks */,
+				89C8E6CE1D2F6DDD00E09EDB /* Result.framework in Frameworks */,
+				89C8E6B71D2F69AA00E09EDB /* Quick.framework in Frameworks */,
+				89C8E6D11D2F6E2B00E09EDB /* Freddy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +127,9 @@
 		89C8E69C1D2F672F00E09EDB /* Sinope */ = {
 			isa = PBXGroup;
 			children = (
+				89C8E6D51D3040E300E09EDB /* Helpers */,
+				89C8E6C51D2F6B8000E09EDB /* Frameworks */,
+				89C8E6BC1D2F6A2700E09EDB /* Models */,
 				89C8E69D1D2F672F00E09EDB /* Sinope.h */,
 				89C8E69F1D2F672F00E09EDB /* Info.plist */,
 			);
@@ -80,10 +139,50 @@
 		89C8E6A81D2F672F00E09EDB /* SinopeTests */ = {
 			isa = PBXGroup;
 			children = (
-				89C8E6A91D2F672F00E09EDB /* SinopeTests.swift */,
+				89C8E6B81D2F69B700E09EDB /* Frameworks */,
 				89C8E6AB1D2F672F00E09EDB /* Info.plist */,
+				89C8E6CB1D2F6D6200E09EDB /* FeedSpec.swift */,
+				89C8E6D31D2FEAC700E09EDB /* ArticleSpec.swift */,
+				89C8E6D81D30439100E09EDB /* AuthorSpec.swift */,
 			);
 			path = SinopeTests;
+			sourceTree = "<group>";
+		};
+		89C8E6B81D2F69B700E09EDB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				89C8E6B41D2F69AA00E09EDB /* Nimble.framework */,
+				89C8E6B51D2F69AA00E09EDB /* Quick.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		89C8E6BC1D2F6A2700E09EDB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				89C8E6BD1D2F6A3800E09EDB /* Feed.swift */,
+				89C8E6BF1D2F6A3E00E09EDB /* Article.swift */,
+				89C8E6C91D2F6C4900E09EDB /* Author.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		89C8E6C51D2F6B8000E09EDB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				89C8E6CF1D2F6E2700E09EDB /* Freddy.framework */,
+				89C8E6C11D2F6B7500E09EDB /* CBGPromise.framework */,
+				89C8E6C21D2F6B7500E09EDB /* Result.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		89C8E6D51D3040E300E09EDB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				89C8E6D61D3040FA00E09EDB /* DateFormatter.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -107,7 +206,6 @@
 				89C8E6951D2F672F00E09EDB /* Sources */,
 				89C8E6961D2F672F00E09EDB /* Frameworks */,
 				89C8E6971D2F672F00E09EDB /* Headers */,
-				89C8E6981D2F672F00E09EDB /* Resources */,
 			);
 			buildRules = (
 			);
@@ -125,6 +223,7 @@
 				89C8E6A01D2F672F00E09EDB /* Sources */,
 				89C8E6A11D2F672F00E09EDB /* Frameworks */,
 				89C8E6A21D2F672F00E09EDB /* Resources */,
+				89C8E6B91D2F69BE00E09EDB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -173,13 +272,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		89C8E6981D2F672F00E09EDB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		89C8E6A21D2F672F00E09EDB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -194,6 +286,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89C8E6D71D3040FA00E09EDB /* DateFormatter.swift in Sources */,
+				89C8E6CA1D2F6C4900E09EDB /* Author.swift in Sources */,
+				89C8E6C01D2F6A3E00E09EDB /* Article.swift in Sources */,
+				89C8E6BE1D2F6A3800E09EDB /* Feed.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,7 +297,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89C8E6AA1D2F672F00E09EDB /* SinopeTests.swift in Sources */,
+				89C8E6CC1D2F6D6200E09EDB /* FeedSpec.swift in Sources */,
+				89C8E6D41D2FEAC700E09EDB /* ArticleSpec.swift in Sources */,
+				89C8E6D91D30439100E09EDB /* AuthorSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,28 +408,43 @@
 		89C8E6AF1D2F672F00E09EDB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Sinope/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rachelbrindle.Sinope;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		89C8E6B01D2F672F00E09EDB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Sinope/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rachelbrindle.Sinope;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -342,16 +455,27 @@
 		89C8E6B21D2F672F00E09EDB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SinopeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rachelbrindle.SinopeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		89C8E6B31D2F672F00E09EDB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SinopeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rachelbrindle.SinopeTests;
@@ -378,6 +502,7 @@
 				89C8E6B01D2F672F00E09EDB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		89C8E6B11D2F672F00E09EDB /* Build configuration list for PBXNativeTarget "SinopeTests" */ = {
 			isa = XCConfigurationList;
@@ -386,6 +511,7 @@
 				89C8E6B31D2F672F00E09EDB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

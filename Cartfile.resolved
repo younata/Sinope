@@ -1,0 +1,5 @@
+github "cbguder/CBGPromise" "2e1edc65e5fbcdff5ed42afdc4ea65b370ddf688"
+github "bignerdranch/Freddy" "2.1.0"
+github "antitypical/Result" "2.1.2"
+github "quick/nimble" "v4.1.0"
+github "quick/quick" "v0.9.2"

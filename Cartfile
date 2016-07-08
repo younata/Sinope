@@ -1,0 +1,3 @@
+github "antitypical/Result"
+github "cbguder/CBGPromise" "master"
+github "bignerdranch/Freddy"
