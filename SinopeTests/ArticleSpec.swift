@@ -114,7 +114,7 @@ class ArticleSpec: QuickSpec {
                 }
             }
 
-            xit("can be init'd from json with authors") {
+            it("can be init'd from json with authors") {
                 let json = try! JSON(data: valid)
 
                 let subject = try? Article(json: json)

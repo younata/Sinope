@@ -29,6 +29,12 @@
 		89C8E6D41D2FEAC700E09EDB /* ArticleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6D31D2FEAC700E09EDB /* ArticleSpec.swift */; };
 		89C8E6D71D3040FA00E09EDB /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6D61D3040FA00E09EDB /* DateFormatter.swift */; };
 		89C8E6D91D30439100E09EDB /* AuthorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6D81D30439100E09EDB /* AuthorSpec.swift */; };
+		89C8E6DC1D309FB000E09EDB /* FeedsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6DB1D309FB000E09EDB /* FeedsService.swift */; };
+		89C8E6DE1D309FCF00E09EDB /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6DD1D309FCF00E09EDB /* NetworkClient.swift */; };
+		89C8E6E01D30D56700E09EDB /* SinopeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6DF1D30D56700E09EDB /* SinopeError.swift */; };
+		89C8E6E21D31418700E09EDB /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6E11D31418700E09EDB /* UserService.swift */; };
+		89C8E6E61D314BC400E09EDB /* FakeNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6E41D314B9800E09EDB /* FakeNetworkClient.swift */; };
+		89C8E6E81D314CD600E09EDB /* UserServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6E71D314CD600E09EDB /* UserServiceSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +83,12 @@
 		89C8E6D31D2FEAC700E09EDB /* ArticleSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleSpec.swift; sourceTree = "<group>"; };
 		89C8E6D61D3040FA00E09EDB /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		89C8E6D81D30439100E09EDB /* AuthorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorSpec.swift; sourceTree = "<group>"; };
+		89C8E6DB1D309FB000E09EDB /* FeedsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsService.swift; sourceTree = "<group>"; };
+		89C8E6DD1D309FCF00E09EDB /* NetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		89C8E6DF1D30D56700E09EDB /* SinopeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinopeError.swift; sourceTree = "<group>"; };
+		89C8E6E11D31418700E09EDB /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		89C8E6E41D314B9800E09EDB /* FakeNetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNetworkClient.swift; sourceTree = "<group>"; };
+		89C8E6E71D314CD600E09EDB /* UserServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserServiceSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +139,7 @@
 		89C8E69C1D2F672F00E09EDB /* Sinope */ = {
 			isa = PBXGroup;
 			children = (
+				89C8E6DA1D309F8100E09EDB /* Services */,
 				89C8E6D51D3040E300E09EDB /* Helpers */,
 				89C8E6C51D2F6B8000E09EDB /* Frameworks */,
 				89C8E6BC1D2F6A2700E09EDB /* Models */,
@@ -139,11 +152,13 @@
 		89C8E6A81D2F672F00E09EDB /* SinopeTests */ = {
 			isa = PBXGroup;
 			children = (
+				89C8E6E51D314BA300E09EDB /* Fakes */,
 				89C8E6B81D2F69B700E09EDB /* Frameworks */,
 				89C8E6AB1D2F672F00E09EDB /* Info.plist */,
 				89C8E6CB1D2F6D6200E09EDB /* FeedSpec.swift */,
 				89C8E6D31D2FEAC700E09EDB /* ArticleSpec.swift */,
 				89C8E6D81D30439100E09EDB /* AuthorSpec.swift */,
+				89C8E6E71D314CD600E09EDB /* UserServiceSpec.swift */,
 			);
 			path = SinopeTests;
 			sourceTree = "<group>";
@@ -163,6 +178,7 @@
 				89C8E6BD1D2F6A3800E09EDB /* Feed.swift */,
 				89C8E6BF1D2F6A3E00E09EDB /* Article.swift */,
 				89C8E6C91D2F6C4900E09EDB /* Author.swift */,
+				89C8E6DF1D30D56700E09EDB /* SinopeError.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -183,6 +199,24 @@
 				89C8E6D61D3040FA00E09EDB /* DateFormatter.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		89C8E6DA1D309F8100E09EDB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				89C8E6DB1D309FB000E09EDB /* FeedsService.swift */,
+				89C8E6E11D31418700E09EDB /* UserService.swift */,
+				89C8E6DD1D309FCF00E09EDB /* NetworkClient.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		89C8E6E51D314BA300E09EDB /* Fakes */ = {
+			isa = PBXGroup;
+			children = (
+				89C8E6E41D314B9800E09EDB /* FakeNetworkClient.swift */,
+			);
+			path = Fakes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,9 +321,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				89C8E6D71D3040FA00E09EDB /* DateFormatter.swift in Sources */,
+				89C8E6E01D30D56700E09EDB /* SinopeError.swift in Sources */,
 				89C8E6CA1D2F6C4900E09EDB /* Author.swift in Sources */,
 				89C8E6C01D2F6A3E00E09EDB /* Article.swift in Sources */,
+				89C8E6E21D31418700E09EDB /* UserService.swift in Sources */,
+				89C8E6DC1D309FB000E09EDB /* FeedsService.swift in Sources */,
 				89C8E6BE1D2F6A3800E09EDB /* Feed.swift in Sources */,
+				89C8E6DE1D309FCF00E09EDB /* NetworkClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,7 +336,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				89C8E6CC1D2F6D6200E09EDB /* FeedSpec.swift in Sources */,
+				89C8E6E81D314CD600E09EDB /* UserServiceSpec.swift in Sources */,
 				89C8E6D41D2FEAC700E09EDB /* ArticleSpec.swift in Sources */,
+				89C8E6E61D314BC400E09EDB /* FakeNetworkClient.swift in Sources */,
 				89C8E6D91D30439100E09EDB /* AuthorSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
