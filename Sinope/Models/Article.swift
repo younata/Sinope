@@ -1,6 +1,6 @@
 import Freddy
 
-public struct Article: JSONDecodable {
+public struct Article: JSONDecodable, Equatable {
     public let title: String
     public let url: NSURL
     public let summary: String
@@ -35,4 +35,11 @@ public struct Article: JSONDecodable {
         self.authors = ((try? json.array("authors")) ?? []).flatMap { try? Author(json: $0) }
 
     }
+}
+
+public func == (lhs: Article, rhs: Article) -> Bool {
+    return lhs.title == rhs.title && lhs.url == rhs.url &&
+        lhs.summary == rhs.summary && lhs.content == rhs.content &&
+        lhs.published == rhs.published && lhs.updated == rhs.updated &&
+        lhs.authors == rhs.authors
 }

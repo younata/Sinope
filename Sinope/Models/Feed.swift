@@ -1,12 +1,19 @@
 import Freddy
 
-public struct Feed: JSONDecodable {
+public struct Feed: JSONDecodable, Equatable {
     public let title: String
     public let url: NSURL
     public let summary: String
     public let imageUrl: NSURL?
-
     public private(set) var articles: [Article]
+
+    init(title: String, url: NSURL, summary: String, imageUrl: NSURL?, articles: [Article]) {
+        self.title = title
+        self.url = url
+        self.summary = summary
+        self.imageUrl = imageUrl
+        self.articles = articles
+    }
 
     public init(json: JSON) throws {
         self.title = try json.string("title")
@@ -28,4 +35,10 @@ public struct Feed: JSONDecodable {
         }
         self.articles = ((try? json.array("articles")) ?? []).flatMap { try? Article(json: $0) }
     }
+}
+
+public func == (lhs: Feed, rhs: Feed) -> Bool {
+    return lhs.title == rhs.title && lhs.url == rhs.url &&
+        lhs.summary == rhs.summary && lhs.imageUrl == rhs.imageUrl &&
+        lhs.articles == rhs.articles
 }

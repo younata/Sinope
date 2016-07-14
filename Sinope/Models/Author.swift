@@ -1,6 +1,6 @@
 import Freddy
 
-public struct Author: JSONDecodable {
+public struct Author: JSONDecodable, Equatable {
     public let name: String
     public let email: NSURL?
 
@@ -16,4 +16,8 @@ public struct Author: JSONDecodable {
             self.email = nil
         }
     }
+}
+
+public func == (lhs: Author, rhs: Author) -> Bool {
+    return lhs.name == rhs.name && lhs.email == rhs.email
 }
