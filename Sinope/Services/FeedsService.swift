@@ -21,53 +21,11 @@ public final class PasiphaeFeedsService: FeedsService {
     }
 
     public func subscribe(feeds: [NSURL], authToken: String) -> Future<Result<[NSURL], SinopeError>> {
-        let url = self.baseURL.URLByAppendingPathComponent("api/v1/feeds/subscribe")
-        let headers = [
-            "X-APP-TOKEN": self.appToken,
-            "Authentication": "Token token=\"\(authToken)\""
-        ]
-        let feedStrings = feeds.map { $0.absoluteString }
-        let body = try! NSJSONSerialization.dataWithJSONObject(["feeds": feedStrings], options: [])
-        return self.networkClient.post(url, headers: headers, body: body).map { res -> Result<[NSURL], SinopeError> in
-            switch (res) {
-            case let .Success(data):
-                do {
-                    let json = try JSON(data: data)
-                    let array: [String] = try json.arrayOf()
-                    let urls = array.flatMap { NSURL(string: $0) }
-                    return .Success(urls)
-                } catch {
-                    return .Failure(.JSON)
-                }
-            case .Failure(_):
-                return .Failure(.Network)
-            }
-        }
+        return self.subunsub("subscribe", feeds: feeds, authToken: authToken)
     }
 
     public func unsubscribe(feeds: [NSURL], authToken: String) -> Future<Result<[NSURL], SinopeError>> {
-        let url = self.baseURL.URLByAppendingPathComponent("api/v1/feeds/unsubscribe")
-        let headers = [
-            "X-APP-TOKEN": self.appToken,
-            "Authentication": "Token token=\"\(authToken)\""
-        ]
-        let feedStrings = feeds.map { $0.absoluteString }
-        let body = try! NSJSONSerialization.dataWithJSONObject(["feeds": feedStrings], options: [])
-        return self.networkClient.post(url, headers: headers, body: body).map { res -> Result<[NSURL], SinopeError> in
-            switch (res) {
-            case let .Success(data):
-                do {
-                    let json = try JSON(data: data)
-                    let array: [String] = try json.arrayOf()
-                    let urls = array.flatMap { NSURL(string: $0) }
-                    return .Success(urls)
-                } catch {
-                    return .Failure(.JSON)
-                }
-            case .Failure(_):
-                return .Failure(.Network)
-            }
-        }
+        return self.subunsub("unsubscribe", feeds: feeds, authToken: authToken)
     }
 
     public func fetch(authToken: String, date: NSDate?) -> Future<Result<(NSDate, [Feed]), SinopeError>> {
@@ -93,6 +51,31 @@ public final class PasiphaeFeedsService: FeedsService {
                     } else {
                         return .Failure(.JSON)
                     }
+                } catch {
+                    return .Failure(.JSON)
+                }
+            case .Failure(_):
+                return .Failure(.Network)
+            }
+        }
+    }
+
+    private func subunsub(action: String, feeds: [NSURL], authToken: String) -> Future<Result<[NSURL], SinopeError>> {
+        let url = self.baseURL.URLByAppendingPathComponent("api/v1/feeds/" + action)
+        let headers = [
+            "X-APP-TOKEN": self.appToken,
+            "Authentication": "Token token=\"\(authToken)\""
+        ]
+        let feedStrings = feeds.map { $0.absoluteString }
+        let body = try! NSJSONSerialization.dataWithJSONObject(["feeds": feedStrings], options: [])
+        return self.networkClient.post(url, headers: headers, body: body).map { res -> Result<[NSURL], SinopeError> in
+            switch (res) {
+            case let .Success(data):
+                do {
+                    let json = try JSON(data: data)
+                    let array: [String] = try json.arrayOf()
+                    let urls = array.flatMap { NSURL(string: $0) }
+                    return .Success(urls)
                 } catch {
                     return .Failure(.JSON)
                 }

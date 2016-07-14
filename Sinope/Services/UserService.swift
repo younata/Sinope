@@ -21,37 +21,11 @@ public final class PasiphaeUserService {
     }
 
     public func createAccount(email: String, password: String) -> Future<Result<String, SinopeError>> {
-        let url = self.baseURL.URLByAppendingPathComponent("api/v1/user/create")
-        let body = try! NSJSONSerialization.dataWithJSONObject(["email": email, "password": password], options: [])
-        return self.networkClient.put(url, headers: ["X-APP-TOKEN": self.appToken], body: body).map { res -> Result<String, SinopeError> in
-            switch (res) {
-            case let .Success(data):
-                if let json = try? JSON(data: data), apiToken = try? json.string("api_token") {
-                    return .Success(apiToken)
-                } else {
-                    return .Failure(.JSON)
-                }
-            case .Failure(_):
-                return .Failure(.Network)
-            }
-        }
+        return self.getApiToken(email, password: password, endpoint: "create", networkMethod: self.networkClient.put)
     }
 
     public func login(email: String, password: String) -> Future<Result<String, SinopeError>> {
-        let url = self.baseURL.URLByAppendingPathComponent("api/v1/user/login")
-        let body = try! NSJSONSerialization.dataWithJSONObject(["email": email, "password": password], options: [])
-        return self.networkClient.post(url, headers: ["X-APP-TOKEN": self.appToken], body: body).map { res -> Result<String, SinopeError> in
-            switch (res) {
-            case let .Success(data):
-                if let json = try? JSON(data: data), apiToken = try? json.string("api_token") {
-                    return .Success(apiToken)
-                } else {
-                    return .Failure(.JSON)
-                }
-            case .Failure(_):
-                return .Failure(.Network)
-            }
-        }
+        return self.getApiToken(email, password: password, endpoint: "login", networkMethod: self.networkClient.post)
     }
 
     public func addDeviceToken(token: String, authToken: String) -> Future<Result<Void, SinopeError>> {
@@ -81,6 +55,23 @@ public final class PasiphaeUserService {
             switch (res) {
             case .Success(_):
                 return .Success()
+            case .Failure(_):
+                return .Failure(.Network)
+            }
+        }
+    }
+
+    private func getApiToken(email: String, password: String, endpoint: String, networkMethod: (NSURL, [String: String], NSData) -> Future<Result<NSData, NSError>>) -> Future<Result<String, SinopeError>> {
+        let url = self.baseURL.URLByAppendingPathComponent("api/v1/user/" + endpoint)
+        let body = try! NSJSONSerialization.dataWithJSONObject(["email": email, "password": password], options: [])
+        return networkMethod(url, ["X-APP-TOKEN": self.appToken], body).map { res -> Result<String, SinopeError> in
+            switch (res) {
+            case let .Success(data):
+                if let json = try? JSON(data: data), apiToken = try? json.string("api_token") {
+                    return .Success(apiToken)
+                } else {
+                    return .Failure(.JSON)
+                }
             case .Failure(_):
                 return .Failure(.Network)
             }
