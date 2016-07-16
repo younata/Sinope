@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		895A9CBD1D37D940008B2B25 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895A9CBC1D37D940008B2B25 /* Repository.swift */; };
+		895A9CBF1D388BCB008B2B25 /* RepositorySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895A9CBE1D388BCB008B2B25 /* RepositorySpec.swift */; };
+		895A9CC51D392282008B2B25 /* FakeUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895A9CC41D392167008B2B25 /* FakeUserService.swift */; };
+		895A9CC61D392284008B2B25 /* FakeFeedsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895A9CC31D392167008B2B25 /* FakeFeedsService.swift */; };
 		89C8E69E1D2F672F00E09EDB /* Sinope.h in Headers */ = {isa = PBXBuildFile; fileRef = 89C8E69D1D2F672F00E09EDB /* Sinope.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		89C8E6A51D2F672F00E09EDB /* Sinope.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E69A1D2F672F00E09EDB /* Sinope.framework */; };
 		89C8E6B61D2F69AA00E09EDB /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6B41D2F69AA00E09EDB /* Nimble.framework */; };
@@ -67,6 +71,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		895A9CBC1D37D940008B2B25 /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		895A9CBE1D388BCB008B2B25 /* RepositorySpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositorySpec.swift; sourceTree = "<group>"; };
+		895A9CC31D392167008B2B25 /* FakeFeedsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeFeedsService.swift; sourceTree = "<group>"; };
+		895A9CC41D392167008B2B25 /* FakeUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeUserService.swift; sourceTree = "<group>"; };
 		89C8E69A1D2F672F00E09EDB /* Sinope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sinope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C8E69D1D2F672F00E09EDB /* Sinope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sinope.h; sourceTree = "<group>"; };
 		89C8E69F1D2F672F00E09EDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -120,6 +128,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		895A9CBA1D37D8E6008B2B25 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				895A9CBC1D37D940008B2B25 /* Repository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		895A9CBB1D37D919008B2B25 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				895A9CBE1D388BCB008B2B25 /* RepositorySpec.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
 		89C8E6901D2F672F00E09EDB = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +165,7 @@
 		89C8E69C1D2F672F00E09EDB /* Sinope */ = {
 			isa = PBXGroup;
 			children = (
+				895A9CBA1D37D8E6008B2B25 /* Repositories */,
 				89C8E6DA1D309F8100E09EDB /* Services */,
 				89C8E6D51D3040E300E09EDB /* Helpers */,
 				89C8E6C51D2F6B8000E09EDB /* Frameworks */,
@@ -154,6 +179,7 @@
 		89C8E6A81D2F672F00E09EDB /* SinopeTests */ = {
 			isa = PBXGroup;
 			children = (
+				895A9CBB1D37D919008B2B25 /* Repositories */,
 				89C8E6EC1D367C2000E09EDB /* Services */,
 				89C8E6EB1D367C1A00E09EDB /* Models */,
 				89C8E6E51D314BA300E09EDB /* Fakes */,
@@ -214,6 +240,8 @@
 		89C8E6E51D314BA300E09EDB /* Fakes */ = {
 			isa = PBXGroup;
 			children = (
+				895A9CC31D392167008B2B25 /* FakeFeedsService.swift */,
+				895A9CC41D392167008B2B25 /* FakeUserService.swift */,
 				89C8E6E41D314B9800E09EDB /* FakeNetworkClient.swift */,
 			);
 			path = Fakes;
@@ -347,6 +375,7 @@
 				89C8E6DC1D309FB000E09EDB /* FeedsService.swift in Sources */,
 				89C8E6BE1D2F6A3800E09EDB /* Feed.swift in Sources */,
 				89C8E6DE1D309FCF00E09EDB /* NetworkClient.swift in Sources */,
+				895A9CBD1D37D940008B2B25 /* Repository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,9 +386,12 @@
 				89C8E6CC1D2F6D6200E09EDB /* FeedSpec.swift in Sources */,
 				89C8E6E81D314CD600E09EDB /* UserServiceSpec.swift in Sources */,
 				89C8E6EE1D367C7000E09EDB /* FeedsServiceSpec.swift in Sources */,
+				895A9CC61D392284008B2B25 /* FakeFeedsService.swift in Sources */,
 				89C8E6D41D2FEAC700E09EDB /* ArticleSpec.swift in Sources */,
 				89C8E6E61D314BC400E09EDB /* FakeNetworkClient.swift in Sources */,
+				895A9CBF1D388BCB008B2B25 /* RepositorySpec.swift in Sources */,
 				89C8E6D91D30439100E09EDB /* AuthorSpec.swift in Sources */,
+				895A9CC51D392282008B2B25 /* FakeUserService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
