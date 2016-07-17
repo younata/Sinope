@@ -13,6 +13,7 @@ namespace "test" do
     task :setup do |t|
       run 'git clone https://github.com/younata/Pasiphae'
       run 'cd Pasiphae && bundle install --gemfile=./Gemfile && bundle exec rake db:migrate && PASIPHAE_APPLICATION_TOKEN=\'test\' bundle exec rails s &'
+      run 'sleep 5'
     end
 
     desc "run integration tests"
