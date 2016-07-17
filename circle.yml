@@ -11,5 +11,5 @@ dependencies:
 
 test:
   override:
-    - bundle exec rake
-    - bundle exec rake test:integration:setup_and_run
+    - rake
+    - rake test:integration:setup_and_run
