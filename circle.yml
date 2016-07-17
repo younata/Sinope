@@ -1,0 +1,15 @@
+machine:
+  xcode:
+    version: 7.3
+
+dependencies:
+  override:
+    - brew update
+    - brew upgrade carthage || true
+    - bundle
+    - carthage update --platform ios
+
+test:
+  override:
+    - bundle exec rake
+    - bundle exec rake test:integration:setup_and_run

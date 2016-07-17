@@ -163,7 +163,7 @@ class FeedsServiceSpec: QuickSpec {
                 expect(networkClient.getCallCount) == 1
 
                 let args = networkClient.getArgsForCall(0)
-                expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/fetch?date=1970-01-01T00:00:00+0000")
+                expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/fetch?date=1970-01-01T00:00:00.000Z")
                 expect(args.1) == ["X-APP-TOKEN": "app_token",
                                    "Authorization": "Token token=\"auth_token\"",
                                    "Content-Type": "application/json"]
