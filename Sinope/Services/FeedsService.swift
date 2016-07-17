@@ -36,12 +36,16 @@ public final class PasiphaeFeedsService: FeedsService {
         }
         let headers = [
             "X-APP-TOKEN": self.appToken,
-            "Authentication": "Token token=\"\(authToken)\""
+            "Authorization": "Token token=\"\(authToken)\"",
+            "Content-Type": "application/json"
         ]
         return self.networkClient.get(urlComponents.URL!, headers: headers).map { res -> Result<(NSDate, [Feed]), SinopeError> in
             switch (res) {
             case let .Success(data):
                 do {
+                    if String(data: data, encoding: NSUTF8StringEncoding) == "HTTP Token: Access denied.\n" {
+                        return .Failure(.NotLoggedIn)
+                    }
                     let json = try JSON(data: data)
                     let dateString = try json.string("last_updated")
                     let dateFormatter = DateFormatter.sharedFormatter
@@ -64,13 +68,17 @@ public final class PasiphaeFeedsService: FeedsService {
         let url = self.baseURL.URLByAppendingPathComponent("api/v1/feeds/" + action)
         let headers = [
             "X-APP-TOKEN": self.appToken,
-            "Authentication": "Token token=\"\(authToken)\""
+            "Authorization": "Token token=\"\(authToken)\"",
+            "Content-Type": "application/json"
         ]
         let feedStrings = feeds.map { $0.absoluteString }
         let body = try! NSJSONSerialization.dataWithJSONObject(["feeds": feedStrings], options: [])
         return self.networkClient.post(url, headers: headers, body: body).map { res -> Result<[NSURL], SinopeError> in
             switch (res) {
             case let .Success(data):
+                if String(data: data, encoding: NSUTF8StringEncoding) == "HTTP Token: Access denied.\n" {
+                    return .Failure(.NotLoggedIn)
+                }
                 do {
                     let json = try JSON(data: data)
                     let array: [String] = try json.arrayOf()

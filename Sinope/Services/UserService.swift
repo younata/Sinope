@@ -33,11 +33,15 @@ public final class PasiphaeUserService: UserService {
         let body = try! NSJSONSerialization.dataWithJSONObject(["token": "device_token"], options: [])
         let headers = [
             "X-APP-TOKEN": self.appToken,
-            "Authentication": "Token token=\"\(authToken)\""
+            "Authorization": "Token token=\"\(authToken)\"",
+            "Content-Type": "application/json"
         ]
         return self.networkClient.put(url, headers: headers, body: body).map { res -> Result<Void, SinopeError> in
             switch (res) {
-            case .Success(_):
+            case let .Success(data):
+                if String(data: data, encoding: NSUTF8StringEncoding) == "HTTP Token: Access denied.\n" {
+                    return .Failure(.NotLoggedIn)
+                }
                 return .Success()
             case .Failure(_):
                 return .Failure(.Network)
@@ -49,11 +53,15 @@ public final class PasiphaeUserService: UserService {
         let url = self.baseURL.URLByAppendingPathComponent("api/v1/user/delete")
         let headers = [
             "X-APP-TOKEN": self.appToken,
-            "Authentication": "Token token=\"\(authToken)\""
+            "Authorization": "Token token=\"\(authToken)\"",
+            "Content-Type": "application/json"
         ]
         return self.networkClient.delete(url, headers: headers).map { res -> Result<Void, SinopeError> in
             switch (res) {
-            case .Success(_):
+            case let .Success(data):
+                if String(data: data, encoding: NSUTF8StringEncoding) == "HTTP Token: Access denied.\n" {
+                    return .Failure(.NotLoggedIn)
+                }
                 return .Success()
             case .Failure(_):
                 return .Failure(.Network)
@@ -64,7 +72,11 @@ public final class PasiphaeUserService: UserService {
     private func getApiToken(email: String, password: String, endpoint: String, networkMethod: (NSURL, [String: String], NSData) -> Future<Result<NSData, NSError>>) -> Future<Result<String, SinopeError>> {
         let url = self.baseURL.URLByAppendingPathComponent("api/v1/user/" + endpoint)
         let body = try! NSJSONSerialization.dataWithJSONObject(["email": email, "password": password], options: [])
-        return networkMethod(url, ["X-APP-TOKEN": self.appToken], body).map { res -> Result<String, SinopeError> in
+        let headers = [
+            "X-APP-TOKEN": self.appToken,
+            "Content-Type": "application/json"
+        ]
+        return networkMethod(url, headers, body).map { res -> Result<String, SinopeError> in
             switch (res) {
             case let .Success(data):
                 if let json = try? JSON(data: data), apiToken = try? json.string("api_token") {

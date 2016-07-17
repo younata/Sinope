@@ -2,6 +2,7 @@ import CBGPromise
 import Result
 
 public protocol Repository: class {
+    var authToken: String? { get }
     // user modification methods
     func createAccount(email: String, password: String) -> Future<Result<Void, SinopeError>>
     func login(email: String, password: String) -> Future<Result<Void, SinopeError>>
@@ -16,18 +17,16 @@ public protocol Repository: class {
     func fetch(date: NSDate?) -> Future<Result<(NSDate, [Feed]), SinopeError>>
 }
 
-extension Repository {
-    static func DefaultRepository(baseURL: NSURL, networkClient: NetworkClient, appToken: String) -> Repository {
-        let userService = PasiphaeUserService(baseURL: baseURL, networkClient: networkClient, appToken: appToken)
-        let feedsService = PasiphaeFeedsService(baseURL: baseURL, networkClient: networkClient, appToken: appToken)
-        return PasiphaeRepository(userService: userService, feedsService: feedsService)
-    }
+public func DefaultRepository(baseURL: NSURL, networkClient: NetworkClient, appToken: String) -> Repository {
+    let userService = PasiphaeUserService(baseURL: baseURL, networkClient: networkClient, appToken: appToken)
+    let feedsService = PasiphaeFeedsService(baseURL: baseURL, networkClient: networkClient, appToken: appToken)
+    return PasiphaeRepository(userService: userService, feedsService: feedsService)
 }
 
 public final class PasiphaeRepository: Repository {
     private let userService: UserService
     private let feedsService: FeedsService
-    private var authToken: String? = nil
+    public private(set) var authToken: String? = nil
     public init(userService: UserService, feedsService: FeedsService) {
         self.userService = userService
         self.feedsService = feedsService

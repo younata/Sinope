@@ -36,7 +36,9 @@ class FeedsServiceSpec: QuickSpec {
 
                 let args = networkClient.postArgsForCall(0)
                 expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/subscribe")
-                expect(args.1) == ["X-APP-TOKEN": "app_token", "Authentication": "Token token=\"auth_token\""]
+                expect(args.1) == ["X-APP-TOKEN": "app_token",
+                                   "Authorization": "Token token=\"auth_token\"",
+                                   "Content-Type": "application/json"]
                 let body = String(data: args.2, encoding: NSUTF8StringEncoding)
                 expect(body) == "{\"feeds\":[\"https:\\/\\/example.org\\/feed2\"]}"
             }
@@ -98,7 +100,9 @@ class FeedsServiceSpec: QuickSpec {
 
                 let args = networkClient.postArgsForCall(0)
                 expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/unsubscribe")
-                expect(args.1) == ["X-APP-TOKEN": "app_token", "Authentication": "Token token=\"auth_token\""]
+                expect(args.1) == ["X-APP-TOKEN": "app_token",
+                                   "Authorization": "Token token=\"auth_token\"",
+                                   "Content-Type": "application/json"]
                 let body = String(data: args.2, encoding: NSUTF8StringEncoding)
                 expect(body) == "{\"feeds\":[\"https:\\/\\/example.org\\/feed2\"]}"
             }
@@ -159,8 +163,10 @@ class FeedsServiceSpec: QuickSpec {
                 expect(networkClient.getCallCount) == 1
 
                 let args = networkClient.getArgsForCall(0)
-                expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/fetch?date=1970-01-01T00:00:00.000Z")
-                expect(args.1) == ["X-APP-TOKEN": "app_token", "Authentication": "Token token=\"auth_token\""]
+                expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/fetch?date=1970-01-01T00:00:00+0000")
+                expect(args.1) == ["X-APP-TOKEN": "app_token",
+                                   "Authorization": "Token token=\"auth_token\"",
+                                   "Content-Type": "application/json"]
             }
 
             describe("fetching without a date") {
@@ -180,7 +186,9 @@ class FeedsServiceSpec: QuickSpec {
 
                     let args = networkClient.getArgsForCall(1)
                     expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/fetch")
-                    expect(args.1) == ["X-APP-TOKEN": "app_token", "Authentication": "Token token=\"auth_token\""]
+                    expect(args.1) == ["X-APP-TOKEN": "app_token",
+                                       "Authorization": "Token token=\"auth_token\"",
+                                       "Content-Type": "application/json"]
                 }
             }
 

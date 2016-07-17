@@ -34,7 +34,8 @@ class UserServiceSpec: QuickSpec {
                 expect(networkClient.putCallCount) == 1
                 let args = networkClient.putArgsForCall(0)
                 expect(args.0) == NSURL(string: "https://example.com/api/v1/user/create")
-                expect(args.1) == ["X-APP-TOKEN": "app_token"]
+                expect(args.1) == ["X-APP-TOKEN": "app_token",
+                                   "Content-Type": "application/json"]
                 let body = String(data: args.2, encoding: NSUTF8StringEncoding)
                 expect(body) == "{\"email\":\"user@example.com\",\"password\":\"password\"}"
             }
@@ -92,7 +93,8 @@ class UserServiceSpec: QuickSpec {
                 expect(networkClient.postCallCount) == 1
                 let args = networkClient.postArgsForCall(0)
                 expect(args.0) == NSURL(string: "https://example.com/api/v1/user/login")
-                expect(args.1) == ["X-APP-TOKEN": "app_token"]
+                expect(args.1) == ["X-APP-TOKEN": "app_token",
+                                   "Content-Type": "application/json"]
                 let body = String(data: args.2, encoding: NSUTF8StringEncoding)
                 expect(body) == "{\"email\":\"user@example.com\",\"password\":\"password\"}"
             }
@@ -150,7 +152,9 @@ class UserServiceSpec: QuickSpec {
                 expect(networkClient.putCallCount) == 1
                 let args = networkClient.putArgsForCall(0)
                 expect(args.0) == NSURL(string: "https://example.com/api/v1/user/add_device_token")
-                expect(args.1) == ["X-APP-TOKEN": "app_token", "Authentication": "Token token=\"authToken\""]
+                expect(args.1) == ["X-APP-TOKEN": "app_token",
+                                   "Authorization": "Token token=\"authToken\"",
+                                   "Content-Type": "application/json"]
                 let body = String(data: args.2, encoding: NSUTF8StringEncoding)
                 expect(body) == "{\"token\":\"device_token\"}"
             }
@@ -195,7 +199,9 @@ class UserServiceSpec: QuickSpec {
                 expect(networkClient.deleteCallCount) == 1
                 let args = networkClient.deleteArgsForCall(0)
                 expect(args.0) == NSURL(string: "https://example.com/api/v1/user/delete")
-                expect(args.1) == ["X-APP-TOKEN": "app_token", "Authentication": "Token token=\"authToken\""]
+                expect(args.1) == ["X-APP-TOKEN": "app_token",
+                                   "Authorization": "Token token=\"authToken\"",
+                                   "Content-Type": "application/json"]
             }
 
             describe("when the network call succeeds") {
