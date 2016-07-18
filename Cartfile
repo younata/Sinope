@@ -1,3 +1,3 @@
 github "antitypical/Result"
-github "younata/CBGPromise" "master"
+github "cbguder/CBGPromise" "master"
 github "bignerdranch/Freddy"

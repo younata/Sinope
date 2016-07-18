@@ -1,4 +1,4 @@
-github "younata/CBGPromise" "66673b6e946dc5ddba108d90ccea8e12601a6116"
+github "cbguder/CBGPromise" "2e1edc65e5fbcdff5ed42afdc4ea65b370ddf688"
 github "bignerdranch/Freddy" "2.1.0"
 github "antitypical/Result" "2.1.3"
 github "quick/nimble" "v4.1.0"

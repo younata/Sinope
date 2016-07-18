@@ -22,7 +22,7 @@ class RepositoryIntegrationSpec: QuickSpec {
                 if let authToken = authToken {
                     subject.login(authToken)
                 } else {
-                    createAccountResponse = subject.createAccount("user@example.com", password: "testere").wait(10)
+                    createAccountResponse = subject.createAccount("user@example.com", password: "testere").wait()
                     authToken = subject.authToken
                 }
             }
@@ -39,7 +39,7 @@ class RepositoryIntegrationSpec: QuickSpec {
                 ]
 
                 beforeEach {
-                    feedsResponse = subject.subscribe(urls).wait(10)
+                    feedsResponse = subject.subscribe(urls).wait()
                 }
 
                 it("it can subscribe to feeds") {
@@ -51,7 +51,7 @@ class RepositoryIntegrationSpec: QuickSpec {
                     var fetchResponse: Result<(NSDate, [Feed]), SinopeError>?
 
                     beforeEach {
-                        fetchResponse = subject.fetch(nil).wait(10)
+                        fetchResponse = subject.fetch(nil).wait()
                     }
 
                     it("returns a last fetched date after the above 'then' variables") {
