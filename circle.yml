@@ -12,4 +12,4 @@ dependencies:
 test:
   override:
     - rake
-    - rake test:integration:setup_and_run
+    #- rake test:integration:setup_and_run
