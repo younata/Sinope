@@ -265,6 +265,7 @@ class FeedsServiceSpec: QuickSpec {
                         let fixture = ("{\"last_updated\": \"2016-07-13T22:21:00.000Z\", \"feeds\": [{\"title\": \"Rachel Brindle\"," +
                             "\"url\": \"https://younata.github.io/feed.xml\"," +
                             "\"summary\": null," +
+                            "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
                             "\"image_url\": \"https://example.com/image.png\", \"articles\": []}]}").dataUsingEncoding(NSUTF8StringEncoding)!
                         promise.resolve(.Success(fixture))
                     }
@@ -279,7 +280,7 @@ class FeedsServiceSpec: QuickSpec {
                         expect(receivedFuture.value?.value) == [
                             Feed(title: "Rachel Brindle", url: NSURL(string: "https://younata.github.io/feed.xml")!,
                                 summary: "", imageUrl: NSURL(string: "https://example.com/image.png"),
-                                lastUpdated: nil, articles: [])
+                                lastUpdated: dateFormatter.dateFromString("2015-12-23T00:00:00.000Z")!, articles: [])
                         ]
                     }
                 }

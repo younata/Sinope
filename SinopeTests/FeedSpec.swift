@@ -25,35 +25,54 @@ class FeedSpec: QuickSpec {
                 "{\"title\": \"Example 1\", \"url\": \"https://example.com/1/\", \"summary\": \"test\", \"published\": \"2015-12-23T00:00:00.000Z\", \"updated\": null, \"content\": null, \"authors\": []}" +
                 "]}").dataUsingEncoding(NSUTF8StringEncoding)!
 
-            let validFixtureNoArticlesNoImageUrlNoLastUpdated: NSData = ("{\"title\": \"Rachel Brindle\"," +
+            let validFixtureNoArticlesNoImageUrl: NSData = ("{\"title\": \"Rachel Brindle\"," +
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
+                "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"image_url\": null, \"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
 
-            let validFixtureNoArticlesNoSummaryNoLastUpdated: NSData = ("{\"title\": \"Rachel Brindle\"," +
+            let validFixtureNoArticlesNoSummary: NSData = ("{\"title\": \"Rachel Brindle\"," +
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": null," +
+                "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"image_url\": \"https://example.com/image.png\", \"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
 
             let invalidFixtureNoUrl: NSData = ("{\"title\": \"Rachel Brindle\"," +
                 "\"url\": null," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
+                "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"image_url\": null, \"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
 
             let invalidFixtureEmptyUrl: NSData = ("{\"title\": \"Rachel Brindle\"," +
                 "\"url\": \"\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
+                "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"image_url\": null, \"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
 
             let invalidFixtureNoTitle: NSData = ("{\"title\": null," +
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
+                "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"image_url\": null, \"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
 
             let invalidFixtureEmptyTitle: NSData = ("{\"title\": \"\"," +
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
+                "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"image_url\": null, \"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+
+            let invalidFixtureEmptyLastUpdated: NSData = ("{\"title\": \"Rachel Brindle\"," +
+                "\"url\": \"https://younata.github.io/feed.xml\"," +
+                "\"summary\": \"OSX, iOS and Robotics developer\"," +
+                "\"image_url\": \"https://example.com/image.png\"," +
+                "\"last_updated\": \"\"," +
+                "\"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+
+            let invalidFixtureNoLastUpdated: NSData = ("{\"title\": \"Rachel Brindle\"," +
+                "\"url\": \"https://younata.github.io/feed.xml\"," +
+                "\"summary\": \"OSX, iOS and Robotics developer\"," +
+                "\"image_url\": \"https://example.com/image.png\"," +
+                "\"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
 
             it("can be init'd from json") {
                 let json = try! JSON(data: validFixtureNoArticles)
@@ -100,7 +119,7 @@ class FeedSpec: QuickSpec {
             }
 
             it("doesn't throw if image_url is empty") {
-                let json = try! JSON(data: validFixtureNoArticlesNoImageUrlNoLastUpdated)
+                let json = try! JSON(data: validFixtureNoArticlesNoImageUrl)
 
                 let subject = try? Feed(json: json)
                 expect(subject).toNot(beNil())
@@ -110,13 +129,13 @@ class FeedSpec: QuickSpec {
                     expect(subject.url) == NSURL(string: "https://younata.github.io/feed.xml")!
                     expect(subject.summary) == "OSX, iOS and Robotics developer"
                     expect(subject.imageUrl).to(beNil())
-                    expect(subject.lastUpdated).to(beNil())
+                    expect(subject.lastUpdated) == dateFormatter.dateFromString("2015-12-23T00:00:00.000Z")
                     expect(subject.articles).to(beEmpty())
                 }
             }
 
             it("doesn't throw if summary is empty") {
-                let json = try! JSON(data: validFixtureNoArticlesNoSummaryNoLastUpdated)
+                let json = try! JSON(data: validFixtureNoArticlesNoSummary)
 
                 let subject = try? Feed(json: json)
                 expect(subject).toNot(beNil())
@@ -126,7 +145,7 @@ class FeedSpec: QuickSpec {
                     expect(subject.url) == NSURL(string: "https://younata.github.io/feed.xml")!
                     expect(subject.summary) == ""
                     expect(subject.imageUrl) == NSURL(string: "https://example.com/image.png")!
-                    expect(subject.lastUpdated).to(beNil())
+                    expect(subject.lastUpdated) == dateFormatter.dateFromString("2015-12-23T00:00:00.000Z")
                     expect(subject.articles).to(beEmpty())
                 }
             }
@@ -154,6 +173,20 @@ class FeedSpec: QuickSpec {
 
             it("throws if url is empty") {
                 let json = try! JSON(data: invalidFixtureEmptyUrl)
+
+                let subject = try? Feed(json: json)
+                expect(subject).to(beNil())
+            }
+
+            it("throws if last_updated is nil") {
+                let json = try! JSON(data: invalidFixtureNoLastUpdated)
+
+                let subject = try? Feed(json: json)
+                expect(subject).to(beNil())
+            }
+
+            it("throws if last_updated is empty") {
+                let json = try! JSON(data: invalidFixtureEmptyLastUpdated)
 
                 let subject = try? Feed(json: json)
                 expect(subject).to(beNil())

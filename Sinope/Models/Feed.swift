@@ -5,10 +5,10 @@ public struct Feed: JSONDecodable, Equatable {
     public let url: NSURL
     public let summary: String
     public let imageUrl: NSURL?
-    public let lastUpdated: NSDate?
+    public let lastUpdated: NSDate
     public private(set) var articles: [Article]
 
-    init(title: String, url: NSURL, summary: String, imageUrl: NSURL?, lastUpdated: NSDate?, articles: [Article]) {
+    init(title: String, url: NSURL, summary: String, imageUrl: NSURL?, lastUpdated: NSDate, articles: [Article]) {
         self.title = title
         self.url = url
         self.summary = summary
@@ -39,7 +39,7 @@ public struct Feed: JSONDecodable, Equatable {
         if !lastUpdatedString.isEmpty, let lastUpdated = DateFormatter.sharedFormatter.dateFromString(lastUpdatedString) {
             self.lastUpdated = lastUpdated
         } else {
-            self.lastUpdated = nil
+            throw JSON.Error.KeyNotFound(key: "last_updated")
         }
         
         self.articles = ((try? json.array("articles")) ?? []).flatMap { try? Article(json: $0) }
