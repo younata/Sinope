@@ -3,13 +3,14 @@ import CBGPromise
 import Freddy
 
 public protocol FeedsService {
+    func check(url: NSURL) -> Future<Result<[NSURL: Bool], SinopeError>>
     func subscribe(feeds: [NSURL], authToken: String) -> Future<Result<[NSURL], SinopeError>>
     func unsubscribe(feeds: [NSURL], authToken: String) -> Future<Result<[NSURL], SinopeError>>
 
-    func fetch(authToken: String, date: NSDate?) -> Future<Result<(NSDate, [Feed]), SinopeError>>
+    func fetch(authToken: String, feeds: [NSURL: NSDate]) -> Future<Result<[Feed], SinopeError>>
 }
 
-public final class PasiphaeFeedsService: FeedsService {
+public struct PasiphaeFeedsService: FeedsService {
     private let baseURL: NSURL
     private let networkClient: NetworkClient
     private let appToken: String
@@ -20,6 +21,35 @@ public final class PasiphaeFeedsService: FeedsService {
         self.appToken = appToken
     }
 
+    public func check(url: NSURL) -> Future<Result<[NSURL: Bool], SinopeError>> {
+        let urlComponents = NSURLComponents(URL: self.baseURL.URLByAppendingPathComponent("api/v1/feeds/check"), resolvingAgainstBaseURL: false)!
+        urlComponents.queryItems = [NSURLQueryItem(name: "url", value: url.absoluteString)]
+        let headers = [
+            "X-APP-TOKEN": self.appToken,
+            "Content-Type": "application/json"
+        ]
+        return self.networkClient.get(urlComponents.URL!, headers: headers).map { res -> Result<[NSURL: Bool], SinopeError> in
+            switch (res) {
+            case let .Success(data):
+                do {
+                    let json = try JSON(data: data)
+                    let dictionary = try json.dictionary()
+                    let retValue: [NSURL: Bool] = try dictionary.flatMapPairs { urlString, jsonBool in
+                        if let url = NSURL(string: urlString) {
+                            return (url, try jsonBool.bool())
+                        }
+                        return nil
+                    }
+                    return .Success(retValue)
+                } catch {
+                    return .Failure(.JSON)
+                }
+            case .Failure(_):
+                return .Failure(.Network)
+            }
+        }
+    }
+
     public func subscribe(feeds: [NSURL], authToken: String) -> Future<Result<[NSURL], SinopeError>> {
         return self.subunsub("subscribe", feeds: feeds, authToken: authToken)
     }
@@ -28,18 +58,23 @@ public final class PasiphaeFeedsService: FeedsService {
         return self.subunsub("unsubscribe", feeds: feeds, authToken: authToken)
     }
 
-    public func fetch(authToken: String, date: NSDate?) -> Future<Result<(NSDate, [Feed]), SinopeError>> {
+    public func fetch(authToken: String, feeds: [NSURL: NSDate]) -> Future<Result<[Feed], SinopeError>> {
         let urlComponents = NSURLComponents(URL: self.baseURL.URLByAppendingPathComponent("api/v1/feeds/fetch"), resolvingAgainstBaseURL: false)!
-        if let date = date {
-            let dateFormatter = DateFormatter.sharedFormatter
-            urlComponents.queryItems = [NSURLQueryItem(name: "date", value: dateFormatter.stringFromDate(date))]
+        let dateFormatter = DateFormatter.sharedFormatter
+        let queryDict = feeds.mapPairs { url, date in
+            return (url.absoluteString, dateFormatter.stringFromDate(date))
+        }
+        if !queryDict.isEmpty {
+            let json = (try? NSJSONSerialization.dataWithJSONObject(queryDict, options: [])) ?? NSData()
+            let jsonString = String(data: json, encoding: NSUTF8StringEncoding) ?? ""
+            urlComponents.queryItems = [NSURLQueryItem(name: "feeds", value: jsonString)]
         }
         let headers = [
             "X-APP-TOKEN": self.appToken,
             "Authorization": "Token token=\"\(authToken)\"",
             "Content-Type": "application/json"
         ]
-        return self.networkClient.get(urlComponents.URL!, headers: headers).map { res -> Result<(NSDate, [Feed]), SinopeError> in
+        return self.networkClient.get(urlComponents.URL!, headers: headers).map { res -> Result<[Feed], SinopeError> in
             switch (res) {
             case let .Success(data):
                 do {
@@ -47,14 +82,8 @@ public final class PasiphaeFeedsService: FeedsService {
                         return .Failure(.NotLoggedIn)
                     }
                     let json = try JSON(data: data)
-                    let dateString = try json.string("last_updated")
-                    let dateFormatter = DateFormatter.sharedFormatter
-                    if let date = dateFormatter.dateFromString(dateString) {
-                        let feeds = try json.arrayOf("feeds", type: Feed.self)
-                        return .Success(date, feeds)
-                    } else {
-                        return .Failure(.JSON)
-                    }
+                    let feeds = try json.arrayOf("feeds", type: Feed.self)
+                    return .Success(feeds)
                 } catch {
                     return .Failure(.JSON)
                 }

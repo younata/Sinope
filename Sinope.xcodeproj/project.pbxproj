@@ -50,6 +50,7 @@
 		89C8E6E61D314BC400E09EDB /* FakeNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6E41D314B9800E09EDB /* FakeNetworkClient.swift */; };
 		89C8E6E81D314CD600E09EDB /* UserServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6E71D314CD600E09EDB /* UserServiceSpec.swift */; };
 		89C8E6EE1D367C7000E09EDB /* FeedsServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6ED1D367C7000E09EDB /* FeedsServiceSpec.swift */; };
+		89E951A61D769B3700912043 /* Dictionary+Sinope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E951A51D769B3700912043 /* Dictionary+Sinope.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,7 @@
 		89C8E6E41D314B9800E09EDB /* FakeNetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNetworkClient.swift; sourceTree = "<group>"; };
 		89C8E6E71D314CD600E09EDB /* UserServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserServiceSpec.swift; path = ../UserServiceSpec.swift; sourceTree = "<group>"; };
 		89C8E6ED1D367C7000E09EDB /* FeedsServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsServiceSpec.swift; sourceTree = "<group>"; };
+		89E951A51D769B3700912043 /* Dictionary+Sinope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Sinope.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				89C8E6D61D3040FA00E09EDB /* DateFormatter.swift */,
+				89E951A51D769B3700912043 /* Dictionary+Sinope.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				89C8E6E01D30D56700E09EDB /* SinopeError.swift in Sources */,
 				89C8E6CA1D2F6C4900E09EDB /* Author.swift in Sources */,
 				89C8E6C01D2F6A3E00E09EDB /* Article.swift in Sources */,
+				89E951A61D769B3700912043 /* Dictionary+Sinope.swift in Sources */,
 				89C8E6E21D31418700E09EDB /* UserService.swift in Sources */,
 				89C8E6DC1D309FB000E09EDB /* FeedsService.swift in Sources */,
 				89C8E6BE1D2F6A3800E09EDB /* Feed.swift in Sources */,
@@ -718,6 +722,7 @@
 				895A9CDB1D3AADC4008B2B25 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		89C8E6941D2F672F00E09EDB /* Build configuration list for PBXProject "Sinope" */ = {
 			isa = XCConfigurationList;

@@ -370,12 +370,85 @@ class RepositorySpec: QuickSpec {
             }
         }
 
+        describe("checking if a url is a feed") {
+            var receivedFuture: Future<Result<[NSURL: Bool], SinopeError>>!
+            var checkPromise: Promise<Result<[NSURL: Bool], SinopeError>>!
+
+            let url = NSURL(string: "https://example.org")!
+
+            sharedExamples("checking if a url is a feed") {
+                beforeEach {
+                    // make the request
+                    checkPromise = Promise<Result<[NSURL: Bool], SinopeError>>()
+                    feedsService.checkReturns(checkPromise.future)
+
+                    receivedFuture = subject.check(url)
+                }
+
+                it("makes a request to the user service to add the device token") {
+                    expect(feedsService.checkCallCount) == 1
+
+                    guard feedsService.checkCallCount == 1 else { return }
+
+                    let args = feedsService.checkArgsForCall(0)
+
+                    expect(args) == url
+                }
+
+                it("returns the exact same future when we try to fetch again") {
+                    feedsService.checkReturns(Promise<Result<[NSURL: Bool], SinopeError>>().future)
+
+                    expect(subject.check(url)).to(beIdenticalTo(receivedFuture))
+                    expect(feedsService.checkCallCount) == 1
+
+                    expect(subject.check(NSURL(string: "https://example.com")!)).toNot(beIdenticalTo(receivedFuture))
+                }
+
+                describe("when the call succeeds") {
+                    beforeEach {
+                        checkPromise.resolve(.Success([url: true]))
+                    }
+
+                    it("resolves the promise") {
+                        expect(receivedFuture.value).toNot(beNil())
+                        expect(receivedFuture.value?.value) == [url: true]
+                    }
+                }
+
+                describe("when tha call fails") {
+                    beforeEach {
+                        checkPromise.resolve(.Failure(.Unknown))
+                    }
+
+                    it("forwards the error") {
+                        expect(receivedFuture.value?.error) == SinopeError.Unknown
+                    }
+                }
+            }
+
+            describe("when not logged in") {
+                itBehavesLike("checking if a url is a feed")
+            }
+
+            describe("when logged in") {
+                beforeEach {
+                    let loginPromise = Promise<Result<String, SinopeError>>()
+                    loginPromise.resolve(.Success("blah"))
+                    userService.loginReturns(loginPromise.future)
+
+                    subject.login("foo", password: "bar")
+                }
+
+                itBehavesLike("checking if a url is a feed")
+            }
+        }
+
         describe("fetching data") {
-            var receivedFuture: Future<Result<(NSDate, [Feed]), SinopeError>>!
+            var receivedFuture: Future<Result<[Feed], SinopeError>>!
 
             describe("when not logged in") {
                 beforeEach {
-                    receivedFuture = subject.fetch(nil)
+                    receivedFuture = subject.fetch([:])
                 }
 
                 it("returns a resolved promise with error .NotLoggedIn") {
@@ -385,7 +458,8 @@ class RepositorySpec: QuickSpec {
 
             describe("when logged in") {
                 let loginToken = "login_token"
-                var fetchPromise: Promise<Result<(NSDate, [Feed]), SinopeError>>!
+                var fetchPromise: Promise<Result<[Feed], SinopeError>>!
+                let url = NSURL(string: "https://example.com")!
                 let date = NSDate()
 
                 beforeEach {
@@ -395,10 +469,10 @@ class RepositorySpec: QuickSpec {
 
                     subject.login("foo", password: "bar")
 
-                    fetchPromise = Promise<Result<(NSDate, [Feed]), SinopeError>>()
+                    fetchPromise = Promise<Result<[Feed], SinopeError>>()
                     feedsService.fetchReturns(fetchPromise.future)
 
-                    receivedFuture = subject.fetch(date)
+                    receivedFuture = subject.fetch([url: date])
                 }
 
                 it("makes a request to the user service to add the device token") {
@@ -406,24 +480,23 @@ class RepositorySpec: QuickSpec {
                     let args = feedsService.fetchArgsForCall(0)
 
                     expect(args.0) == loginToken
-                    expect(args.1) == date
+                    expect(args.1) == [url: date]
                 }
 
-                it("returns the exact same future when we try to fetch from the same time frame (or later)") {
-                    expect(subject.fetch(date)).to(beIdenticalTo(receivedFuture))
+                it("returns the exact same future when we try to fetch again") {
+                    expect(subject.fetch([url: date])).to(beIdenticalTo(receivedFuture))
 
-                    expect(subject.fetch(NSDate())).to(beIdenticalTo(receivedFuture))
+                    expect(subject.fetch([:])).to(beIdenticalTo(receivedFuture))
                 }
 
                 describe("when the call succeeds") {
                     beforeEach {
-                        fetchPromise.resolve(.Success(date, []))
+                        fetchPromise.resolve(.Success([]))
                     }
 
                     it("resolves the promise") {
                         expect(receivedFuture.value).toNot(beNil())
-                        expect(receivedFuture.value?.value?.0) == date
-                        expect(receivedFuture.value?.value?.1) == []
+                        expect(receivedFuture.value?.value) == []
                     }
                 }
 

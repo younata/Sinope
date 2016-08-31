@@ -14,7 +14,9 @@ public protocol Repository: class {
     func subscribe(feeds: [NSURL]) -> Future<Result<[NSURL], SinopeError>>
     func unsubscribe(feeds: [NSURL]) -> Future<Result<[NSURL], SinopeError>>
 
-    func fetch(date: NSDate?) -> Future<Result<(NSDate, [Feed]), SinopeError>>
+    func check(url: NSURL) -> Future<Result<[NSURL: Bool], SinopeError>>
+
+    func fetch(feeds: [NSURL: NSDate]) -> Future<Result<[Feed], SinopeError>>
 }
 
 public func DefaultRepository(baseURL: NSURL, networkClient: NetworkClient, appToken: String) -> Repository {
@@ -128,15 +130,27 @@ public final class PasiphaeRepository: Repository {
         }
     }
 
-    private var fetchPromise: Future<Result<(NSDate, [Feed]), SinopeError>>?
-    public func fetch(date: NSDate?) -> Future<Result<(NSDate, [Feed]), SinopeError>> {
-        if let logInFuture = self.errorIfLoggedOut((NSDate, [Feed])) {
+    private var checkPromises: [NSURL: Future<Result<[NSURL: Bool], SinopeError>>] = [:]
+    public func check(url: NSURL) -> Future<Result<[NSURL: Bool], SinopeError>> {
+        if let checkPromise = self.checkPromises[url] {
+            return checkPromise
+        }
+        let promise = self.feedsService.check(url)
+        self.checkPromises[url] = promise
+        return promise.then { _ in
+            self.checkPromises.removeValueForKey(url)
+        }
+    }
+
+    private var fetchPromise: Future<Result<[Feed], SinopeError>>?
+    public func fetch(feeds: [NSURL: NSDate]) -> Future<Result<[Feed], SinopeError>> {
+        if let logInFuture = self.errorIfLoggedOut([Feed]) {
             return logInFuture
         }
         if let fetchPromise = self.fetchPromise {
             return fetchPromise
         }
-        self.fetchPromise = self.feedsService.fetch(self.authToken!, date: date)
+        self.fetchPromise = self.feedsService.fetch(self.authToken!, feeds: feeds)
         return self.fetchPromise!.then { _ in
             self.fetchPromise = nil
         }

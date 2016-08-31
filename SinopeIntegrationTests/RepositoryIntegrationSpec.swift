@@ -48,10 +48,13 @@ class RepositoryIntegrationSpec: QuickSpec {
                 }
 
                 describe("fetching feeds") {
-                    var fetchResponse: Result<(NSDate, [Feed]), SinopeError>?
+                    var fetchResponse: Result<[Feed], SinopeError>?
 
                     beforeEach {
-                        fetchResponse = subject.fetch(nil).wait()
+                        let updated = [
+                            NSURL(string: "http://younata.github.io/feed.xml")!: NSDate(timeIntervalSinceNow: -10)
+                        ]
+                        fetchResponse = subject.fetch(updated).wait()
                     }
 
                     it("returns a last fetched date after the above 'then' variables") {
@@ -60,9 +63,9 @@ class RepositoryIntegrationSpec: QuickSpec {
 
                     it("returns Rachel's blog") {
                         expect(fetchResponse?.error).to(beNil())
-                        expect(fetchResponse?.value?.1).to(haveCount(1))
+                        expect(fetchResponse?.value).to(haveCount(1))
 
-                        if let feed = fetchResponse?.value?.1.first {
+                        if let feed = fetchResponse?.value?.first {
                             expect(feed.url) == NSURL(string: "http://younata.github.io/feed.xml")
                         }
                     }

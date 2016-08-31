@@ -9,7 +9,7 @@ public protocol UserService {
     func deleteAccount(authToken: String) -> Future<Result<Void, SinopeError>>
 }
 
-public final class PasiphaeUserService: UserService {
+public struct PasiphaeUserService: UserService {
     private let baseURL: NSURL
     private let networkClient: NetworkClient
     private let appToken: String

@@ -5,13 +5,15 @@ public struct Feed: JSONDecodable, Equatable {
     public let url: NSURL
     public let summary: String
     public let imageUrl: NSURL?
+    public let lastUpdated: NSDate?
     public private(set) var articles: [Article]
 
-    init(title: String, url: NSURL, summary: String, imageUrl: NSURL?, articles: [Article]) {
+    init(title: String, url: NSURL, summary: String, imageUrl: NSURL?, lastUpdated: NSDate?, articles: [Article]) {
         self.title = title
         self.url = url
         self.summary = summary
         self.imageUrl = imageUrl
+        self.lastUpdated = lastUpdated
         self.articles = articles
     }
 
@@ -33,6 +35,13 @@ public struct Feed: JSONDecodable, Equatable {
         } else {
             self.imageUrl = nil
         }
+        let lastUpdatedString = (try? json.string("last_updated")) ?? ""
+        if !lastUpdatedString.isEmpty, let lastUpdated = DateFormatter.sharedFormatter.dateFromString(lastUpdatedString) {
+            self.lastUpdated = lastUpdated
+        } else {
+            self.lastUpdated = nil
+        }
+        
         self.articles = ((try? json.array("articles")) ?? []).flatMap { try? Article(json: $0) }
     }
 }
@@ -40,5 +49,5 @@ public struct Feed: JSONDecodable, Equatable {
 public func == (lhs: Feed, rhs: Feed) -> Bool {
     return lhs.title == rhs.title && lhs.url == rhs.url &&
         lhs.summary == rhs.summary && lhs.imageUrl == rhs.imageUrl &&
-        lhs.articles == rhs.articles
+        lhs.lastUpdated == rhs.lastUpdated && lhs.articles == rhs.articles
 }

@@ -16,6 +16,69 @@ class FeedsServiceSpec: QuickSpec {
             subject = PasiphaeFeedsService(baseURL: baseURL, networkClient: networkClient, appToken: "app_token")
         }
 
+        describe("check") {
+            var receivedFuture: Future<Result<[NSURL: Bool], SinopeError>>!
+            var promise: Promise<Result<NSData, NSError>>!
+
+            beforeEach {
+                promise = Promise<Result<NSData, NSError>>()
+                networkClient.getStub = { _ in promise.future}
+
+                receivedFuture = subject.check(NSURL(string: "https://example.org/feed")!)
+            }
+
+            it("returns an in-progress future") {
+                expect(receivedFuture.value).to(beNil())
+            }
+
+            it("makes a request to fetch") {
+                expect(networkClient.getCallCount) == 1
+
+                guard networkClient.getCallCount == 1 else { return }
+
+                let args = networkClient.getArgsForCall(0)
+                expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/check?url=https://example.org/feed")
+                expect(args.1) == ["X-APP-TOKEN": "app_token",
+                                   "Content-Type": "application/json"]
+            }
+
+            describe("when the network call succeeds") {
+                describe("with a valid json object") {
+                    beforeEach {
+                        let fixture = ("{\"https://example.org/feed\": true}").dataUsingEncoding(NSUTF8StringEncoding)!
+                        promise.resolve(.Success(fixture))
+                    }
+
+                    it("resolves the future with whether or not that url is a feed") {
+                        expect(receivedFuture.value).toNot(beNil())
+                        expect(receivedFuture.value?.error).to(beNil())
+                        expect(receivedFuture.value?.value).toNot(beNil())
+                        expect(receivedFuture.value?.value) == [NSURL(string: "https://example.org/feed")!: true]
+                    }
+                }
+
+                describe("with an invalid json object") {
+                    beforeEach {
+                        promise.resolve(.Success(NSData()))
+                    }
+
+                    it("resolves the future with a json error") {
+                        expect(receivedFuture.value?.error) == .JSON
+                    }
+                }
+            }
+
+            describe("when the network call fails") {
+                beforeEach {
+                    promise.resolve(.Failure(NSError(domain: "", code: 0, userInfo: nil)))
+                }
+
+                it("resolves the future with a network error") {
+                    expect(receivedFuture.value?.error) == .Network
+                }
+            }
+        }
+
         describe("subscribe") {
             var receivedFuture: Future<Result<[NSURL], SinopeError>>!
             var promise: Promise<Result<NSData, NSError>>!
@@ -31,7 +94,7 @@ class FeedsServiceSpec: QuickSpec {
                 expect(receivedFuture.value).to(beNil())
             }
 
-            it("makes a request to login") {
+            it("makes a request to subscribe") {
                 expect(networkClient.postCallCount) == 1
 
                 let args = networkClient.postArgsForCall(0)
@@ -50,7 +113,7 @@ class FeedsServiceSpec: QuickSpec {
                         promise.resolve(.Success(fixture))
                     }
 
-                    it("resolves the future with the api token") {
+                    it("resolves the future with the list of subscribed feeds") {
                         expect(receivedFuture.value?.value) == [
                             NSURL(string: "https://example.org/feed1")!,
                             NSURL(string: "https://example.org/feed2")!
@@ -95,7 +158,7 @@ class FeedsServiceSpec: QuickSpec {
                 expect(receivedFuture.value).to(beNil())
             }
 
-            it("makes a request to login") {
+            it("makes a request to unsubscribe") {
                 expect(networkClient.postCallCount) == 1
 
                 let args = networkClient.postArgsForCall(0)
@@ -114,7 +177,7 @@ class FeedsServiceSpec: QuickSpec {
                         promise.resolve(.Success(fixture))
                     }
 
-                    it("resolves the future with the api token") {
+                    it("resolves the future with the list of subscribed feeds") {
                         expect(receivedFuture.value?.value) == [
                             NSURL(string: "https://example.org/feed1")!,
                             NSURL(string: "https://example.org/feed2")!
@@ -145,25 +208,27 @@ class FeedsServiceSpec: QuickSpec {
         }
 
         describe("fetch") {
-            var receivedFuture: Future<Result<(NSDate, [Feed]), SinopeError>>!
+            var receivedFuture: Future<Result<[Feed], SinopeError>>!
             var promise: Promise<Result<NSData, NSError>>!
 
             beforeEach {
                 promise = Promise<Result<NSData, NSError>>()
                 networkClient.getStub = { _ in promise.future}
 
-                receivedFuture = subject.fetch("auth_token", date: NSDate(timeIntervalSince1970: 0))
+                receivedFuture = subject.fetch("auth_token", feeds: [NSURL(string: "https://example.com/")!: NSDate(timeIntervalSince1970: 0)])
             }
 
             it("returns an in-progress future") {
                 expect(receivedFuture.value).to(beNil())
             }
 
-            it("makes a request to login") {
+            it("makes a request to fetch") {
                 expect(networkClient.getCallCount) == 1
 
+                guard networkClient.getCallCount == 1 else { return }
+
                 let args = networkClient.getArgsForCall(0)
-                expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/fetch?date=1970-01-01T00:00:00.000Z")
+                expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/fetch?feeds=%7B%22https:%5C/%5C/example.com%5C/%22:%221970-01-01T00:00:00.000Z%22%7D")
                 expect(args.1) == ["X-APP-TOKEN": "app_token",
                                    "Authorization": "Token token=\"auth_token\"",
                                    "Content-Type": "application/json"]
@@ -174,15 +239,17 @@ class FeedsServiceSpec: QuickSpec {
                     promise = Promise<Result<NSData, NSError>>()
                     networkClient.getStub = { _ in promise.future}
 
-                    receivedFuture = subject.fetch("auth_token", date: nil)
+                    receivedFuture = subject.fetch("auth_token", feeds: [:])
                 }
 
                 it("returns an in-progress future") {
                     expect(receivedFuture.value).to(beNil())
                 }
 
-                it("makes a request to login") {
+                it("makes a request to fetch") {
                     expect(networkClient.getCallCount) == 2
+
+                    guard networkClient.getCallCount == 2 else { return }
 
                     let args = networkClient.getArgsForCall(1)
                     expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/fetch")
@@ -202,17 +269,17 @@ class FeedsServiceSpec: QuickSpec {
                         promise.resolve(.Success(fixture))
                     }
 
-                    it("resolves the future with the api token") {
+                    it("resolves the future with the feeds received") {
                         expect(receivedFuture.value).toNot(beNil())
                         expect(receivedFuture.value?.error).to(beNil())
                         expect(receivedFuture.value?.value).toNot(beNil())
                         let dateFormatter = NSDateFormatter()
                         dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSSzzz"
                         dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-                        expect(receivedFuture.value?.value?.0) == dateFormatter.dateFromString("2016-07-13T22:21:00.000Z")
-                        expect(receivedFuture.value?.value?.1) == [
+                        expect(receivedFuture.value?.value) == [
                             Feed(title: "Rachel Brindle", url: NSURL(string: "https://younata.github.io/feed.xml")!,
-                                summary: "", imageUrl: NSURL(string: "https://example.com/image.png"), articles: [])
+                                summary: "", imageUrl: NSURL(string: "https://example.com/image.png"),
+                                lastUpdated: nil, articles: [])
                         ]
                     }
                 }
