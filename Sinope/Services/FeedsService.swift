@@ -64,17 +64,18 @@ public struct PasiphaeFeedsService: FeedsService {
         let queryDict = feeds.mapPairs { url, date in
             return (url.absoluteString, dateFormatter.stringFromDate(date))
         }
+        let body: NSData
         if !queryDict.isEmpty {
-            let json = (try? NSJSONSerialization.dataWithJSONObject(queryDict, options: [])) ?? NSData()
-            let jsonString = String(data: json, encoding: NSUTF8StringEncoding) ?? ""
-            urlComponents.queryItems = [NSURLQueryItem(name: "feeds", value: jsonString)]
+            body = (try? NSJSONSerialization.dataWithJSONObject(queryDict, options: [])) ?? NSData()
+        } else {
+            body = NSData()
         }
         let headers = [
             "X-APP-TOKEN": self.appToken,
             "Authorization": "Token token=\"\(authToken)\"",
             "Content-Type": "application/json"
         ]
-        return self.networkClient.get(urlComponents.URL!, headers: headers).map { res -> Result<[Feed], SinopeError> in
+        return self.networkClient.post(urlComponents.URL!, headers: headers, body: body).map { res -> Result<[Feed], SinopeError> in
             switch (res) {
             case let .Success(data):
                 do {

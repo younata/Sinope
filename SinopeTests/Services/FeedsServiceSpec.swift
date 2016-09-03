@@ -213,7 +213,7 @@ class FeedsServiceSpec: QuickSpec {
 
             beforeEach {
                 promise = Promise<Result<NSData, NSError>>()
-                networkClient.getStub = { _ in promise.future}
+                networkClient.postStub = { _ in promise.future}
 
                 receivedFuture = subject.fetch("auth_token", feeds: [NSURL(string: "https://example.com/")!: NSDate(timeIntervalSince1970: 0)])
             }
@@ -223,21 +223,23 @@ class FeedsServiceSpec: QuickSpec {
             }
 
             it("makes a request to fetch") {
-                expect(networkClient.getCallCount) == 1
+                expect(networkClient.postCallCount) == 1
 
-                guard networkClient.getCallCount == 1 else { return }
+                guard networkClient.postCallCount == 1 else { return }
 
-                let args = networkClient.getArgsForCall(0)
-                expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/fetch?feeds=%7B%22https:%5C/%5C/example.com%5C/%22:%221970-01-01T00:00:00.000Z%22%7D")
+                let args = networkClient.postArgsForCall(0)
+                expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/fetch")
                 expect(args.1) == ["X-APP-TOKEN": "app_token",
                                    "Authorization": "Token token=\"auth_token\"",
                                    "Content-Type": "application/json"]
+                let body = String(data: args.2, encoding: NSUTF8StringEncoding)
+                expect(body) == "{\"https:\\/\\/example.com\\/\":\"1970-01-01T00:00:00.000Z\"}"
             }
 
             describe("fetching without a date") {
                 beforeEach {
                     promise = Promise<Result<NSData, NSError>>()
-                    networkClient.getStub = { _ in promise.future}
+                    networkClient.postStub = { _ in promise.future}
 
                     receivedFuture = subject.fetch("auth_token", feeds: [:])
                 }
@@ -247,15 +249,17 @@ class FeedsServiceSpec: QuickSpec {
                 }
 
                 it("makes a request to fetch") {
-                    expect(networkClient.getCallCount) == 2
+                    expect(networkClient.postCallCount) == 2
 
-                    guard networkClient.getCallCount == 2 else { return }
+                    guard networkClient.postCallCount == 2 else { return }
 
-                    let args = networkClient.getArgsForCall(1)
+                    let args = networkClient.postArgsForCall(1)
                     expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/fetch")
                     expect(args.1) == ["X-APP-TOKEN": "app_token",
                                        "Authorization": "Token token=\"auth_token\"",
                                        "Content-Type": "application/json"]
+                    let body = String(data: args.2, encoding: NSUTF8StringEncoding)
+                    expect(body) == ""
                 }
             }
 
