@@ -43,7 +43,7 @@ class RepositorySpec: QuickSpec {
             }
             describe("when the user service succeeds") {
                 beforeEach {
-                    promise.resolve(.Success("test"))
+                    promise.resolve(.success("test"))
                 }
 
                 it("resolves the received future") {
@@ -54,11 +54,11 @@ class RepositorySpec: QuickSpec {
 
             describe("when the user service fails") {
                 beforeEach {
-                    promise.resolve(.Failure(.Network))
+                    promise.resolve(.failure(.network))
                 }
 
                 it("returns with the same error") {
-                    expect(receivedFuture.value?.error).to(equal(SinopeError.Network))
+                    expect(receivedFuture.value?.error).to(equal(SinopeError.network))
                 }
             }
         }
@@ -91,7 +91,7 @@ class RepositorySpec: QuickSpec {
 
             describe("when the user service succeeds") {
                 beforeEach {
-                    promise.resolve(.Success("test"))
+                    promise.resolve(.success("test"))
                 }
 
                 it("resolves the received future") {
@@ -102,11 +102,11 @@ class RepositorySpec: QuickSpec {
 
             describe("when the user service fails") {
                 beforeEach {
-                    promise.resolve(.Failure(.Network))
+                    promise.resolve(.failure(.network))
                 }
 
                 it("returns with the same error") {
-                    expect(receivedFuture.value?.error).to(equal(SinopeError.Network))
+                    expect(receivedFuture.value?.error).to(equal(SinopeError.network))
                 }
             }
         }
@@ -120,7 +120,7 @@ class RepositorySpec: QuickSpec {
                 }
 
                 it("returns a resolved promise with error .NotLoggedIn") {
-                    expect(receivedFuture.value?.error).to(equal(SinopeError.NotLoggedIn))
+                    expect(receivedFuture.value?.error).to(equal(SinopeError.notLoggedIn))
                 }
             }
 
@@ -130,10 +130,10 @@ class RepositorySpec: QuickSpec {
 
                 beforeEach {
                     let loginPromise = Promise<Result<String, SinopeError>>()
-                    loginPromise.resolve(.Success(loginToken))
+                    loginPromise.resolve(.success(loginToken))
                     userService.loginReturns(loginPromise.future)
 
-                    subject.login("foo", password: "bar")
+                    _ = subject.login("foo", password: "bar")
 
                     addDevicePromise = Promise<Result<Void, SinopeError>>()
                     userService.addDeviceTokenReturns(addDevicePromise.future)
@@ -155,7 +155,7 @@ class RepositorySpec: QuickSpec {
 
                 describe("when the call succeeds") {
                     beforeEach {
-                        addDevicePromise.resolve(.Success())
+                        addDevicePromise.resolve(.success())
                     }
 
                     it("resolves the promise") {
@@ -166,11 +166,11 @@ class RepositorySpec: QuickSpec {
 
                 describe("when tha call fails") {
                     beforeEach {
-                        addDevicePromise.resolve(.Failure(.Unknown))
+                        addDevicePromise.resolve(.failure(.unknown))
                     }
 
                     it("forwards the error") {
-                        expect(receivedFuture.value?.error) == SinopeError.Unknown
+                        expect(receivedFuture.value?.error) == SinopeError.unknown
                     }
                 }
             }
@@ -185,7 +185,7 @@ class RepositorySpec: QuickSpec {
                 }
 
                 it("returns a resolved promise with error .NotLoggedIn") {
-                    expect(receivedFuture.value?.error).to(equal(SinopeError.NotLoggedIn))
+                    expect(receivedFuture.value?.error).to(equal(SinopeError.notLoggedIn))
                 }
             }
 
@@ -195,10 +195,10 @@ class RepositorySpec: QuickSpec {
 
                 beforeEach {
                     let loginPromise = Promise<Result<String, SinopeError>>()
-                    loginPromise.resolve(.Success(loginToken))
+                    loginPromise.resolve(.success(loginToken))
                     userService.loginReturns(loginPromise.future)
 
-                    subject.login("foo", password: "bar")
+                    _ = subject.login("foo", password: "bar")
 
                     deletePromise = Promise<Result<Void, SinopeError>>()
                     userService.deleteAccountReturns(deletePromise.future)
@@ -219,7 +219,7 @@ class RepositorySpec: QuickSpec {
 
                 describe("when the call succeeds") {
                     beforeEach {
-                        deletePromise.resolve(.Success())
+                        deletePromise.resolve(.success())
                     }
 
                     it("resolves the promise") {
@@ -230,156 +230,156 @@ class RepositorySpec: QuickSpec {
 
                 describe("when tha call fails") {
                     beforeEach {
-                        deletePromise.resolve(.Failure(.Unknown))
+                        deletePromise.resolve(.failure(.unknown))
                     }
                     
                     it("forwards the error") {
-                        expect(receivedFuture.value?.error) == SinopeError.Unknown
+                        expect(receivedFuture.value?.error) == SinopeError.unknown
                     }
                 }
             }
         }
 
         describe("subscribing to a set of feeds") {
-            var receivedFuture: Future<Result<[NSURL], SinopeError>>!
+            var receivedFuture: Future<Result<[URL], SinopeError>>!
 
             describe("when not logged in") {
                 beforeEach {
-                    receivedFuture = subject.subscribe([NSURL(string: "https://example.com")!])
+                    receivedFuture = subject.subscribe([URL(string: "https://example.com")!])
                 }
 
                 it("returns a resolved promise with error .NotLoggedIn") {
-                    expect(receivedFuture.value?.error).to(equal(SinopeError.NotLoggedIn))
+                    expect(receivedFuture.value?.error).to(equal(SinopeError.notLoggedIn))
                 }
             }
 
             describe("when logged in") {
                 let loginToken = "login_token"
-                var subscribePromise: Promise<Result<[NSURL], SinopeError>>!
+                var subscribePromise: Promise<Result<[URL], SinopeError>>!
 
                 beforeEach {
                     let loginPromise = Promise<Result<String, SinopeError>>()
-                    loginPromise.resolve(.Success(loginToken))
+                    loginPromise.resolve(.success(loginToken))
                     userService.loginReturns(loginPromise.future)
 
-                    subject.login("foo", password: "bar")
+                    _ = subject.login("foo", password: "bar")
 
-                    subscribePromise = Promise<Result<[NSURL], SinopeError>>()
+                    subscribePromise = Promise<Result<[URL], SinopeError>>()
                     feedsService.subscribeReturns(subscribePromise.future)
 
-                    receivedFuture = subject.subscribe([NSURL(string: "https://example.com")!])
+                    receivedFuture = subject.subscribe([URL(string: "https://example.com")!])
                 }
 
                 it("makes a request to the user service to add the device token") {
                     expect(feedsService.subscribeCallCount) == 1
                     let args = feedsService.subscribeArgsForCall(0)
 
-                    expect(args.0) == [NSURL(string: "https://example.com")!]
+                    expect(args.0) == [URL(string: "https://example.com")!]
                     expect(args.1) == loginToken
                 }
 
                 it("returns the exact same future when we try to subscribe to the same feeds while still waiting for a result") {
-                    expect(subject.subscribe([NSURL(string: "https://example.com")!])).to(beIdenticalTo(receivedFuture))
+                    expect(subject.subscribe([URL(string: "https://example.com")!])).to(beIdenticalTo(receivedFuture))
                 }
 
                 describe("when the call succeeds") {
                     beforeEach {
-                        subscribePromise.resolve(.Success([NSURL(string: "https://example.com")!]))
+                        subscribePromise.resolve(.success([URL(string: "https://example.com")!]))
                     }
 
                     it("resolves the promise") {
                         expect(receivedFuture.value).toNot(beNil())
-                        expect(receivedFuture.value?.value) == [NSURL(string: "https://example.com")!]
+                        expect(receivedFuture.value?.value) == [URL(string: "https://example.com")!]
                     }
                 }
 
                 describe("when tha call fails") {
                     beforeEach {
-                        subscribePromise.resolve(.Failure(.Unknown))
+                        subscribePromise.resolve(.failure(.unknown))
                     }
                     
                     it("forwards the error") {
-                        expect(receivedFuture.value?.error) == SinopeError.Unknown
+                        expect(receivedFuture.value?.error) == SinopeError.unknown
                     }
                 }
             }
         }
 
         describe("unsubscribing from a set of feeds") {
-            var receivedFuture: Future<Result<[NSURL], SinopeError>>!
+            var receivedFuture: Future<Result<[URL], SinopeError>>!
 
             describe("when not logged in") {
                 beforeEach {
-                    receivedFuture = subject.unsubscribe([NSURL(string: "https://example.com")!])
+                    receivedFuture = subject.unsubscribe([URL(string: "https://example.com")!])
                 }
 
                 it("returns a resolved promise with error .NotLoggedIn") {
-                    expect(receivedFuture.value?.error).to(equal(SinopeError.NotLoggedIn))
+                    expect(receivedFuture.value?.error).to(equal(SinopeError.notLoggedIn))
                 }
             }
 
             describe("when logged in") {
                 let loginToken = "login_token"
-                var unsubscribePromise: Promise<Result<[NSURL], SinopeError>>!
+                var unsubscribePromise: Promise<Result<[URL], SinopeError>>!
 
                 beforeEach {
                     let loginPromise = Promise<Result<String, SinopeError>>()
-                    loginPromise.resolve(.Success(loginToken))
+                    loginPromise.resolve(.success(loginToken))
                     userService.loginReturns(loginPromise.future)
 
-                    subject.login("foo", password: "bar")
+                    _ = subject.login("foo", password: "bar")
 
-                    unsubscribePromise = Promise<Result<[NSURL], SinopeError>>()
+                    unsubscribePromise = Promise<Result<[URL], SinopeError>>()
                     feedsService.unsubscribeReturns(unsubscribePromise.future)
 
-                    receivedFuture = subject.unsubscribe([NSURL(string: "https://example.com")!])
+                    receivedFuture = subject.unsubscribe([URL(string: "https://example.com")!])
                 }
 
                 it("makes a request to the user service to add the device token") {
                     expect(feedsService.unsubscribeCallCount) == 1
                     let args = feedsService.unsubscribeArgsForCall(0)
 
-                    expect(args.0) == [NSURL(string: "https://example.com")!]
+                    expect(args.0) == [URL(string: "https://example.com")!]
                     expect(args.1) == loginToken
                 }
 
                 it("returns the exact same future when we try to unsubscribe from the same feeds while still waiting for a result") {
-                    expect(subject.unsubscribe([NSURL(string: "https://example.com")!])).to(beIdenticalTo(receivedFuture))
+                    expect(subject.unsubscribe([URL(string: "https://example.com")!])).to(beIdenticalTo(receivedFuture))
                 }
 
                 describe("when the call succeeds") {
                     beforeEach {
-                        unsubscribePromise.resolve(.Success([NSURL(string: "https://example.com")!]))
+                        unsubscribePromise.resolve(.success([URL(string: "https://example.com")!]))
                     }
 
                     it("resolves the promise") {
                         expect(receivedFuture.value).toNot(beNil())
-                        expect(receivedFuture.value?.value) == [NSURL(string: "https://example.com")!]
+                        expect(receivedFuture.value?.value) == [URL(string: "https://example.com")!]
                     }
                 }
 
                 describe("when tha call fails") {
                     beforeEach {
-                        unsubscribePromise.resolve(.Failure(.Unknown))
+                        unsubscribePromise.resolve(.failure(.unknown))
                     }
                     
                     it("forwards the error") {
-                        expect(receivedFuture.value?.error) == SinopeError.Unknown
+                        expect(receivedFuture.value?.error) == SinopeError.unknown
                     }
                 }
             }
         }
 
         describe("checking if a url is a feed") {
-            var receivedFuture: Future<Result<[NSURL: Bool], SinopeError>>!
-            var checkPromise: Promise<Result<[NSURL: Bool], SinopeError>>!
+            var receivedFuture: Future<Result<[URL: Bool], SinopeError>>!
+            var checkPromise: Promise<Result<[URL: Bool], SinopeError>>!
 
-            let url = NSURL(string: "https://example.org")!
+            let url = URL(string: "https://example.org")!
 
             sharedExamples("checking if a url is a feed") {
                 beforeEach {
                     // make the request
-                    checkPromise = Promise<Result<[NSURL: Bool], SinopeError>>()
+                    checkPromise = Promise<Result<[URL: Bool], SinopeError>>()
                     feedsService.checkReturns(checkPromise.future)
 
                     receivedFuture = subject.check(url)
@@ -396,17 +396,17 @@ class RepositorySpec: QuickSpec {
                 }
 
                 it("returns the exact same future when we try to fetch again") {
-                    feedsService.checkReturns(Promise<Result<[NSURL: Bool], SinopeError>>().future)
+                    feedsService.checkReturns(Promise<Result<[URL: Bool], SinopeError>>().future)
 
                     expect(subject.check(url)).to(beIdenticalTo(receivedFuture))
                     expect(feedsService.checkCallCount) == 1
 
-                    expect(subject.check(NSURL(string: "https://example.com")!)).toNot(beIdenticalTo(receivedFuture))
+                    expect(subject.check(URL(string: "https://example.com")!)).toNot(beIdenticalTo(receivedFuture))
                 }
 
                 describe("when the call succeeds") {
                     beforeEach {
-                        checkPromise.resolve(.Success([url: true]))
+                        checkPromise.resolve(.success([url: true]))
                     }
 
                     it("resolves the promise") {
@@ -417,11 +417,11 @@ class RepositorySpec: QuickSpec {
 
                 describe("when tha call fails") {
                     beforeEach {
-                        checkPromise.resolve(.Failure(.Unknown))
+                        checkPromise.resolve(.failure(.unknown))
                     }
 
                     it("forwards the error") {
-                        expect(receivedFuture.value?.error) == SinopeError.Unknown
+                        expect(receivedFuture.value?.error) == SinopeError.unknown
                     }
                 }
             }
@@ -433,10 +433,10 @@ class RepositorySpec: QuickSpec {
             describe("when logged in") {
                 beforeEach {
                     let loginPromise = Promise<Result<String, SinopeError>>()
-                    loginPromise.resolve(.Success("blah"))
+                    loginPromise.resolve(.success("blah"))
                     userService.loginReturns(loginPromise.future)
 
-                    subject.login("foo", password: "bar")
+                    _ = subject.login("foo", password: "bar")
                 }
 
                 itBehavesLike("checking if a url is a feed")
@@ -452,22 +452,22 @@ class RepositorySpec: QuickSpec {
                 }
 
                 it("returns a resolved promise with error .NotLoggedIn") {
-                    expect(receivedFuture.value?.error).to(equal(SinopeError.NotLoggedIn))
+                    expect(receivedFuture.value?.error).to(equal(SinopeError.notLoggedIn))
                 }
             }
 
             describe("when logged in") {
                 let loginToken = "login_token"
                 var fetchPromise: Promise<Result<[Feed], SinopeError>>!
-                let url = NSURL(string: "https://example.com")!
-                let date = NSDate()
+                let url = URL(string: "https://example.com")!
+                let date = Date()
 
                 beforeEach {
                     let loginPromise = Promise<Result<String, SinopeError>>()
-                    loginPromise.resolve(.Success(loginToken))
+                    loginPromise.resolve(.success(loginToken))
                     userService.loginReturns(loginPromise.future)
 
-                    subject.login("foo", password: "bar")
+                    _ = subject.login("foo", password: "bar")
 
                     fetchPromise = Promise<Result<[Feed], SinopeError>>()
                     feedsService.fetchReturns(fetchPromise.future)
@@ -491,7 +491,7 @@ class RepositorySpec: QuickSpec {
 
                 describe("when the call succeeds") {
                     beforeEach {
-                        fetchPromise.resolve(.Success([]))
+                        fetchPromise.resolve(.success([]))
                     }
 
                     it("resolves the promise") {
@@ -502,11 +502,11 @@ class RepositorySpec: QuickSpec {
 
                 describe("when tha call fails") {
                     beforeEach {
-                        fetchPromise.resolve(.Failure(.Unknown))
+                        fetchPromise.resolve(.failure(.unknown))
                     }
                     
                     it("forwards the error") {
-                        expect(receivedFuture.value?.error) == SinopeError.Unknown
+                        expect(receivedFuture.value?.error) == SinopeError.unknown
                     }
                 }
             }

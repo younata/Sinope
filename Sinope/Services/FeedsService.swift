@@ -3,122 +3,122 @@ import CBGPromise
 import Freddy
 
 public protocol FeedsService {
-    func check(url: NSURL) -> Future<Result<[NSURL: Bool], SinopeError>>
-    func subscribe(feeds: [NSURL], authToken: String) -> Future<Result<[NSURL], SinopeError>>
-    func unsubscribe(feeds: [NSURL], authToken: String) -> Future<Result<[NSURL], SinopeError>>
+    func check(url: URL) -> Future<Result<[URL: Bool], SinopeError>>
+    func subscribe(feeds: [URL], authToken: String) -> Future<Result<[URL], SinopeError>>
+    func unsubscribe(feeds: [URL], authToken: String) -> Future<Result<[URL], SinopeError>>
 
-    func fetch(authToken: String, feeds: [NSURL: NSDate]) -> Future<Result<[Feed], SinopeError>>
+    func fetch(authToken: String, feeds: [URL: Date]) -> Future<Result<[Feed], SinopeError>>
 }
 
 public struct PasiphaeFeedsService: FeedsService {
-    private let baseURL: NSURL
+    private let baseURL: URL
     private let networkClient: NetworkClient
     private let appToken: String
 
-    public init(baseURL: NSURL, networkClient: NetworkClient, appToken: String) {
+    public init(baseURL: URL, networkClient: NetworkClient, appToken: String) {
         self.baseURL = baseURL
         self.networkClient = networkClient
         self.appToken = appToken
     }
 
-    public func check(url: NSURL) -> Future<Result<[NSURL: Bool], SinopeError>> {
-        let urlComponents = NSURLComponents(URL: self.baseURL.URLByAppendingPathComponent("api/v1/feeds/check"), resolvingAgainstBaseURL: false)!
-        urlComponents.queryItems = [NSURLQueryItem(name: "url", value: url.absoluteString)]
+    public func check(url: URL) -> Future<Result<[URL: Bool], SinopeError>> {
+        var urlComponents = URLComponents(url: self.baseURL.appendingPathComponent("api/v1/feeds/check"), resolvingAgainstBaseURL: false)!
+        urlComponents.queryItems = [URLQueryItem(name: "url", value: url.absoluteString)]
         let headers = [
             "X-APP-TOKEN": self.appToken,
             "Content-Type": "application/json"
         ]
-        return self.networkClient.get(urlComponents.URL!, headers: headers).map { res -> Result<[NSURL: Bool], SinopeError> in
+        return self.networkClient.get(urlComponents.url!, headers: headers).map { res -> Result<[URL: Bool], SinopeError> in
             switch (res) {
-            case let .Success(data):
+            case let .success(data):
                 do {
                     let json = try JSON(data: data)
                     let dictionary = try json.dictionary()
-                    let retValue: [NSURL: Bool] = try dictionary.flatMapPairs { urlString, jsonBool in
-                        if let url = NSURL(string: urlString) {
+                    let retValue: [URL: Bool] = try dictionary.flatMapPairs { urlString, jsonBool in
+                        if let url = URL(string: urlString) {
                             return (url, try jsonBool.bool())
                         }
                         return nil
                     }
-                    return .Success(retValue)
+                    return .success(retValue)
                 } catch {
-                    return .Failure(.JSON)
+                    return .failure(.json)
                 }
-            case .Failure(_):
-                return .Failure(.Network)
+            case .failure(_):
+                return .failure(.network)
             }
         }
     }
 
-    public func subscribe(feeds: [NSURL], authToken: String) -> Future<Result<[NSURL], SinopeError>> {
-        return self.subunsub("subscribe", feeds: feeds, authToken: authToken)
+    public func subscribe(feeds: [URL], authToken: String) -> Future<Result<[URL], SinopeError>> {
+        return self.subunsub(action: "subscribe", feeds: feeds, authToken: authToken)
     }
 
-    public func unsubscribe(feeds: [NSURL], authToken: String) -> Future<Result<[NSURL], SinopeError>> {
-        return self.subunsub("unsubscribe", feeds: feeds, authToken: authToken)
+    public func unsubscribe(feeds: [URL], authToken: String) -> Future<Result<[URL], SinopeError>> {
+        return self.subunsub(action: "unsubscribe", feeds: feeds, authToken: authToken)
     }
 
-    public func fetch(authToken: String, feeds: [NSURL: NSDate]) -> Future<Result<[Feed], SinopeError>> {
-        let urlComponents = NSURLComponents(URL: self.baseURL.URLByAppendingPathComponent("api/v1/feeds/fetch"), resolvingAgainstBaseURL: false)!
+    public func fetch(authToken: String, feeds: [URL: Date]) -> Future<Result<[Feed], SinopeError>> {
+        let urlComponents = URLComponents(url: self.baseURL.appendingPathComponent("api/v1/feeds/fetch"), resolvingAgainstBaseURL: false)!
         let dateFormatter = DateFormatter.sharedFormatter
         let queryDict = feeds.mapPairs { url, date in
-            return (url.absoluteString, dateFormatter.stringFromDate(date))
+            return (url.absoluteString, dateFormatter.string(from: date))
         }
-        let body: NSData
+        let body: Data
         if !queryDict.isEmpty {
-            body = (try? NSJSONSerialization.dataWithJSONObject(queryDict, options: [])) ?? NSData()
+            body = (try? JSONSerialization.data(withJSONObject: queryDict, options: [])) ?? Data()
         } else {
-            body = NSData()
+            body = Data()
         }
         let headers = [
             "X-APP-TOKEN": self.appToken,
             "Authorization": "Token token=\"\(authToken)\"",
             "Content-Type": "application/json"
         ]
-        return self.networkClient.post(urlComponents.URL!, headers: headers, body: body).map { res -> Result<[Feed], SinopeError> in
+        return self.networkClient.post(urlComponents.url!, headers: headers, body: body).map { res -> Result<[Feed], SinopeError> in
             switch (res) {
-            case let .Success(data):
+            case let .success(data):
                 do {
-                    if String(data: data, encoding: NSUTF8StringEncoding) == "HTTP Token: Access denied.\n" {
-                        return .Failure(.NotLoggedIn)
+                    if String(data: data, encoding: String.Encoding.utf8) == "HTTP Token: Access denied.\n" {
+                        return .failure(.notLoggedIn)
                     }
                     let json = try JSON(data: data)
                     let feeds = try json.arrayOf("feeds", type: Feed.self)
-                    return .Success(feeds)
+                    return .success(feeds)
                 } catch {
-                    return .Failure(.JSON)
+                    return .failure(.json)
                 }
-            case .Failure(_):
-                return .Failure(.Network)
+            case .failure(_):
+                return .failure(.network)
             }
         }
     }
 
-    private func subunsub(action: String, feeds: [NSURL], authToken: String) -> Future<Result<[NSURL], SinopeError>> {
-        let url = self.baseURL.URLByAppendingPathComponent("api/v1/feeds/" + action)
+    private func subunsub(action: String, feeds: [URL], authToken: String) -> Future<Result<[URL], SinopeError>> {
+        let url = self.baseURL.appendingPathComponent("api/v1/feeds/" + action)
         let headers = [
             "X-APP-TOKEN": self.appToken,
             "Authorization": "Token token=\"\(authToken)\"",
             "Content-Type": "application/json"
         ]
         let feedStrings = feeds.map { $0.absoluteString }
-        let body = try! NSJSONSerialization.dataWithJSONObject(["feeds": feedStrings], options: [])
-        return self.networkClient.post(url, headers: headers, body: body).map { res -> Result<[NSURL], SinopeError> in
+        let body = try! JSONSerialization.data(withJSONObject: ["feeds": feedStrings], options: [])
+        return self.networkClient.post(url, headers: headers, body: body).map { res -> Result<[URL], SinopeError> in
             switch (res) {
-            case let .Success(data):
-                if String(data: data, encoding: NSUTF8StringEncoding) == "HTTP Token: Access denied.\n" {
-                    return .Failure(.NotLoggedIn)
+            case let .success(data):
+                if String(data: data, encoding: String.Encoding.utf8) == "HTTP Token: Access denied.\n" {
+                    return .failure(.notLoggedIn)
                 }
                 do {
                     let json = try JSON(data: data)
                     let array: [String] = try json.arrayOf()
-                    let urls = array.flatMap { NSURL(string: $0) }
-                    return .Success(urls)
+                    let urls = array.flatMap { URL(string: $0) }
+                    return .success(urls)
                 } catch {
-                    return .Failure(.JSON)
+                    return .failure(.json)
                 }
-            case .Failure(_):
-                return .Failure(.Network)
+            case .failure(_):
+                return .failure(.network)
             }
         }
     }

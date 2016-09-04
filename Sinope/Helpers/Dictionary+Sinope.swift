@@ -6,11 +6,11 @@ extension Dictionary {
         }
     }
 
-    func mapPairs<OutKey: Hashable, OutValue>(@noescape transform: Element throws -> (OutKey, OutValue)) rethrows -> [OutKey: OutValue] {
+    func mapPairs<OutKey: Hashable, OutValue>(_ transform: (Element) throws -> (OutKey, OutValue)) rethrows -> [OutKey: OutValue] {
         return Dictionary<OutKey, OutValue>(try map(transform))
     }
 
-    func flatMapPairs<OutKey: Hashable, OutValue>(@noescape transform: Element throws -> (OutKey, OutValue)?) rethrows -> [OutKey: OutValue] {
+    func flatMapPairs<OutKey: Hashable, OutValue>(_ transform: (Element) throws -> (OutKey, OutValue)?) rethrows -> [OutKey: OutValue] {
         return Dictionary<OutKey, OutValue>(try flatMap(transform))
     }
 }

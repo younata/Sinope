@@ -6,17 +6,17 @@ import Freddy
 class AuthorSpec: QuickSpec {
     override func spec() {
         describe("init'ing from json") {
-            let valid: NSData = ("{\"name\": \"Rachel Brindle\"," +
-                "\"email\": \"mailto:rachel@example.com\"}").dataUsingEncoding(NSUTF8StringEncoding)!
+            let valid: Data = ("{\"name\": \"Rachel Brindle\"," +
+                "\"email\": \"mailto:rachel@example.com\"}").data(using: String.Encoding.utf8)!
 
-            let validNoEmail: NSData = ("{\"name\": \"Rachel Brindle\"," +
-                "\"email\": null}").dataUsingEncoding(NSUTF8StringEncoding)!
+            let validNoEmail: Data = ("{\"name\": \"Rachel Brindle\"," +
+                "\"email\": null}").data(using: String.Encoding.utf8)!
 
-            let invalidNoName: NSData = ("{\"name\": null," +
-                "\"email\": \"rachel@example.com\"}").dataUsingEncoding(NSUTF8StringEncoding)!
+            let invalidNoName: Data = ("{\"name\": null," +
+                "\"email\": \"rachel@example.com\"}").data(using: String.Encoding.utf8)!
 
-            let invalidEmptyName: NSData = ("{\"name\": \"\"," +
-                "\"email\": \"rachel@example.com\"}").dataUsingEncoding(NSUTF8StringEncoding)!
+            let invalidEmptyName: Data = ("{\"name\": \"\"," +
+                "\"email\": \"rachel@example.com\"}").data(using: String.Encoding.utf8)!
 
             it("can be init'd from json") {
                 let json = try! JSON(data: valid)
@@ -26,7 +26,7 @@ class AuthorSpec: QuickSpec {
 
                 if let subject = subject {
                     expect(subject.name) == "Rachel Brindle"
-                    expect(subject.email) == NSURL(string: "mailto:rachel@example.com")
+                    expect(subject.email) == URL(string: "mailto:rachel@example.com")
                 }
             }
 

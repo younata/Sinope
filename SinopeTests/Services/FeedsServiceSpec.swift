@@ -8,7 +8,7 @@ import Freddy
 class FeedsServiceSpec: QuickSpec {
     override func spec() {
         var subject: PasiphaeFeedsService!
-        let baseURL = NSURL(string: "https://example.com/")!
+        let baseURL = URL(string: "https://example.com/")!
         var networkClient: FakeNetworkClient!
 
         beforeEach {
@@ -17,14 +17,14 @@ class FeedsServiceSpec: QuickSpec {
         }
 
         describe("check") {
-            var receivedFuture: Future<Result<[NSURL: Bool], SinopeError>>!
-            var promise: Promise<Result<NSData, NSError>>!
+            var receivedFuture: Future<Result<[URL: Bool], SinopeError>>!
+            var promise: Promise<Result<Data, NSError>>!
 
             beforeEach {
-                promise = Promise<Result<NSData, NSError>>()
+                promise = Promise<Result<Data, NSError>>()
                 networkClient.getStub = { _ in promise.future}
 
-                receivedFuture = subject.check(NSURL(string: "https://example.org/feed")!)
+                receivedFuture = subject.check(url: URL(string: "https://example.org/feed")!)
             }
 
             it("returns an in-progress future") {
@@ -37,7 +37,7 @@ class FeedsServiceSpec: QuickSpec {
                 guard networkClient.getCallCount == 1 else { return }
 
                 let args = networkClient.getArgsForCall(0)
-                expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/check?url=https://example.org/feed")
+                expect(args.0) == URL(string: "https://example.com/api/v1/feeds/check?url=https://example.org/feed")
                 expect(args.1) == ["X-APP-TOKEN": "app_token",
                                    "Content-Type": "application/json"]
             }
@@ -45,49 +45,49 @@ class FeedsServiceSpec: QuickSpec {
             describe("when the network call succeeds") {
                 describe("with a valid json object") {
                     beforeEach {
-                        let fixture = ("{\"https://example.org/feed\": true}").dataUsingEncoding(NSUTF8StringEncoding)!
-                        promise.resolve(.Success(fixture))
+                        let fixture = ("{\"https://example.org/feed\": true}").data(using: String.Encoding.utf8)!
+                        promise.resolve(.success(fixture))
                     }
 
                     it("resolves the future with whether or not that url is a feed") {
                         expect(receivedFuture.value).toNot(beNil())
                         expect(receivedFuture.value?.error).to(beNil())
                         expect(receivedFuture.value?.value).toNot(beNil())
-                        expect(receivedFuture.value?.value) == [NSURL(string: "https://example.org/feed")!: true]
+                        expect(receivedFuture.value?.value) == [URL(string: "https://example.org/feed")!: true]
                     }
                 }
 
                 describe("with an invalid json object") {
                     beforeEach {
-                        promise.resolve(.Success(NSData()))
+                        promise.resolve(.success(Data()))
                     }
 
                     it("resolves the future with a json error") {
-                        expect(receivedFuture.value?.error) == .JSON
+                        expect(receivedFuture.value?.error) == .json
                     }
                 }
             }
 
             describe("when the network call fails") {
                 beforeEach {
-                    promise.resolve(.Failure(NSError(domain: "", code: 0, userInfo: nil)))
+                    promise.resolve(.failure(NSError(domain: "", code: 0, userInfo: nil)))
                 }
 
                 it("resolves the future with a network error") {
-                    expect(receivedFuture.value?.error) == .Network
+                    expect(receivedFuture.value?.error) == .network
                 }
             }
         }
 
         describe("subscribe") {
-            var receivedFuture: Future<Result<[NSURL], SinopeError>>!
-            var promise: Promise<Result<NSData, NSError>>!
+            var receivedFuture: Future<Result<[URL], SinopeError>>!
+            var promise: Promise<Result<Data, NSError>>!
 
             beforeEach {
-                promise = Promise<Result<NSData, NSError>>()
+                promise = Promise<Result<Data, NSError>>()
                 networkClient.postStub = { _ in promise.future}
 
-                receivedFuture = subject.subscribe([NSURL(string: "https://example.org/feed2")!], authToken: "auth_token")
+                receivedFuture = subject.subscribe(feeds: [URL(string: "https://example.org/feed2")!], authToken: "auth_token")
             }
 
             it("returns an in-progress future") {
@@ -98,60 +98,60 @@ class FeedsServiceSpec: QuickSpec {
                 expect(networkClient.postCallCount) == 1
 
                 let args = networkClient.postArgsForCall(0)
-                expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/subscribe")
+                expect(args.0) == URL(string: "https://example.com/api/v1/feeds/subscribe")
                 expect(args.1) == ["X-APP-TOKEN": "app_token",
                                    "Authorization": "Token token=\"auth_token\"",
                                    "Content-Type": "application/json"]
-                let body = String(data: args.2, encoding: NSUTF8StringEncoding)
+                let body = String(data: args.2, encoding: String.Encoding.utf8)
                 expect(body) == "{\"feeds\":[\"https:\\/\\/example.org\\/feed2\"]}"
             }
 
             describe("when the network call succeeds") {
                 describe("with a valid json object") {
                     beforeEach {
-                        let fixture = "[\"https://example.org/feed1\", \"https://example.org/feed2\"]".dataUsingEncoding(NSUTF8StringEncoding)!
-                        promise.resolve(.Success(fixture))
+                        let fixture = "[\"https://example.org/feed1\", \"https://example.org/feed2\"]".data(using: String.Encoding.utf8)!
+                        promise.resolve(.success(fixture))
                     }
 
                     it("resolves the future with the list of subscribed feeds") {
                         expect(receivedFuture.value?.value) == [
-                            NSURL(string: "https://example.org/feed1")!,
-                            NSURL(string: "https://example.org/feed2")!
+                            URL(string: "https://example.org/feed1")!,
+                            URL(string: "https://example.org/feed2")!
                         ]
                     }
                 }
 
                 describe("with an invalid json object") {
                     beforeEach {
-                        promise.resolve(.Success(NSData()))
+                        promise.resolve(.success(Data()))
                     }
 
                     it("resolves the future with a json error") {
-                        expect(receivedFuture.value?.error) == .JSON
+                        expect(receivedFuture.value?.error) == .json
                     }
                 }
             }
 
             describe("when the network call fails") {
                 beforeEach {
-                    promise.resolve(.Failure(NSError(domain: "", code: 0, userInfo: nil)))
+                    promise.resolve(.failure(NSError(domain: "", code: 0, userInfo: nil)))
                 }
 
                 it("resolves the future with a network error") {
-                    expect(receivedFuture.value?.error) == .Network
+                    expect(receivedFuture.value?.error) == .network
                 }
             }
         }
 
         describe("unsubscribe") {
-            var receivedFuture: Future<Result<[NSURL], SinopeError>>!
-            var promise: Promise<Result<NSData, NSError>>!
+            var receivedFuture: Future<Result<[URL], SinopeError>>!
+            var promise: Promise<Result<Data, NSError>>!
 
             beforeEach {
-                promise = Promise<Result<NSData, NSError>>()
+                promise = Promise<Result<Data, NSError>>()
                 networkClient.postStub = { _ in promise.future}
 
-                receivedFuture = subject.unsubscribe([NSURL(string: "https://example.org/feed2")!], authToken: "auth_token")
+                receivedFuture = subject.unsubscribe(feeds: [URL(string: "https://example.org/feed2")!], authToken: "auth_token")
             }
 
             it("returns an in-progress future") {
@@ -162,60 +162,60 @@ class FeedsServiceSpec: QuickSpec {
                 expect(networkClient.postCallCount) == 1
 
                 let args = networkClient.postArgsForCall(0)
-                expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/unsubscribe")
+                expect(args.0) == URL(string: "https://example.com/api/v1/feeds/unsubscribe")
                 expect(args.1) == ["X-APP-TOKEN": "app_token",
                                    "Authorization": "Token token=\"auth_token\"",
                                    "Content-Type": "application/json"]
-                let body = String(data: args.2, encoding: NSUTF8StringEncoding)
+                let body = String(data: args.2, encoding: String.Encoding.utf8)
                 expect(body) == "{\"feeds\":[\"https:\\/\\/example.org\\/feed2\"]}"
             }
 
             describe("when the network call succeeds") {
                 describe("with a valid json object") {
                     beforeEach {
-                        let fixture = "[\"https://example.org/feed1\", \"https://example.org/feed2\"]".dataUsingEncoding(NSUTF8StringEncoding)!
-                        promise.resolve(.Success(fixture))
+                        let fixture = "[\"https://example.org/feed1\", \"https://example.org/feed2\"]".data(using: String.Encoding.utf8)!
+                        promise.resolve(.success(fixture))
                     }
 
                     it("resolves the future with the list of subscribed feeds") {
                         expect(receivedFuture.value?.value) == [
-                            NSURL(string: "https://example.org/feed1")!,
-                            NSURL(string: "https://example.org/feed2")!
+                            URL(string: "https://example.org/feed1")!,
+                            URL(string: "https://example.org/feed2")!
                         ]
                     }
                 }
 
                 describe("with an invalid json object") {
                     beforeEach {
-                        promise.resolve(.Success(NSData()))
+                        promise.resolve(.success(Data()))
                     }
 
                     it("resolves the future with a json error") {
-                        expect(receivedFuture.value?.error) == .JSON
+                        expect(receivedFuture.value?.error) == .json
                     }
                 }
             }
 
             describe("when the network call fails") {
                 beforeEach {
-                    promise.resolve(.Failure(NSError(domain: "", code: 0, userInfo: nil)))
+                    promise.resolve(.failure(NSError(domain: "", code: 0, userInfo: nil)))
                 }
 
                 it("resolves the future with a network error") {
-                    expect(receivedFuture.value?.error) == .Network
+                    expect(receivedFuture.value?.error) == .network
                 }
             }
         }
 
         describe("fetch") {
             var receivedFuture: Future<Result<[Feed], SinopeError>>!
-            var promise: Promise<Result<NSData, NSError>>!
+            var promise: Promise<Result<Data, NSError>>!
 
             beforeEach {
-                promise = Promise<Result<NSData, NSError>>()
+                promise = Promise<Result<Data, NSError>>()
                 networkClient.postStub = { _ in promise.future}
 
-                receivedFuture = subject.fetch("auth_token", feeds: [NSURL(string: "https://example.com/")!: NSDate(timeIntervalSince1970: 0)])
+                receivedFuture = subject.fetch(authToken: "auth_token", feeds: [URL(string: "https://example.com/")!: Date(timeIntervalSince1970: 0)])
             }
 
             it("returns an in-progress future") {
@@ -228,20 +228,20 @@ class FeedsServiceSpec: QuickSpec {
                 guard networkClient.postCallCount == 1 else { return }
 
                 let args = networkClient.postArgsForCall(0)
-                expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/fetch")
+                expect(args.0) == URL(string: "https://example.com/api/v1/feeds/fetch")
                 expect(args.1) == ["X-APP-TOKEN": "app_token",
                                    "Authorization": "Token token=\"auth_token\"",
                                    "Content-Type": "application/json"]
-                let body = String(data: args.2, encoding: NSUTF8StringEncoding)
+                let body = String(data: args.2, encoding: String.Encoding.utf8)
                 expect(body) == "{\"https:\\/\\/example.com\\/\":\"1970-01-01T00:00:00.000Z\"}"
             }
 
             describe("fetching without a date") {
                 beforeEach {
-                    promise = Promise<Result<NSData, NSError>>()
+                    promise = Promise<Result<Data, NSError>>()
                     networkClient.postStub = { _ in promise.future}
 
-                    receivedFuture = subject.fetch("auth_token", feeds: [:])
+                    receivedFuture = subject.fetch(authToken: "auth_token", feeds: [:])
                 }
 
                 it("returns an in-progress future") {
@@ -254,11 +254,11 @@ class FeedsServiceSpec: QuickSpec {
                     guard networkClient.postCallCount == 2 else { return }
 
                     let args = networkClient.postArgsForCall(1)
-                    expect(args.0) == NSURL(string: "https://example.com/api/v1/feeds/fetch")
+                    expect(args.0) == URL(string: "https://example.com/api/v1/feeds/fetch")
                     expect(args.1) == ["X-APP-TOKEN": "app_token",
                                        "Authorization": "Token token=\"auth_token\"",
                                        "Content-Type": "application/json"]
-                    let body = String(data: args.2, encoding: NSUTF8StringEncoding)
+                    let body = String(data: args.2, encoding: String.Encoding.utf8)
                     expect(body) == ""
                 }
             }
@@ -266,47 +266,48 @@ class FeedsServiceSpec: QuickSpec {
             describe("when the network call succeeds") {
                 describe("with a valid json object") {
                     beforeEach {
-                        let fixture = ("{\"last_updated\": \"2016-07-13T22:21:00.000Z\", \"feeds\": [{\"title\": \"Rachel Brindle\"," +
+                        let fixtureString = "{\"last_updated\": \"2016-07-13T22:21:00.000Z\", \"feeds\": [{\"title\": \"Rachel Brindle\"," +
                             "\"url\": \"https://younata.github.io/feed.xml\"," +
                             "\"summary\": null," +
                             "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                            "\"image_url\": \"https://example.com/image.png\", \"articles\": []}]}").dataUsingEncoding(NSUTF8StringEncoding)!
-                        promise.resolve(.Success(fixture))
+                            "\"image_url\": \"https://example.com/image.png\", \"articles\": []}]}"
+                        let fixture: Data = fixtureString.data(using: String.Encoding.utf8)!
+                        promise.resolve(.success(fixture))
                     }
 
                     it("resolves the future with the feeds received") {
                         expect(receivedFuture.value).toNot(beNil())
                         expect(receivedFuture.value?.error).to(beNil())
                         expect(receivedFuture.value?.value).toNot(beNil())
-                        let dateFormatter = NSDateFormatter()
+                        let dateFormatter = Foundation.DateFormatter()
                         dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSSzzz"
-                        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+                        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
                         expect(receivedFuture.value?.value) == [
-                            Feed(title: "Rachel Brindle", url: NSURL(string: "https://younata.github.io/feed.xml")!,
-                                summary: "", imageUrl: NSURL(string: "https://example.com/image.png"),
-                                lastUpdated: dateFormatter.dateFromString("2015-12-23T00:00:00.000Z")!, articles: [])
+                            Feed(title: "Rachel Brindle", url: URL(string: "https://younata.github.io/feed.xml")!,
+                                summary: "", imageUrl: URL(string: "https://example.com/image.png"),
+                                lastUpdated: dateFormatter.date(from: "2015-12-23T00:00:00.000Z")!, articles: [])
                         ]
                     }
                 }
 
                 describe("with an invalid json object") {
                     beforeEach {
-                        promise.resolve(.Success(NSData()))
+                        promise.resolve(.success(Data()))
                     }
 
                     it("resolves the future with a json error") {
-                        expect(receivedFuture.value?.error) == .JSON
+                        expect(receivedFuture.value?.error) == .json
                     }
                 }
             }
 
             describe("when the network call fails") {
                 beforeEach {
-                    promise.resolve(.Failure(NSError(domain: "", code: 0, userInfo: nil)))
+                    promise.resolve(.failure(NSError(domain: "", code: 0, userInfo: nil)))
                 }
 
                 it("resolves the future with a network error") {
-                    expect(receivedFuture.value?.error) == .Network
+                    expect(receivedFuture.value?.error) == .network
                 }
             }
         }

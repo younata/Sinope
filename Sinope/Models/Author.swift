@@ -2,15 +2,15 @@ import Freddy
 
 public struct Author: JSONDecodable, Equatable {
     public let name: String
-    public let email: NSURL?
+    public let email: URL?
 
     public init(json: JSON) throws {
         self.name = try json.string("name")
         if self.name.isEmpty {
-            throw JSON.Error.KeyNotFound(key: "name")
+            throw JSON.Error.keyNotFound(key: "name")
         }
         let emailString = try? json.string("email")
-        if let emailString = emailString, email = NSURL(string: emailString) {
+        if let emailString = emailString, let email = URL(string: emailString) {
             self.email = email
         } else {
             self.email = nil

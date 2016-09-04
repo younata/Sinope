@@ -10,68 +10,68 @@ class FakeNetworkClient : NetworkClient, Equatable {
     }
 
     private(set) var getCallCount : Int = 0
-    var getStub : ((NSURL, [String: String]) -> (Future<Result<NSData, NSError>>))?
-    private var getArgs : Array<(NSURL, [String: String])> = []
-    func getReturns(stubbedValues: (Future<Result<NSData, NSError>>)) {
-        self.getStub = {(url: NSURL, headers: [String: String]) -> (Future<Result<NSData, NSError>>) in
+    var getStub : ((URL, [String: String]) -> (Future<Result<Data, NSError>>))?
+    private var getArgs : Array<(URL, [String: String])> = []
+    func getReturns(_ stubbedValues: (Future<Result<Data, NSError>>)) {
+        self.getStub = {(url: URL, headers: [String: String]) -> (Future<Result<Data, NSError>>) in
             return stubbedValues
         }
     }
-    func getArgsForCall(callIndex: Int) -> (NSURL, [String: String]) {
+    func getArgsForCall(_ callIndex: Int) -> (URL, [String: String]) {
         return self.getArgs[callIndex]
     }
-    func get(url: NSURL, headers: [String: String]) -> (Future<Result<NSData, NSError>>) {
+    func get(_ url: URL, headers: [String: String]) -> (Future<Result<Data, NSError>>) {
         self.getCallCount += 1
         self.getArgs.append((url, headers))
         return self.getStub!(url, headers)
     }
 
     private(set) var putCallCount : Int = 0
-    var putStub : ((NSURL, [String: String], NSData) -> (Future<Result<NSData, NSError>>))?
-    private var putArgs : Array<(NSURL, [String: String], NSData)> = []
-    func putReturns(stubbedValues: (Future<Result<NSData, NSError>>)) {
-        self.putStub = {(url: NSURL, headers: [String: String], body: NSData) -> (Future<Result<NSData, NSError>>) in
+    var putStub : ((URL, [String: String], Data) -> (Future<Result<Data, NSError>>))?
+    private var putArgs : Array<(URL, [String: String], Data)> = []
+    func putReturns(_ stubbedValues: (Future<Result<Data, NSError>>)) {
+        self.putStub = {(url: URL, headers: [String: String], body: Data) -> (Future<Result<Data, NSError>>) in
             return stubbedValues
         }
     }
-    func putArgsForCall(callIndex: Int) -> (NSURL, [String: String], NSData) {
+    func putArgsForCall(_ callIndex: Int) -> (URL, [String: String], Data) {
         return self.putArgs[callIndex]
     }
-    func put(url: NSURL, headers: [String: String], body: NSData) -> (Future<Result<NSData, NSError>>) {
+    func put(_ url: URL, headers: [String: String], body: Data) -> (Future<Result<Data, NSError>>) {
         self.putCallCount += 1
         self.putArgs.append((url, headers, body))
         return self.putStub!(url, headers, body)
     }
 
     private(set) var postCallCount : Int = 0
-    var postStub : ((NSURL, [String: String], NSData) -> (Future<Result<NSData, NSError>>))?
-    private var postArgs : Array<(NSURL, [String: String], NSData)> = []
-    func postReturns(stubbedValues: (Future<Result<NSData, NSError>>)) {
-        self.postStub = {(url: NSURL, headers: [String: String], body: NSData) -> (Future<Result<NSData, NSError>>) in
+    var postStub : ((URL, [String: String], Data) -> (Future<Result<Data, NSError>>))?
+    private var postArgs : Array<(URL, [String: String], Data)> = []
+    func postReturns(_ stubbedValues: (Future<Result<Data, NSError>>)) {
+        self.postStub = {(url: URL, headers: [String: String], body: Data) -> (Future<Result<Data, NSError>>) in
             return stubbedValues
         }
     }
-    func postArgsForCall(callIndex: Int) -> (NSURL, [String: String], NSData) {
+    func postArgsForCall(_ callIndex: Int) -> (URL, [String: String], Data) {
         return self.postArgs[callIndex]
     }
-    func post(url: NSURL, headers: [String: String], body: NSData) -> (Future<Result<NSData, NSError>>) {
+    func post(_ url: URL, headers: [String: String], body: Data) -> (Future<Result<Data, NSError>>) {
         self.postCallCount += 1
         self.postArgs.append((url, headers, body))
         return self.postStub!(url, headers, body)
     }
 
     private(set) var deleteCallCount : Int = 0
-    var deleteStub : ((NSURL, [String: String]) -> (Future<Result<NSData, NSError>>))?
-    private var deleteArgs : Array<(NSURL, [String: String])> = []
-    func deleteReturns(stubbedValues: (Future<Result<NSData, NSError>>)) {
-        self.deleteStub = {(url: NSURL, headers: [String: String]) -> (Future<Result<NSData, NSError>>) in
+    var deleteStub : ((URL, [String: String]) -> (Future<Result<Data, NSError>>))?
+    private var deleteArgs : Array<(URL, [String: String])> = []
+    func deleteReturns(_ stubbedValues: (Future<Result<Data, NSError>>)) {
+        self.deleteStub = {(url: URL, headers: [String: String]) -> (Future<Result<Data, NSError>>) in
             return stubbedValues
         }
     }
-    func deleteArgsForCall(callIndex: Int) -> (NSURL, [String: String]) {
+    func deleteArgsForCall(_ callIndex: Int) -> (URL, [String: String]) {
         return self.deleteArgs[callIndex]
     }
-    func delete(url: NSURL, headers: [String: String]) -> (Future<Result<NSData, NSError>>) {
+    func delete(_ url: URL, headers: [String: String]) -> (Future<Result<Data, NSError>>) {
         self.deleteCallCount += 1
         self.deleteArgs.append((url, headers))
         return self.deleteStub!(url, headers)

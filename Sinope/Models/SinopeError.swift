@@ -1,6 +1,6 @@
-public enum SinopeError: ErrorType, Equatable {
-    case Network
-    case JSON
-    case NotLoggedIn
-    case Unknown
+public enum SinopeError: Error, Equatable {
+    case network
+    case json
+    case notLoggedIn
+    case unknown
 }

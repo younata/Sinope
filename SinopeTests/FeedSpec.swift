@@ -6,73 +6,83 @@ import Freddy
 class FeedSpec: QuickSpec {
     override func spec() {
         describe("init'ing from json") {
-            let dateFormatter = NSDateFormatter()
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSSzzz"
 
-            let validFixtureNoArticles: NSData = ("{\"title\": \"Rachel Brindle\"," +
+            let validFixtureStringNoArticles = "{\"title\": \"Rachel Brindle\"," +
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"image_url\": \"https://example.com/image.png\"," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"articles\": []}"
+            let validFixtureNoArticles: Data = validFixtureStringNoArticles.data(using: String.Encoding.utf8)!
 
-            let validFixture: NSData = ("{\"title\": \"Rachel Brindle\"," +
+            let validFixtureString = "{\"title\": \"Rachel Brindle\"," +
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"image_url\": \"https://example.com/image.png\"," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"articles\": [" +
                 "{\"title\": \"Example 1\", \"url\": \"https://example.com/1/\", \"summary\": \"test\", \"published\": \"2015-12-23T00:00:00.000Z\", \"updated\": null, \"content\": null, \"authors\": []}" +
-                "]}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "]}"
+            let validFixture: Data = validFixtureString.data(using: String.Encoding.utf8)!
 
-            let validFixtureNoArticlesNoImageUrl: NSData = ("{\"title\": \"Rachel Brindle\"," +
+            let validFixtureStringNoArticlesNoImageUrl = "{\"title\": \"Rachel Brindle\"," +
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"image_url\": null, \"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"image_url\": null, \"articles\": []}"
+            let validFixtureNoArticlesNoImageUrl: Data = validFixtureStringNoArticlesNoImageUrl.data(using: String.Encoding.utf8)!
 
-            let validFixtureNoArticlesNoSummary: NSData = ("{\"title\": \"Rachel Brindle\"," +
+            let validFixtureStringNoArticlesNoSummary = "{\"title\": \"Rachel Brindle\"," +
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": null," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"image_url\": \"https://example.com/image.png\", \"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"image_url\": \"https://example.com/image.png\", \"articles\": []}"
+            let validFixtureNoArticlesNoSummary: Data = validFixtureStringNoArticlesNoSummary.data(using: String.Encoding.utf8)!
 
-            let invalidFixtureNoUrl: NSData = ("{\"title\": \"Rachel Brindle\"," +
+            let invalidFixtureStringNoUrl = "{\"title\": \"Rachel Brindle\"," +
                 "\"url\": null," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"image_url\": null, \"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"image_url\": null, \"articles\": []}"
+            let invalidFixtureNoUrl: Data = invalidFixtureStringNoUrl.data(using: String.Encoding.utf8)!
 
-            let invalidFixtureEmptyUrl: NSData = ("{\"title\": \"Rachel Brindle\"," +
+            let invalidFixtureStringEmptyUrl = "{\"title\": \"Rachel Brindle\"," +
                 "\"url\": \"\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"image_url\": null, \"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"image_url\": null, \"articles\": []}"
+            let invalidFixtureEmptyUrl: Data = invalidFixtureStringEmptyUrl.data(using: String.Encoding.utf8)!
 
-            let invalidFixtureNoTitle: NSData = ("{\"title\": null," +
+            let invalidFixtureStringNoTitle = "{\"title\": null," +
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"image_url\": null, \"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"image_url\": null, \"articles\": []}"
+            let invalidFixtureNoTitle: Data = invalidFixtureStringNoTitle.data(using: String.Encoding.utf8)!
 
-            let invalidFixtureEmptyTitle: NSData = ("{\"title\": \"\"," +
+            let invalidFixtureStringEmptyTitle = "{\"title\": \"\"," +
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"image_url\": null, \"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"image_url\": null, \"articles\": []}"
+            let invalidFixtureEmptyTitle: Data = invalidFixtureStringEmptyTitle.data(using: String.Encoding.utf8)!
 
-            let invalidFixtureEmptyLastUpdated: NSData = ("{\"title\": \"Rachel Brindle\"," +
+            let invalidFixtureStringEmptyLastUpdated = "{\"title\": \"Rachel Brindle\"," +
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"image_url\": \"https://example.com/image.png\"," +
                 "\"last_updated\": \"\"," +
-                "\"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"articles\": []}"
+            let invalidFixtureEmptyLastUpdated: Data = invalidFixtureStringEmptyLastUpdated.data(using: String.Encoding.utf8)!
 
-            let invalidFixtureNoLastUpdated: NSData = ("{\"title\": \"Rachel Brindle\"," +
+            let invalidFixtureStringNoLastUpdated = "{\"title\": \"Rachel Brindle\"," +
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"image_url\": \"https://example.com/image.png\"," +
-                "\"articles\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"articles\": []}"
+            let invalidFixtureNoLastUpdated: Data = invalidFixtureStringNoLastUpdated.data(using: String.Encoding.utf8)!
 
             it("can be init'd from json") {
                 let json = try! JSON(data: validFixtureNoArticles)
@@ -82,10 +92,10 @@ class FeedSpec: QuickSpec {
 
                 if let subject = subject {
                     expect(subject.title) == "Rachel Brindle"
-                    expect(subject.url) == NSURL(string: "https://younata.github.io/feed.xml")!
+                    expect(subject.url) == URL(string: "https://younata.github.io/feed.xml")!
                     expect(subject.summary) == "OSX, iOS and Robotics developer"
-                    expect(subject.imageUrl) == NSURL(string: "https://example.com/image.png")!
-                    expect(subject.lastUpdated) == dateFormatter.dateFromString("2015-12-23T00:00:00.000Z")
+                    expect(subject.imageUrl) == URL(string: "https://example.com/image.png")!
+                    expect(subject.lastUpdated) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
                     expect(subject.articles).to(beEmpty())
                 }
             }
@@ -98,19 +108,19 @@ class FeedSpec: QuickSpec {
 
                 if let subject = subject {
                     expect(subject.title) == "Rachel Brindle"
-                    expect(subject.url) == NSURL(string: "https://younata.github.io/feed.xml")!
+                    expect(subject.url) == URL(string: "https://younata.github.io/feed.xml")!
                     expect(subject.summary) == "OSX, iOS and Robotics developer"
-                    expect(subject.imageUrl) == NSURL(string: "https://example.com/image.png")!
-                    expect(subject.lastUpdated) == dateFormatter.dateFromString("2015-12-23T00:00:00.000Z")
+                    expect(subject.imageUrl) == URL(string: "https://example.com/image.png")!
+                    expect(subject.lastUpdated) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
                     expect(subject.articles).to(haveCount(1))
                     if let article = subject.articles.first {
                         expect(article.title) == "Example 1"
-                        expect(article.url) == NSURL(string: "https://example.com/1/")
+                        expect(article.url) == URL(string: "https://example.com/1/")
                         expect(article.summary) == "test"
                         expect(article.content) == ""
-                        let dateFormatter = NSDateFormatter()
+                        let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSSzzz"
-                        let publishedDate = dateFormatter.dateFromString("2015-12-23T00:00:00.000Z")
+                        let publishedDate = dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
                         expect(article.published) == publishedDate
                         expect(article.updated).to(beNil())
                         expect(article.authors).to(beEmpty())
@@ -126,10 +136,10 @@ class FeedSpec: QuickSpec {
 
                 if let subject = subject {
                     expect(subject.title) == "Rachel Brindle"
-                    expect(subject.url) == NSURL(string: "https://younata.github.io/feed.xml")!
+                    expect(subject.url) == URL(string: "https://younata.github.io/feed.xml")!
                     expect(subject.summary) == "OSX, iOS and Robotics developer"
                     expect(subject.imageUrl).to(beNil())
-                    expect(subject.lastUpdated) == dateFormatter.dateFromString("2015-12-23T00:00:00.000Z")
+                    expect(subject.lastUpdated) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
                     expect(subject.articles).to(beEmpty())
                 }
             }
@@ -142,10 +152,10 @@ class FeedSpec: QuickSpec {
 
                 if let subject = subject {
                     expect(subject.title) == "Rachel Brindle"
-                    expect(subject.url) == NSURL(string: "https://younata.github.io/feed.xml")!
+                    expect(subject.url) == URL(string: "https://younata.github.io/feed.xml")!
                     expect(subject.summary) == ""
-                    expect(subject.imageUrl) == NSURL(string: "https://example.com/image.png")!
-                    expect(subject.lastUpdated) == dateFormatter.dateFromString("2015-12-23T00:00:00.000Z")
+                    expect(subject.imageUrl) == URL(string: "https://example.com/image.png")!
+                    expect(subject.lastUpdated) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
                     expect(subject.articles).to(beEmpty())
                 }
             }

@@ -13,15 +13,15 @@ class FakeUserService : UserService, Equatable {
     private(set) var createAccountCallCount : Int = 0
     var createAccountStub : ((String, String) -> (Future<Result<String, SinopeError>>))?
     private var createAccountArgs : Array<(String, String)> = []
-    func createAccountReturns(stubbedValues: (Future<Result<String, SinopeError>>)) {
+    func createAccountReturns(_ stubbedValues: (Future<Result<String, SinopeError>>)) {
         self.createAccountStub = {(email: String, password: String) -> (Future<Result<String, SinopeError>>) in
             return stubbedValues
         }
     }
-    func createAccountArgsForCall(callIndex: Int) -> (String, String) {
+    func createAccountArgsForCall(_ callIndex: Int) -> (String, String) {
         return self.createAccountArgs[callIndex]
     }
-    func createAccount(email: String, password: String) -> (Future<Result<String, SinopeError>>) {
+    func createAccount(_ email: String, password: String) -> (Future<Result<String, SinopeError>>) {
         self.createAccountCallCount += 1
         self.createAccountArgs.append((email, password))
         return self.createAccountStub!(email, password)
@@ -30,15 +30,15 @@ class FakeUserService : UserService, Equatable {
     private(set) var loginCallCount : Int = 0
     var loginStub : ((String, String) -> (Future<Result<String, SinopeError>>))?
     private var loginArgs : Array<(String, String)> = []
-    func loginReturns(stubbedValues: (Future<Result<String, SinopeError>>)) {
+    func loginReturns(_ stubbedValues: (Future<Result<String, SinopeError>>)) {
         self.loginStub = {(email: String, password: String) -> (Future<Result<String, SinopeError>>) in
             return stubbedValues
         }
     }
-    func loginArgsForCall(callIndex: Int) -> (String, String) {
+    func loginArgsForCall(_ callIndex: Int) -> (String, String) {
         return self.loginArgs[callIndex]
     }
-    func login(email: String, password: String) -> (Future<Result<String, SinopeError>>) {
+    func login(_ email: String, password: String) -> (Future<Result<String, SinopeError>>) {
         self.loginCallCount += 1
         self.loginArgs.append((email, password))
         return self.loginStub!(email, password)
@@ -47,15 +47,15 @@ class FakeUserService : UserService, Equatable {
     private(set) var addDeviceTokenCallCount : Int = 0
     var addDeviceTokenStub : ((String, String) -> (Future<Result<Void, SinopeError>>))?
     private var addDeviceTokenArgs : Array<(String, String)> = []
-    func addDeviceTokenReturns(stubbedValues: (Future<Result<Void, SinopeError>>)) {
+    func addDeviceTokenReturns(_ stubbedValues: (Future<Result<Void, SinopeError>>)) {
         self.addDeviceTokenStub = {(token: String, authToken: String) -> (Future<Result<Void, SinopeError>>) in
             return stubbedValues
         }
     }
-    func addDeviceTokenArgsForCall(callIndex: Int) -> (String, String) {
+    func addDeviceTokenArgsForCall(_ callIndex: Int) -> (String, String) {
         return self.addDeviceTokenArgs[callIndex]
     }
-    func addDeviceToken(token: String, authToken: String) -> (Future<Result<Void, SinopeError>>) {
+    func addDeviceToken(_ token: String, authToken: String) -> (Future<Result<Void, SinopeError>>) {
         self.addDeviceTokenCallCount += 1
         self.addDeviceTokenArgs.append((token, authToken))
         return self.addDeviceTokenStub!(token, authToken)
@@ -64,15 +64,15 @@ class FakeUserService : UserService, Equatable {
     private(set) var deleteAccountCallCount : Int = 0
     var deleteAccountStub : ((String) -> (Future<Result<Void, SinopeError>>))?
     private var deleteAccountArgs : Array<(String)> = []
-    func deleteAccountReturns(stubbedValues: (Future<Result<Void, SinopeError>>)) {
+    func deleteAccountReturns(_ stubbedValues: (Future<Result<Void, SinopeError>>)) {
         self.deleteAccountStub = {(authToken: String) -> (Future<Result<Void, SinopeError>>) in
             return stubbedValues
         }
     }
-    func deleteAccountArgsForCall(callIndex: Int) -> (String) {
+    func deleteAccountArgsForCall(_ callIndex: Int) -> (String) {
         return self.deleteAccountArgs[callIndex]
     }
-    func deleteAccount(authToken: String) -> (Future<Result<Void, SinopeError>>) {
+    func deleteAccount(_ authToken: String) -> (Future<Result<Void, SinopeError>>) {
         self.deleteAccountCallCount += 1
         self.deleteAccountArgs.append((authToken))
         return self.deleteAccountStub!(authToken)

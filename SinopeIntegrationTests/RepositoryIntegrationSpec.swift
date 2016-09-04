@@ -2,6 +2,7 @@ import Quick
 import Nimble
 import Result
 import Sinope
+import CBGPromise
 
 class RepositoryIntegrationSpec: QuickSpec {
     override func spec() {
@@ -11,8 +12,8 @@ class RepositoryIntegrationSpec: QuickSpec {
 
         beforeEach {
             subject = DefaultRepository(
-                NSURL(string: "http://localhost:3000")!,
-                networkClient: NSURLSession.sharedSession(),
+                URL(string: "http://localhost:3000")!,
+                networkClient: URLSession.shared,
                 appToken: "test")
         }
 
@@ -33,9 +34,9 @@ class RepositoryIntegrationSpec: QuickSpec {
             }
 
             describe("subscribing to feeds") {
-                var feedsResponse: Result<[NSURL], SinopeError>?
+                var feedsResponse: Result<[URL], SinopeError>?
                 let urls = [
-                    NSURL(string: "http://younata.github.io/feed.xml")!
+                    URL(string: "http://younata.github.io/feed.xml")!
                 ]
 
                 beforeEach {
@@ -52,7 +53,7 @@ class RepositoryIntegrationSpec: QuickSpec {
 
                     beforeEach {
                         let updated = [
-                            NSURL(string: "http://younata.github.io/feed.xml")!: NSDate(timeIntervalSinceNow: -10)
+                            URL(string: "http://younata.github.io/feed.xml")!: Date(timeIntervalSinceNow: -10)
                         ]
                         fetchResponse = subject.fetch(updated).wait()
                     }
@@ -66,7 +67,7 @@ class RepositoryIntegrationSpec: QuickSpec {
                         expect(fetchResponse?.value).to(haveCount(1))
 
                         if let feed = fetchResponse?.value?.first {
-                            expect(feed.url) == NSURL(string: "http://younata.github.io/feed.xml")
+                            expect(feed.url) == URL(string: "http://younata.github.io/feed.xml")
                         }
                     }
                 }

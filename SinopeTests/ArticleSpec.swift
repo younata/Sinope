@@ -6,96 +6,107 @@ import Freddy
 class ArticleSpec: QuickSpec {
     override func spec() {
         describe("init'ing from json") {
-            let dateFormatter = NSDateFormatter()
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSSzzz"
 
-            let valid: NSData = ("{\"title\": \"Example 1\"," +
+            let validString = "{\"title\": \"Example 1\"," +
                 " \"url\": \"https://example.com/1/\"," +
                 "\"summary\": \"test summary\"," +
                 "\"published\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"updated\": \"2015-12-25T00:00:00.000Z\"," +
                 "\"content\": \"test content\"," +
-                "\"authors\": [{\"name\": \"Moritz Walter\", \"email\": null}]}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"authors\": [{\"name\": \"Moritz Walter\", \"email\": null}]}"
+            let valid: Data = validString.data(using: String.Encoding.utf8)!
 
-            let validNoAuthors: NSData = ("{\"title\": \"Example 1\"," +
+            let validStringNoAuthors = "{\"title\": \"Example 1\"," +
                 " \"url\": \"https://example.com/1/\"," +
                 "\"summary\": \"test summary\"," +
                 "\"published\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"updated\": \"2015-12-25T00:00:00.000Z\"," +
                 "\"content\": \"test content\"," +
-                "\"authors\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"authors\": []}"
+            let validNoAuthors: Data = validStringNoAuthors.data(using: String.Encoding.utf8)!
 
-            let validNoUpdated: NSData = ("{\"title\": \"Example 1\"," +
+            let validStringNoUpdated = "{\"title\": \"Example 1\"," +
                 " \"url\": \"https://example.com/1/\"," +
                 "\"summary\": \"test summary\"," +
                 "\"published\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"updated\": null," +
                 "\"content\": \"test content\"," +
-                "\"authors\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"authors\": []}"
+            let validNoUpdated: Data = validStringNoUpdated.data(using: String.Encoding.utf8)!
 
-            let validNoContent: NSData = ("{\"title\": \"Example 1\"," +
+            let validStringNoContent = "{\"title\": \"Example 1\"," +
                 " \"url\": \"https://example.com/1/\"," +
                 "\"summary\": \"test summary\"," +
                 "\"published\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"updated\": \"2015-12-25T00:00:00.000Z\"," +
                 "\"content\": null," +
-                "\"authors\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"authors\": []}"
+            let validNoContent: Data = validStringNoContent.data(using: String.Encoding.utf8)!
 
-            let validNoSummary: NSData = ("{\"title\": \"Example 1\"," +
+            let validStringNoSummary = "{\"title\": \"Example 1\"," +
                 " \"url\": \"https://example.com/1/\"," +
                 "\"summary\": null," +
                 "\"published\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"updated\": \"2015-12-25T00:00:00.000Z\"," +
                 "\"content\": \"test content\"," +
-                "\"authors\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"authors\": []}"
+            let validNoSummary: Data = validStringNoSummary.data(using: String.Encoding.utf8)!
 
-            let invalidNoTitle: NSData = ("{\"title\": null," +
+            let invalidStringNoTitle = "{\"title\": null," +
                 " \"url\": \"https://example.com/1/\"," +
                 "\"summary\": \"test summary\"," +
                 "\"published\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"updated\": \"2015-12-25T00:00:00.000Z\"," +
                 "\"content\": \"test content\"," +
-                "\"authors\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"authors\": []}"
+            let invalidNoTitle: Data = invalidStringNoTitle.data(using: String.Encoding.utf8)!
 
-            let invalidEmptyTitle: NSData = ("{\"title\": \"\"," +
+            let invalidStringEmptyTitle = "{\"title\": \"\"," +
                 " \"url\": \"https://example.com/1/\"," +
                 "\"summary\": \"test summary\"," +
                 "\"published\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"updated\": \"2015-12-25T00:00:00.000Z\"," +
                 "\"content\": \"test content\"," +
-                "\"authors\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"authors\": []}"
+            let invalidEmptyTitle: Data = invalidStringEmptyTitle.data(using: String.Encoding.utf8)!
 
-            let invalidNoPublished: NSData = ("{\"title\": \"Example 1\"," +
+            let invalidStringNoPublished = "{\"title\": \"Example 1\"," +
                 " \"url\": \"https://example.com/1/\"," +
                 "\"summary\": \"test summary\"," +
                 "\"published\": null," +
                 "\"updated\": \"2015-12-25T00:00:00.000Z\"," +
                 "\"content\": \"test content\"," +
-                "\"authors\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"authors\": []}"
+            let invalidNoPublished: Data = invalidStringNoPublished.data(using: String.Encoding.utf8)!
 
-            let invalidEmptyPublished: NSData = ("{\"title\": \"Example 1\"," +
+            let invalidStringEmptyPublished = "{\"title\": \"Example 1\"," +
                 " \"url\": \"https://example.com/1/\"," +
                 "\"summary\": \"test summary\"," +
                 "\"published\": \"\"," +
                 "\"updated\": \"2015-12-25T00:00:00.000Z\"," +
                 "\"content\": \"test content\"," +
-                "\"authors\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"authors\": []}"
+            let invalidEmptyPublished: Data = invalidStringEmptyPublished.data(using: String.Encoding.utf8)!
 
-            let invalidNoUrl: NSData = ("{\"title\": \"Example 1\"," +
+            let invalidStringNoUrl = "{\"title\": \"Example 1\"," +
                 " \"url\": null," +
                 "\"summary\": \"test summary\"," +
                 "\"published\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"updated\": \"2015-12-25T00:00:00.000Z\"," +
                 "\"content\": \"test content\"," +
-                "\"authors\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"authors\": []}"
+            let invalidNoUrl: Data = invalidStringNoUrl.data(using: String.Encoding.utf8)!
 
-            let invalidEmptyUrl: NSData = ("{\"title\": \"Example 1\"," +
+            let invalidStringEmptyUrl = "{\"title\": \"Example 1\"," +
                 " \"url\": \"\"," +
                 "\"summary\": \"test summary\"," +
                 "\"published\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"updated\": \"2015-12-25T00:00:00.000Z\"," +
                 "\"content\": \"test content\"," +
-                "\"authors\": []}").dataUsingEncoding(NSUTF8StringEncoding)!
+                "\"authors\": []}"
+            let invalidEmptyUrl: Data = invalidStringEmptyUrl.data(using: String.Encoding.utf8)!
 
             it("can be init'd from json") {
                 let json = try! JSON(data: validNoAuthors)
@@ -105,10 +116,10 @@ class ArticleSpec: QuickSpec {
 
                 if let subject = subject {
                     expect(subject.title) == "Example 1"
-                    expect(subject.url) == NSURL(string: "https://example.com/1/")
+                    expect(subject.url) == URL(string: "https://example.com/1/")
                     expect(subject.summary) == "test summary"
-                    expect(subject.published) == dateFormatter.dateFromString("2015-12-23T00:00:00.000Z")
-                    expect(subject.updated) == dateFormatter.dateFromString("2015-12-25T00:00:00.000Z")
+                    expect(subject.published) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
+                    expect(subject.updated) == dateFormatter.date(from: "2015-12-25T00:00:00.000Z")
                     expect(subject.content) == "test content"
                     expect(subject.authors).to(beEmpty())
                 }
@@ -122,10 +133,10 @@ class ArticleSpec: QuickSpec {
 
                 if let subject = subject {
                     expect(subject.title) == "Example 1"
-                    expect(subject.url) == NSURL(string: "https://example.com/1/")
+                    expect(subject.url) == URL(string: "https://example.com/1/")
                     expect(subject.summary) == "test summary"
-                    expect(subject.published) == dateFormatter.dateFromString("2015-12-23T00:00:00.000Z")
-                    expect(subject.updated) == dateFormatter.dateFromString("2015-12-25T00:00:00.000Z")
+                    expect(subject.published) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
+                    expect(subject.updated) == dateFormatter.date(from: "2015-12-25T00:00:00.000Z")
                     expect(subject.content) == "test content"
                     expect(subject.authors).to(haveCount(1))
                     if let author = subject.authors.first {
@@ -143,9 +154,9 @@ class ArticleSpec: QuickSpec {
 
                 if let subject = subject {
                     expect(subject.title) == "Example 1"
-                    expect(subject.url) == NSURL(string: "https://example.com/1/")
+                    expect(subject.url) == URL(string: "https://example.com/1/")
                     expect(subject.summary) == "test summary"
-                    expect(subject.published) == dateFormatter.dateFromString("2015-12-23T00:00:00.000Z")
+                    expect(subject.published) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
                     expect(subject.updated).to(beNil())
                     expect(subject.content) == "test content"
                     expect(subject.authors).to(beEmpty())
@@ -160,10 +171,10 @@ class ArticleSpec: QuickSpec {
 
                 if let subject = subject {
                     expect(subject.title) == "Example 1"
-                    expect(subject.url) == NSURL(string: "https://example.com/1/")
+                    expect(subject.url) == URL(string: "https://example.com/1/")
                     expect(subject.summary) == "test summary"
-                    expect(subject.published) == dateFormatter.dateFromString("2015-12-23T00:00:00.000Z")
-                    expect(subject.updated) == dateFormatter.dateFromString("2015-12-25T00:00:00.000Z")
+                    expect(subject.published) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
+                    expect(subject.updated) == dateFormatter.date(from: "2015-12-25T00:00:00.000Z")
                     expect(subject.content) == ""
                     expect(subject.authors).to(beEmpty())
                 }
@@ -177,10 +188,10 @@ class ArticleSpec: QuickSpec {
 
                 if let subject = subject {
                     expect(subject.title) == "Example 1"
-                    expect(subject.url) == NSURL(string: "https://example.com/1/")
+                    expect(subject.url) == URL(string: "https://example.com/1/")
                     expect(subject.summary) == ""
-                    expect(subject.published) == dateFormatter.dateFromString("2015-12-23T00:00:00.000Z")
-                    expect(subject.updated) == dateFormatter.dateFromString("2015-12-25T00:00:00.000Z")
+                    expect(subject.published) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
+                    expect(subject.updated) == dateFormatter.date(from: "2015-12-25T00:00:00.000Z")
                     expect(subject.content) == "test content"
                     expect(subject.authors).to(beEmpty())
                 }
