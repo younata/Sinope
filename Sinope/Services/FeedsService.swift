@@ -33,10 +33,10 @@ public struct PasiphaeFeedsService: FeedsService {
             case let .success(data):
                 do {
                     let json = try JSON(data: data)
-                    let dictionary = try json.dictionary()
+                    let dictionary = try json.getDictionary()
                     let retValue: [URL: Bool] = try dictionary.flatMapPairs { urlString, jsonBool in
                         if let url = URL(string: urlString) {
-                            return (url, try jsonBool.bool())
+                            return (url, try jsonBool.getBool())
                         }
                         return nil
                     }
@@ -83,7 +83,7 @@ public struct PasiphaeFeedsService: FeedsService {
                         return .failure(.notLoggedIn)
                     }
                     let json = try JSON(data: data)
-                    let feeds = try json.arrayOf("feeds", type: Feed.self)
+                    let feeds = try json.decodedArray(at: "feeds", type: Feed.self)
                     return .success(feeds)
                 } catch {
                     return .failure(.json)
@@ -111,7 +111,7 @@ public struct PasiphaeFeedsService: FeedsService {
                 }
                 do {
                     let json = try JSON(data: data)
-                    let array: [String] = try json.arrayOf()
+                    let array: [String] = try json.decodedArray()
                     let urls = array.flatMap { URL(string: $0) }
                     return .success(urls)
                 } catch {

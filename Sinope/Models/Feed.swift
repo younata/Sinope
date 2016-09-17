@@ -18,31 +18,31 @@ public struct Feed: JSONDecodable, Equatable {
     }
 
     public init(json: JSON) throws {
-        self.title = try json.string("title")
+        self.title = try json.getString(at: "title")
         if self.title.isEmpty {
             throw JSON.Error.keyNotFound(key: "title")
         }
-        let urlString = try json.string("url")
+        let urlString = try json.getString(at: "url")
         if !urlString.isEmpty, let url = URL(string: urlString) {
             self.url = url
         } else {
             throw JSON.Error.keyNotFound(key: "url")
         }
-        self.summary = (try? json.string("summary")) ?? ""
-        let imageUrlString = (try? json.string("image_url")) ?? ""
+        self.summary = (try? json.getString(at: "summary")) ?? ""
+        let imageUrlString = (try? json.getString(at: "image_url")) ?? ""
         if !imageUrlString.isEmpty, let imageUrl = URL(string: imageUrlString) {
             self.imageUrl = imageUrl
         } else {
             self.imageUrl = nil
         }
-        let lastUpdatedString = (try? json.string("last_updated")) ?? ""
+        let lastUpdatedString = (try? json.getString(at: "last_updated")) ?? ""
         if !lastUpdatedString.isEmpty, let lastUpdated = DateFormatter.sharedFormatter.date(from: lastUpdatedString) {
             self.lastUpdated = lastUpdated
         } else {
             throw JSON.Error.keyNotFound(key: "last_updated")
         }
         
-        self.articles = ((try? json.array("articles")) ?? []).flatMap { try? Article(json: $0) }
+        self.articles = ((try? json.getArray(at: "articles")) ?? []).flatMap { try? Article(json: $0) }
     }
 }
 

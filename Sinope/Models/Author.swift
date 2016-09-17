@@ -5,11 +5,11 @@ public struct Author: JSONDecodable, Equatable {
     public let email: URL?
 
     public init(json: JSON) throws {
-        self.name = try json.string("name")
+        self.name = try json.getString(at: "name")
         if self.name.isEmpty {
             throw JSON.Error.keyNotFound(key: "name")
         }
-        let emailString = try? json.string("email")
+        let emailString = try? json.getString(at: "email")
         if let emailString = emailString, let email = URL(string: emailString) {
             self.email = email
         } else {

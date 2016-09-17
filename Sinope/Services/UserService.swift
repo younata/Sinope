@@ -79,7 +79,7 @@ public struct PasiphaeUserService: UserService {
         return networkMethod(url, headers, body).map { res -> Result<String, SinopeError> in
             switch (res) {
             case let .success(data):
-                if let json = try? JSON(data: data), let apiToken = try? json.string("api_token") {
+                if let json = try? JSON(data: data), let apiToken = try? json.getString(at: "api_token") {
                     return .success(apiToken)
                 } else {
                     return .failure(.json)
