@@ -1,5 +1,5 @@
 github "younata/CBGPromise" "03361e16c5c0cd3c562672ad6bd1ed5d460035cf"
-github "bignerdranch/Freddy" "c2780e5d60c57c8a41ff643de5bf07b0bbc102d8"
-github "antitypical/Result" "3.0.0-alpha.4"
+github "bignerdranch/Freddy" "3.0.0"
+github "antitypical/Result" "3.0.0"
 github "quick/nimble" "db706fc1d7130f6ac96c56aaf0e635fa3217fe57"
-github "quick/quick" "8f2bc636ecfa2cc20696f62548b38d4ab943e299"
+github "quick/quick" "1503fb019d72417d5d6e4fbebdbaa03c9e4a125f"
