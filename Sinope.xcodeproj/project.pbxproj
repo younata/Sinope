@@ -113,6 +113,7 @@
 		895A9CD51D3AADC4008B2B25 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		895A9CE11D3AAE15008B2B25 /* RepositoryIntegrationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryIntegrationSpec.swift; sourceTree = "<group>"; };
 		895A9CE31D3AAE3F008B2B25 /* NSURLSessionBlockNetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionBlockNetworkClient.swift; sourceTree = "<group>"; };
+		89831FE71DB5172300E32412 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		89C8E69A1D2F672F00E09EDB /* Sinope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sinope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C8E69D1D2F672F00E09EDB /* Sinope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sinope.h; sourceTree = "<group>"; };
 		89C8E69F1D2F672F00E09EDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -232,6 +233,7 @@
 				89C8E6C51D2F6B8000E09EDB /* Frameworks */,
 				89C8E6BC1D2F6A2700E09EDB /* Models */,
 				89C8E69D1D2F672F00E09EDB /* Sinope.h */,
+				89831FE81DB5172300E32412 /* Localizable.strings */,
 				89C8E69F1D2F672F00E09EDB /* Info.plist */,
 			);
 			path = Sinope;
@@ -514,6 +516,18 @@
 			targetProxy = 89C8E6A61D2F672F00E09EDB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		89831FE81DB5172300E32412 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				89831FE71DB5172300E32412 /* en */,
+			);
+			name = Localizable.strings;
+			path = ..;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		895A9CDA1D3AADC4008B2B25 /* Debug */ = {

@@ -1,0 +1,4 @@
+"Error_Network" = "Unable to load backend";
+"Error_JSON" = "Bad Server Response";
+"Error_NotLoggedIn" = "Unknown User - Are you logged in?";
+"Error_Unknown" = "Unknown Error, please try again later";
