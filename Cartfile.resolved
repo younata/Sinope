@@ -1,5 +1,5 @@
-github "cbguder/CBGPromise" "8eddc10e7e22e3a9cb76258ea26117e43477474d"
+github "cbguder/CBGPromise" "98259656d7b1d9788371498356210437bc46b953"
 github "bignerdranch/Freddy" "3.0.1"
 github "antitypical/Result" "3.0.0"
-github "quick/nimble" "v5.0.0"
+github "quick/nimble" "v5.1.0"
 github "quick/quick" "v0.10.0"

@@ -1,3 +1,5 @@
+import Foundation
+
 class DateFormatter {
     static let sharedFormatter: Foundation.DateFormatter = {
         let dateFormatter = Foundation.DateFormatter()

@@ -24,6 +24,40 @@
 		895A9CE71D3B2CF8008B2B25 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6C21D2F6B7500E09EDB /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		89831FEE1DC069D000E32412 /* SinopeErrorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89831FED1DC069D000E32412 /* SinopeErrorSpec.swift */; };
 		89831FF01DC06C2000E32412 /* Localizable.strings in Copy Bundle Resources */ = {isa = PBXBuildFile; fileRef = 89831FE81DB5172300E32412 /* Localizable.strings */; };
+		89831FFF1DC0F58A00E32412 /* Sinope.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89831FF61DC0F58A00E32412 /* Sinope.framework */; };
+		898320061DC0F58A00E32412 /* Sinope-mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 89831FF81DC0F58A00E32412 /* Sinope-mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8983200D1DC0F60700E32412 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 89831FE81DB5172300E32412 /* Localizable.strings */; };
+		8983200E1DC0F62200E32412 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895A9CBC1D37D940008B2B25 /* Repository.swift */; };
+		8983200F1DC0F62200E32412 /* FeedsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6DB1D309FB000E09EDB /* FeedsService.swift */; };
+		898320101DC0F62200E32412 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6E11D31418700E09EDB /* UserService.swift */; };
+		898320111DC0F62200E32412 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6DD1D309FCF00E09EDB /* NetworkClient.swift */; };
+		898320121DC0F62200E32412 /* NSURLSessionBlockNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895A9CE31D3AAE3F008B2B25 /* NSURLSessionBlockNetworkClient.swift */; };
+		898320131DC0F62200E32412 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6D61D3040FA00E09EDB /* DateFormatter.swift */; };
+		898320141DC0F62200E32412 /* Dictionary+Sinope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E951A51D769B3700912043 /* Dictionary+Sinope.swift */; };
+		898320151DC0F62200E32412 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6BD1D2F6A3800E09EDB /* Feed.swift */; };
+		898320161DC0F62200E32412 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6BF1D2F6A3E00E09EDB /* Article.swift */; };
+		898320171DC0F62200E32412 /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6C91D2F6C4900E09EDB /* Author.swift */; };
+		898320181DC0F62200E32412 /* SinopeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6DF1D30D56700E09EDB /* SinopeError.swift */; };
+		898320191DC0F6A700E32412 /* RepositorySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895A9CBE1D388BCB008B2B25 /* RepositorySpec.swift */; };
+		8983201A1DC0F6A700E32412 /* UserServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6E71D314CD600E09EDB /* UserServiceSpec.swift */; };
+		8983201B1DC0F6A700E32412 /* FeedsServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6ED1D367C7000E09EDB /* FeedsServiceSpec.swift */; };
+		8983201C1DC0F6A700E32412 /* FeedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6CB1D2F6D6200E09EDB /* FeedSpec.swift */; };
+		8983201D1DC0F6A700E32412 /* ArticleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6D31D2FEAC700E09EDB /* ArticleSpec.swift */; };
+		8983201E1DC0F6A700E32412 /* AuthorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6D81D30439100E09EDB /* AuthorSpec.swift */; };
+		8983201F1DC0F6A700E32412 /* SinopeErrorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89831FED1DC069D000E32412 /* SinopeErrorSpec.swift */; };
+		898320201DC0F6A700E32412 /* FakeFeedsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895A9CC31D392167008B2B25 /* FakeFeedsService.swift */; };
+		898320211DC0F6A700E32412 /* FakeUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895A9CC41D392167008B2B25 /* FakeUserService.swift */; };
+		898320221DC0F6A700E32412 /* FakeNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C8E6E41D314B9800E09EDB /* FakeNetworkClient.swift */; };
+		898320271DC0F6D300E32412 /* CBGPromise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898320241DC0F6D300E32412 /* CBGPromise.framework */; };
+		898320281DC0F6D300E32412 /* Freddy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898320251DC0F6D300E32412 /* Freddy.framework */; };
+		898320291DC0F6D300E32412 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898320261DC0F6D300E32412 /* Result.framework */; };
+		8983202C1DC0F6E600E32412 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8983202A1DC0F6E600E32412 /* Nimble.framework */; };
+		8983202D1DC0F6E600E32412 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8983202B1DC0F6E600E32412 /* Quick.framework */; };
+		898320341DC0F7CD00E32412 /* CBGPromise.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8983202F1DC0F7CD00E32412 /* CBGPromise.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		898320351DC0F7CD00E32412 /* Freddy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 898320301DC0F7CD00E32412 /* Freddy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		898320361DC0F7CD00E32412 /* Nimble.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 898320311DC0F7CD00E32412 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		898320371DC0F7CD00E32412 /* Quick.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 898320321DC0F7CD00E32412 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		898320381DC0F7CD00E32412 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 898320331DC0F7CD00E32412 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		89C8E69E1D2F672F00E09EDB /* Sinope.h in Headers */ = {isa = PBXBuildFile; fileRef = 89C8E69D1D2F672F00E09EDB /* Sinope.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		89C8E6A51D2F672F00E09EDB /* Sinope.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E69A1D2F672F00E09EDB /* Sinope.framework */; };
 		89C8E6B61D2F69AA00E09EDB /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6B41D2F69AA00E09EDB /* Nimble.framework */; };
@@ -64,6 +98,13 @@
 			remoteGlobalIDString = 89C8E6991D2F672F00E09EDB;
 			remoteInfo = Sinope;
 		};
+		898320001DC0F58A00E32412 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 89C8E6911D2F672F00E09EDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89831FF51DC0F58A00E32412;
+			remoteInfo = "Sinope-mac";
+		};
 		89C8E6A61D2F672F00E09EDB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 89C8E6911D2F672F00E09EDB /* Project object */;
@@ -100,6 +141,21 @@
 			name = "Copy Bundle Resources";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8983202E1DC0F7A900E32412 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				898320341DC0F7CD00E32412 /* CBGPromise.framework in Embed Frameworks */,
+				898320351DC0F7CD00E32412 /* Freddy.framework in Embed Frameworks */,
+				898320361DC0F7CD00E32412 /* Nimble.framework in Embed Frameworks */,
+				898320371DC0F7CD00E32412 /* Quick.framework in Embed Frameworks */,
+				898320381DC0F7CD00E32412 /* Result.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		89C8E6B91D2F69BE00E09EDB /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -128,6 +184,21 @@
 		895A9CE31D3AAE3F008B2B25 /* NSURLSessionBlockNetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionBlockNetworkClient.swift; sourceTree = "<group>"; };
 		89831FE71DB5172300E32412 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		89831FED1DC069D000E32412 /* SinopeErrorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinopeErrorSpec.swift; sourceTree = "<group>"; };
+		89831FF61DC0F58A00E32412 /* Sinope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sinope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		89831FF81DC0F58A00E32412 /* Sinope-mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sinope-mac.h"; sourceTree = "<group>"; };
+		89831FF91DC0F58A00E32412 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89831FFE1DC0F58A00E32412 /* Sinope-macTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sinope-macTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		898320051DC0F58A00E32412 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		898320241DC0F6D300E32412 /* CBGPromise.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CBGPromise.framework; path = Carthage/Build/Mac/CBGPromise.framework; sourceTree = "<group>"; };
+		898320251DC0F6D300E32412 /* Freddy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Freddy.framework; path = Carthage/Build/Mac/Freddy.framework; sourceTree = "<group>"; };
+		898320261DC0F6D300E32412 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/Mac/Result.framework; sourceTree = "<group>"; };
+		8983202A1DC0F6E600E32412 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
+		8983202B1DC0F6E600E32412 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/Mac/Quick.framework; sourceTree = "<group>"; };
+		8983202F1DC0F7CD00E32412 /* CBGPromise.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CBGPromise.framework; path = ../Carthage/Build/Mac/CBGPromise.framework; sourceTree = "<group>"; };
+		898320301DC0F7CD00E32412 /* Freddy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Freddy.framework; path = ../Carthage/Build/Mac/Freddy.framework; sourceTree = "<group>"; };
+		898320311DC0F7CD00E32412 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = ../Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
+		898320321DC0F7CD00E32412 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = ../Carthage/Build/Mac/Quick.framework; sourceTree = "<group>"; };
+		898320331DC0F7CD00E32412 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = ../Carthage/Build/Mac/Result.framework; sourceTree = "<group>"; };
 		89C8E69A1D2F672F00E09EDB /* Sinope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sinope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C8E69D1D2F672F00E09EDB /* Sinope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sinope.h; sourceTree = "<group>"; };
 		89C8E69F1D2F672F00E09EDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -164,6 +235,26 @@
 				895A9CDC1D3AADE0008B2B25 /* Nimble.framework in Frameworks */,
 				895A9CDD1D3AADE0008B2B25 /* Quick.framework in Frameworks */,
 				8943C2581D7C8350004870E9 /* CBGPromise.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89831FF21DC0F58A00E32412 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				898320271DC0F6D300E32412 /* CBGPromise.framework in Frameworks */,
+				898320281DC0F6D300E32412 /* Freddy.framework in Frameworks */,
+				898320291DC0F6D300E32412 /* Result.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89831FFB1DC0F58A00E32412 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8983202C1DC0F6E600E32412 /* Nimble.framework in Frameworks */,
+				8983202D1DC0F6E600E32412 /* Quick.framework in Frameworks */,
+				89831FFF1DC0F58A00E32412 /* Sinope.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,13 +309,50 @@
 			path = SinopeIntegrationTests;
 			sourceTree = "<group>";
 		};
+		89831FF71DC0F58A00E32412 /* Sinope-mac */ = {
+			isa = PBXGroup;
+			children = (
+				8983202F1DC0F7CD00E32412 /* CBGPromise.framework */,
+				898320301DC0F7CD00E32412 /* Freddy.framework */,
+				898320331DC0F7CD00E32412 /* Result.framework */,
+				89831FF81DC0F58A00E32412 /* Sinope-mac.h */,
+				89831FF91DC0F58A00E32412 /* Info.plist */,
+			);
+			path = "Sinope-mac";
+			sourceTree = "<group>";
+		};
+		898320021DC0F58A00E32412 /* Sinope-macTests */ = {
+			isa = PBXGroup;
+			children = (
+				898320311DC0F7CD00E32412 /* Nimble.framework */,
+				898320321DC0F7CD00E32412 /* Quick.framework */,
+				898320051DC0F58A00E32412 /* Info.plist */,
+			);
+			path = "Sinope-macTests";
+			sourceTree = "<group>";
+		};
+		898320231DC0F6D200E32412 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8983202A1DC0F6E600E32412 /* Nimble.framework */,
+				8983202B1DC0F6E600E32412 /* Quick.framework */,
+				898320241DC0F6D300E32412 /* CBGPromise.framework */,
+				898320251DC0F6D300E32412 /* Freddy.framework */,
+				898320261DC0F6D300E32412 /* Result.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		89C8E6901D2F672F00E09EDB = {
 			isa = PBXGroup;
 			children = (
 				89C8E69C1D2F672F00E09EDB /* Sinope */,
 				89C8E6A81D2F672F00E09EDB /* SinopeTests */,
 				895A9CD21D3AADC4008B2B25 /* SinopeIntegrationTests */,
+				89831FF71DC0F58A00E32412 /* Sinope-mac */,
+				898320021DC0F58A00E32412 /* Sinope-macTests */,
 				89C8E69B1D2F672F00E09EDB /* Products */,
+				898320231DC0F6D200E32412 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -234,6 +362,8 @@
 				89C8E69A1D2F672F00E09EDB /* Sinope.framework */,
 				89C8E6A41D2F672F00E09EDB /* SinopeTests.xctest */,
 				895A9CD11D3AADC4008B2B25 /* SinopeIntegrationTests.xctest */,
+				89831FF61DC0F58A00E32412 /* Sinope.framework */,
+				89831FFE1DC0F58A00E32412 /* Sinope-macTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -349,6 +479,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		89831FF31DC0F58A00E32412 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				898320061DC0F58A00E32412 /* Sinope-mac.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		89C8E6971D2F672F00E09EDB /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -377,6 +515,43 @@
 			name = SinopeIntegrationTests;
 			productName = SinopeIntegrationTests;
 			productReference = 895A9CD11D3AADC4008B2B25 /* SinopeIntegrationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		89831FF51DC0F58A00E32412 /* Sinope-mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8983200B1DC0F58A00E32412 /* Build configuration list for PBXNativeTarget "Sinope-mac" */;
+			buildPhases = (
+				89831FF11DC0F58A00E32412 /* Sources */,
+				89831FF21DC0F58A00E32412 /* Frameworks */,
+				89831FF31DC0F58A00E32412 /* Headers */,
+				89831FF41DC0F58A00E32412 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Sinope-mac";
+			productName = "Sinope-mac";
+			productReference = 89831FF61DC0F58A00E32412 /* Sinope.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		89831FFD1DC0F58A00E32412 /* Sinope-macTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8983200C1DC0F58A00E32412 /* Build configuration list for PBXNativeTarget "Sinope-macTests" */;
+			buildPhases = (
+				89831FFA1DC0F58A00E32412 /* Sources */,
+				89831FFB1DC0F58A00E32412 /* Frameworks */,
+				89831FFC1DC0F58A00E32412 /* Resources */,
+				8983202E1DC0F7A900E32412 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				898320011DC0F58A00E32412 /* PBXTargetDependency */,
+			);
+			name = "Sinope-macTests";
+			productName = "Sinope-macTests";
+			productReference = 89831FFE1DC0F58A00E32412 /* Sinope-macTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		89C8E6991D2F672F00E09EDB /* Sinope */ = {
@@ -422,12 +597,22 @@
 		89C8E6911D2F672F00E09EDB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Rachel Brindle";
 				TargetAttributes = {
 					895A9CD01D3AADC4008B2B25 = {
 						CreatedOnToolsVersion = 7.3.1;
+					};
+					89831FF51DC0F58A00E32412 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 9D456YCUH2;
+						ProvisioningStyle = Automatic;
+					};
+					89831FFD1DC0F58A00E32412 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 9D456YCUH2;
+						ProvisioningStyle = Automatic;
 					};
 					89C8E6991D2F672F00E09EDB = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -454,12 +639,29 @@
 				89C8E6991D2F672F00E09EDB /* Sinope */,
 				89C8E6A31D2F672F00E09EDB /* SinopeTests */,
 				895A9CD01D3AADC4008B2B25 /* SinopeIntegrationTests */,
+				89831FF51DC0F58A00E32412 /* Sinope-mac */,
+				89831FFD1DC0F58A00E32412 /* Sinope-macTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		895A9CCF1D3AADC4008B2B25 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89831FF41DC0F58A00E32412 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8983200D1DC0F60700E32412 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89831FFC1DC0F58A00E32412 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -481,6 +683,41 @@
 			buildActionMask = 2147483647;
 			files = (
 				895A9CE21D3AAE15008B2B25 /* RepositoryIntegrationSpec.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89831FF11DC0F58A00E32412 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				898320131DC0F62200E32412 /* DateFormatter.swift in Sources */,
+				898320151DC0F62200E32412 /* Feed.swift in Sources */,
+				898320161DC0F62200E32412 /* Article.swift in Sources */,
+				8983200E1DC0F62200E32412 /* Repository.swift in Sources */,
+				898320171DC0F62200E32412 /* Author.swift in Sources */,
+				898320141DC0F62200E32412 /* Dictionary+Sinope.swift in Sources */,
+				8983200F1DC0F62200E32412 /* FeedsService.swift in Sources */,
+				898320121DC0F62200E32412 /* NSURLSessionBlockNetworkClient.swift in Sources */,
+				898320101DC0F62200E32412 /* UserService.swift in Sources */,
+				898320111DC0F62200E32412 /* NetworkClient.swift in Sources */,
+				898320181DC0F62200E32412 /* SinopeError.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89831FFA1DC0F58A00E32412 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				898320201DC0F6A700E32412 /* FakeFeedsService.swift in Sources */,
+				8983201C1DC0F6A700E32412 /* FeedSpec.swift in Sources */,
+				898320221DC0F6A700E32412 /* FakeNetworkClient.swift in Sources */,
+				898320191DC0F6A700E32412 /* RepositorySpec.swift in Sources */,
+				8983201A1DC0F6A700E32412 /* UserServiceSpec.swift in Sources */,
+				898320211DC0F6A700E32412 /* FakeUserService.swift in Sources */,
+				8983201D1DC0F6A700E32412 /* ArticleSpec.swift in Sources */,
+				8983201B1DC0F6A700E32412 /* FeedsServiceSpec.swift in Sources */,
+				8983201E1DC0F6A700E32412 /* AuthorSpec.swift in Sources */,
+				8983201F1DC0F6A700E32412 /* SinopeErrorSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +763,11 @@
 			isa = PBXTargetDependency;
 			target = 89C8E6991D2F672F00E09EDB /* Sinope */;
 			targetProxy = 895A9CD71D3AADC4008B2B25 /* PBXContainerItemProxy */;
+		};
+		898320011DC0F58A00E32412 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89831FF51DC0F58A00E32412 /* Sinope-mac */;
+			targetProxy = 898320001DC0F58A00E32412 /* PBXContainerItemProxy */;
 		};
 		89C8E6A71D2F672F00E09EDB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -575,6 +817,114 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rachelbrindle.SinopeIntegrationTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		898320071DC0F58A00E32412 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 9D456YCUH2;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "Sinope-mac/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rachelbrindle.Sinope;
+				PRODUCT_NAME = Sinope;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		898320081DC0F58A00E32412 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 9D456YCUH2;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "Sinope-mac/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rachelbrindle.Sinope;
+				PRODUCT_NAME = Sinope;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		898320091DC0F58A00E32412 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9D456YCUH2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				INFOPLIST_FILE = "Sinope-macTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rachelbrindle.Sinope-macTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		8983200A1DC0F58A00E32412 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9D456YCUH2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				INFOPLIST_FILE = "Sinope-macTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rachelbrindle.Sinope-macTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -767,6 +1117,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		8983200B1DC0F58A00E32412 /* Build configuration list for PBXNativeTarget "Sinope-mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				898320071DC0F58A00E32412 /* Debug */,
+				898320081DC0F58A00E32412 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		8983200C1DC0F58A00E32412 /* Build configuration list for PBXNativeTarget "Sinope-macTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				898320091DC0F58A00E32412 /* Debug */,
+				8983200A1DC0F58A00E32412 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		89C8E6941D2F672F00E09EDB /* Build configuration list for PBXProject "Sinope" */ = {
 			isa = XCConfigurationList;

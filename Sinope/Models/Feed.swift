@@ -1,3 +1,4 @@
+import Foundation
 import Freddy
 
 public struct Feed: JSONDecodable, Equatable {
