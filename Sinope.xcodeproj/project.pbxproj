@@ -22,6 +22,8 @@
 		895A9CE51D3B2CF8008B2B25 /* Freddy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6CF1D2F6E2700E09EDB /* Freddy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		895A9CE61D3B2CF8008B2B25 /* CBGPromise.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6C11D2F6B7500E09EDB /* CBGPromise.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		895A9CE71D3B2CF8008B2B25 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6C21D2F6B7500E09EDB /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		89831FEE1DC069D000E32412 /* SinopeErrorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89831FED1DC069D000E32412 /* SinopeErrorSpec.swift */; };
+		89831FF01DC06C2000E32412 /* Localizable.strings in Copy Bundle Resources */ = {isa = PBXBuildFile; fileRef = 89831FE81DB5172300E32412 /* Localizable.strings */; };
 		89C8E69E1D2F672F00E09EDB /* Sinope.h in Headers */ = {isa = PBXBuildFile; fileRef = 89C8E69D1D2F672F00E09EDB /* Sinope.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		89C8E6A51D2F672F00E09EDB /* Sinope.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E69A1D2F672F00E09EDB /* Sinope.framework */; };
 		89C8E6B61D2F69AA00E09EDB /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6B41D2F69AA00E09EDB /* Nimble.framework */; };
@@ -87,6 +89,17 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		89831FEF1DC06C0700E32412 /* Copy Bundle Resources */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				89831FF01DC06C2000E32412 /* Localizable.strings in Copy Bundle Resources */,
+			);
+			name = "Copy Bundle Resources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		89C8E6B91D2F69BE00E09EDB /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -114,6 +127,7 @@
 		895A9CE11D3AAE15008B2B25 /* RepositoryIntegrationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryIntegrationSpec.swift; sourceTree = "<group>"; };
 		895A9CE31D3AAE3F008B2B25 /* NSURLSessionBlockNetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionBlockNetworkClient.swift; sourceTree = "<group>"; };
 		89831FE71DB5172300E32412 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		89831FED1DC069D000E32412 /* SinopeErrorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinopeErrorSpec.swift; sourceTree = "<group>"; };
 		89C8E69A1D2F672F00E09EDB /* Sinope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sinope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C8E69D1D2F672F00E09EDB /* Sinope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sinope.h; sourceTree = "<group>"; };
 		89C8E69F1D2F672F00E09EDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -318,6 +332,7 @@
 				89C8E6CB1D2F6D6200E09EDB /* FeedSpec.swift */,
 				89C8E6D31D2FEAC700E09EDB /* ArticleSpec.swift */,
 				89C8E6D81D30439100E09EDB /* AuthorSpec.swift */,
+				89831FED1DC069D000E32412 /* SinopeErrorSpec.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -371,6 +386,7 @@
 				89C8E6951D2F672F00E09EDB /* Sources */,
 				89C8E6961D2F672F00E09EDB /* Frameworks */,
 				89C8E6971D2F672F00E09EDB /* Headers */,
+				89831FEF1DC06C0700E32412 /* Copy Bundle Resources */,
 			);
 			buildRules = (
 			);
@@ -491,6 +507,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89C8E6CC1D2F6D6200E09EDB /* FeedSpec.swift in Sources */,
+				89831FEE1DC069D000E32412 /* SinopeErrorSpec.swift in Sources */,
 				89C8E6E81D314CD600E09EDB /* UserServiceSpec.swift in Sources */,
 				89C8E6EE1D367C7000E09EDB /* FeedsServiceSpec.swift in Sources */,
 				895A9CC61D392284008B2B25 /* FakeFeedsService.swift in Sources */,
