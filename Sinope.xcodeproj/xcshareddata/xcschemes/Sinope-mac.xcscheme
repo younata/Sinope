@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "89831FF51DC0F58A00E32412"
-               BuildableName = "Sinope-mac.framework"
+               BuildableName = "Sinope.framework"
                BlueprintName = "Sinope-mac"
                ReferencedContainer = "container:Sinope.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "89831FF51DC0F58A00E32412"
-            BuildableName = "Sinope-mac.framework"
+            BuildableName = "Sinope.framework"
             BlueprintName = "Sinope-mac"
             ReferencedContainer = "container:Sinope.xcodeproj">
          </BuildableReference>
@@ -65,7 +65,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "89831FF51DC0F58A00E32412"
-            BuildableName = "Sinope-mac.framework"
+            BuildableName = "Sinope.framework"
             BlueprintName = "Sinope-mac"
             ReferencedContainer = "container:Sinope.xcodeproj">
          </BuildableReference>
@@ -83,7 +83,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "89831FF51DC0F58A00E32412"
-            BuildableName = "Sinope-mac.framework"
+            BuildableName = "Sinope.framework"
             BlueprintName = "Sinope-mac"
             ReferencedContainer = "container:Sinope.xcodeproj">
          </BuildableReference>
