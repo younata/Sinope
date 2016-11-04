@@ -17,7 +17,7 @@ class FeedsServiceSpec: QuickSpec {
         }
 
         describe("check") {
-            var receivedFuture: Future<Result<[URL: Bool], SinopeError>>!
+            var receivedFuture: Future<Result<CheckResult, SinopeError>>!
             var promise: Promise<Result<Data, NSError>>!
 
             beforeEach {
@@ -43,9 +43,9 @@ class FeedsServiceSpec: QuickSpec {
             }
 
             describe("when the network call succeeds") {
-                describe("with a valid json object") {
+                describe("with a valid json object (has a feed)") {
                     beforeEach {
-                        let fixture = ("{\"https://example.org/feed\": true}").data(using: String.Encoding.utf8)!
+                        let fixture = ("{\"feed\": \"https://example.org/feed\", \"opml\": null}").data(using: String.Encoding.utf8)!
                         promise.resolve(.success(fixture))
                     }
 
@@ -53,7 +53,38 @@ class FeedsServiceSpec: QuickSpec {
                         expect(receivedFuture.value).toNot(beNil())
                         expect(receivedFuture.value?.error).to(beNil())
                         expect(receivedFuture.value?.value).toNot(beNil())
-                        expect(receivedFuture.value?.value) == [URL(string: "https://example.org/feed")!: true]
+                        expect(receivedFuture.value?.value) == CheckResult.feed(URL(string: "https://example.org/feed")!)
+                    }
+                }
+
+                describe("with a valid json object (has an opml)") {
+                    beforeEach {
+                        let fixture = ("{\"feed\": null, \"opml\": [\"https://example.org/feed1\", \"https://example.org/feed2\"]}").data(using: String.Encoding.utf8)!
+                        promise.resolve(.success(fixture))
+                    }
+
+                    it("resolves the future with whether or not that url is a feed") {
+                        expect(receivedFuture.value).toNot(beNil())
+                        expect(receivedFuture.value?.error).to(beNil())
+                        expect(receivedFuture.value?.value).toNot(beNil())
+                        expect(receivedFuture.value?.value) == CheckResult.opml([
+                            URL(string: "https://example.org/feed1")!,
+                            URL(string: "https://example.org/feed2")!
+                        ])
+                    }
+                }
+
+                describe("with a valid json object (found nothing)") {
+                    beforeEach {
+                        let fixture = ("{\"feed\": null, \"opml\": null}").data(using: String.Encoding.utf8)!
+                        promise.resolve(.success(fixture))
+                    }
+
+                    it("resolves the future with whether or not that url is a feed") {
+                        expect(receivedFuture.value).toNot(beNil())
+                        expect(receivedFuture.value?.error).to(beNil())
+                        expect(receivedFuture.value?.value).toNot(beNil())
+                        expect(receivedFuture.value?.value) == CheckResult.none
                     }
                 }
 

@@ -58,6 +58,10 @@
 		898320361DC0F7CD00E32412 /* Nimble.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 898320311DC0F7CD00E32412 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		898320371DC0F7CD00E32412 /* Quick.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 898320321DC0F7CD00E32412 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		898320381DC0F7CD00E32412 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 898320331DC0F7CD00E32412 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		89987E6F1DCD00CD004E6D35 /* CheckResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89987E6E1DCD00CD004E6D35 /* CheckResult.swift */; };
+		89987E711DCD00EF004E6D35 /* CheckResultSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89987E701DCD00EF004E6D35 /* CheckResultSpec.swift */; };
+		89987E721DCD00EF004E6D35 /* CheckResultSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89987E701DCD00EF004E6D35 /* CheckResultSpec.swift */; };
+		89987E731DCD00F3004E6D35 /* CheckResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89987E6E1DCD00CD004E6D35 /* CheckResult.swift */; };
 		89C8E69E1D2F672F00E09EDB /* Sinope.h in Headers */ = {isa = PBXBuildFile; fileRef = 89C8E69D1D2F672F00E09EDB /* Sinope.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		89C8E6A51D2F672F00E09EDB /* Sinope.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E69A1D2F672F00E09EDB /* Sinope.framework */; };
 		89C8E6B61D2F69AA00E09EDB /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C8E6B41D2F69AA00E09EDB /* Nimble.framework */; };
@@ -199,6 +203,8 @@
 		898320311DC0F7CD00E32412 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = ../Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
 		898320321DC0F7CD00E32412 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = ../Carthage/Build/Mac/Quick.framework; sourceTree = "<group>"; };
 		898320331DC0F7CD00E32412 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = ../Carthage/Build/Mac/Result.framework; sourceTree = "<group>"; };
+		89987E6E1DCD00CD004E6D35 /* CheckResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckResult.swift; sourceTree = "<group>"; };
+		89987E701DCD00EF004E6D35 /* CheckResultSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckResultSpec.swift; sourceTree = "<group>"; };
 		89C8E69A1D2F672F00E09EDB /* Sinope.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sinope.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C8E69D1D2F672F00E09EDB /* Sinope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sinope.h; sourceTree = "<group>"; };
 		89C8E69F1D2F672F00E09EDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -411,6 +417,7 @@
 				89C8E6BD1D2F6A3800E09EDB /* Feed.swift */,
 				89C8E6BF1D2F6A3E00E09EDB /* Article.swift */,
 				89C8E6C91D2F6C4900E09EDB /* Author.swift */,
+				89987E6E1DCD00CD004E6D35 /* CheckResult.swift */,
 				89C8E6DF1D30D56700E09EDB /* SinopeError.swift */,
 			);
 			path = Models;
@@ -462,6 +469,7 @@
 				89C8E6CB1D2F6D6200E09EDB /* FeedSpec.swift */,
 				89C8E6D31D2FEAC700E09EDB /* ArticleSpec.swift */,
 				89C8E6D81D30439100E09EDB /* AuthorSpec.swift */,
+				89987E701DCD00EF004E6D35 /* CheckResultSpec.swift */,
 				89831FED1DC069D000E32412 /* SinopeErrorSpec.swift */,
 			);
 			path = Models;
@@ -699,6 +707,7 @@
 				8983200F1DC0F62200E32412 /* FeedsService.swift in Sources */,
 				898320121DC0F62200E32412 /* NSURLSessionBlockNetworkClient.swift in Sources */,
 				898320101DC0F62200E32412 /* UserService.swift in Sources */,
+				89987E731DCD00F3004E6D35 /* CheckResult.swift in Sources */,
 				898320111DC0F62200E32412 /* NetworkClient.swift in Sources */,
 				898320181DC0F62200E32412 /* SinopeError.swift in Sources */,
 			);
@@ -711,6 +720,7 @@
 				898320201DC0F6A700E32412 /* FakeFeedsService.swift in Sources */,
 				8983201C1DC0F6A700E32412 /* FeedSpec.swift in Sources */,
 				898320221DC0F6A700E32412 /* FakeNetworkClient.swift in Sources */,
+				89987E721DCD00EF004E6D35 /* CheckResultSpec.swift in Sources */,
 				898320191DC0F6A700E32412 /* RepositorySpec.swift in Sources */,
 				8983201A1DC0F6A700E32412 /* UserServiceSpec.swift in Sources */,
 				898320211DC0F6A700E32412 /* FakeUserService.swift in Sources */,
@@ -734,6 +744,7 @@
 				89C8E6DC1D309FB000E09EDB /* FeedsService.swift in Sources */,
 				89C8E6BE1D2F6A3800E09EDB /* Feed.swift in Sources */,
 				895A9CE41D3AAE3F008B2B25 /* NSURLSessionBlockNetworkClient.swift in Sources */,
+				89987E6F1DCD00CD004E6D35 /* CheckResult.swift in Sources */,
 				89C8E6DE1D309FCF00E09EDB /* NetworkClient.swift in Sources */,
 				895A9CBD1D37D940008B2B25 /* Repository.swift in Sources */,
 			);
@@ -746,6 +757,7 @@
 				89C8E6CC1D2F6D6200E09EDB /* FeedSpec.swift in Sources */,
 				89831FEE1DC069D000E32412 /* SinopeErrorSpec.swift in Sources */,
 				89C8E6E81D314CD600E09EDB /* UserServiceSpec.swift in Sources */,
+				89987E711DCD00EF004E6D35 /* CheckResultSpec.swift in Sources */,
 				89C8E6EE1D367C7000E09EDB /* FeedsServiceSpec.swift in Sources */,
 				895A9CC61D392284008B2B25 /* FakeFeedsService.swift in Sources */,
 				89C8E6D41D2FEAC700E09EDB /* ArticleSpec.swift in Sources */,
@@ -1125,6 +1137,7 @@
 				898320081DC0F58A00E32412 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8983200C1DC0F58A00E32412 /* Build configuration list for PBXNativeTarget "Sinope-macTests" */ = {
 			isa = XCConfigurationList;
@@ -1133,6 +1146,7 @@
 				8983200A1DC0F58A00E32412 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		89C8E6941D2F672F00E09EDB /* Build configuration list for PBXProject "Sinope" */ = {
 			isa = XCConfigurationList;

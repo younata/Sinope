@@ -14,7 +14,7 @@ public protocol Repository: class {
     func subscribe(_ feeds: [URL]) -> Future<Result<[URL], SinopeError>>
     func unsubscribe(_ feeds: [URL]) -> Future<Result<[URL], SinopeError>>
 
-    func check(_ url: URL) -> Future<Result<[URL: Bool], SinopeError>>
+    func check(_ url: URL) -> Future<Result<CheckResult, SinopeError>>
 
     func fetch(_ feeds: [URL: Date]) -> Future<Result<[Feed], SinopeError>>
 }
@@ -130,8 +130,8 @@ public final class PasiphaeRepository: Repository {
         }
     }
 
-    private var checkPromises: [URL: Future<Result<[URL: Bool], SinopeError>>] = [:]
-    public func check(_ url: URL) -> Future<Result<[URL: Bool], SinopeError>> {
+    private var checkPromises: [URL: Future<Result<CheckResult, SinopeError>>] = [:]
+    public func check(_ url: URL) -> Future<Result<CheckResult, SinopeError>> {
         if let checkPromise = self.checkPromises[url] {
             return checkPromise
         }

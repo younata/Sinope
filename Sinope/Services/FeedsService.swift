@@ -3,7 +3,7 @@ import CBGPromise
 import Freddy
 
 public protocol FeedsService {
-    func check(url: URL) -> Future<Result<[URL: Bool], SinopeError>>
+    func check(url: URL) -> Future<Result<CheckResult, SinopeError>>
     func subscribe(feeds: [URL], authToken: String) -> Future<Result<[URL], SinopeError>>
     func unsubscribe(feeds: [URL], authToken: String) -> Future<Result<[URL], SinopeError>>
 
@@ -21,26 +21,31 @@ public struct PasiphaeFeedsService: FeedsService {
         self.appToken = appToken
     }
 
-    public func check(url: URL) -> Future<Result<[URL: Bool], SinopeError>> {
+    public func check(url: URL) -> Future<Result<CheckResult, SinopeError>> {
         var urlComponents = URLComponents(url: self.baseURL.appendingPathComponent("api/v1/feeds/check"), resolvingAgainstBaseURL: false)!
         urlComponents.queryItems = [URLQueryItem(name: "url", value: url.absoluteString)]
         let headers = [
             "X-APP-TOKEN": self.appToken,
             "Content-Type": "application/json"
         ]
-        return self.networkClient.get(urlComponents.url!, headers: headers).map { res -> Result<[URL: Bool], SinopeError> in
+        return self.networkClient.get(urlComponents.url!, headers: headers).map { res -> Result<CheckResult, SinopeError> in
             switch (res) {
             case let .success(data):
                 do {
                     let json = try JSON(data: data)
                     let dictionary = try json.getDictionary()
-                    let retValue: [URL: Bool] = try dictionary.flatMapPairs { urlString, jsonBool in
-                        if let url = URL(string: urlString) {
-                            return (url, try jsonBool.getBool())
+                    if let jsonFeed = dictionary["feed"], let feed = try? jsonFeed.getString(), let feedURL = URL(string: feed) {
+                        return .success(.feed(feedURL))
+                    } else if let jsonOPML = dictionary["opml"], let opml = try? jsonOPML.decodedArray(type: String.self) {
+                        let urls = opml.flatMap({ URL(string: $0) })
+                        if !urls.isEmpty {
+                            return .success(.opml(urls))
+                        } else {
+                            return .success(.none)
                         }
-                        return nil
+                    } else {
+                        return .success(.none)
                     }
-                    return .success(retValue)
                 } catch {
                     return .failure(.json)
                 }

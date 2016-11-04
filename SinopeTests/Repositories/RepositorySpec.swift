@@ -371,15 +371,15 @@ class RepositorySpec: QuickSpec {
         }
 
         describe("checking if a url is a feed") {
-            var receivedFuture: Future<Result<[URL: Bool], SinopeError>>!
-            var checkPromise: Promise<Result<[URL: Bool], SinopeError>>!
+            var receivedFuture: Future<Result<CheckResult, SinopeError>>!
+            var checkPromise: Promise<Result<CheckResult, SinopeError>>!
 
             let url = URL(string: "https://example.org")!
 
             sharedExamples("checking if a url is a feed") {
                 beforeEach {
                     // make the request
-                    checkPromise = Promise<Result<[URL: Bool], SinopeError>>()
+                    checkPromise = Promise<Result<CheckResult, SinopeError>>()
                     feedsService.checkReturns(checkPromise.future)
 
                     receivedFuture = subject.check(url)
@@ -396,7 +396,7 @@ class RepositorySpec: QuickSpec {
                 }
 
                 it("returns the exact same future when we try to fetch again") {
-                    feedsService.checkReturns(Promise<Result<[URL: Bool], SinopeError>>().future)
+                    feedsService.checkReturns(Promise<Result<CheckResult, SinopeError>>().future)
 
                     expect(subject.check(url)).to(beIdenticalTo(receivedFuture))
                     expect(feedsService.checkCallCount) == 1
@@ -406,12 +406,12 @@ class RepositorySpec: QuickSpec {
 
                 describe("when the call succeeds") {
                     beforeEach {
-                        checkPromise.resolve(.success([url: true]))
+                        checkPromise.resolve(.success(.feed(url)))
                     }
 
                     it("resolves the promise") {
                         expect(receivedFuture.value).toNot(beNil())
-                        expect(receivedFuture.value?.value) == [url: true]
+                        expect(receivedFuture.value?.value) == .feed(url)
                     }
                 }
 
