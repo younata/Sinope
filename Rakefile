@@ -26,4 +26,13 @@ namespace "test" do
   end
 end
 
+desc "Adds an upgrade chore to the rNews tracker page"
+task :add_upgrade_chore do |t|
+  require 'pivotal-tracker'
+  PivotalTracker::Client.token = ENV['TRACKER_TOKEN']
+  PivotalTracker::Client.use_ssl = true
+  project = PivotalTracker::Project.find('1423142')
+  project.stories.create(:name => "Update Sinope", :story_type => "chore", :description => "AutoCreated by CI")
+end
+
 task default: ["test:unit"]

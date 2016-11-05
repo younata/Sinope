@@ -1,0 +1,8 @@
+---
+platform: darwin
+
+inputs:
+- name: sinope
+
+run:
+  path: sinope/concourse/tests.sh
