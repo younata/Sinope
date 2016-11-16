@@ -1,6 +1,5 @@
 #!/bin/bash
 
-cd sinope
+cd sinope_github
 bundle
-bundle exec rake test:unit && bundle exec rake test:integration:setup_and_run
-bundle exec rake add_upgrade_chore
+bundle exec rake test:unit
