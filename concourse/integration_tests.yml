@@ -3,6 +3,7 @@ platform: darwin
 
 inputs:
 - name: sinope_github
+- name: pasiphae_github
 
 run:
   path: sinope_github/concourse/integration_tests.sh
