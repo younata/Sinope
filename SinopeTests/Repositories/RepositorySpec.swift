@@ -358,7 +358,7 @@ class RepositorySpec: QuickSpec {
                     }
                 }
 
-                describe("when tha call fails") {
+                describe("when the call fails") {
                     beforeEach {
                         unsubscribePromise.resolve(.failure(.unknown))
                     }
