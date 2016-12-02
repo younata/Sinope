@@ -53,8 +53,8 @@ class ArticleServiceSpec: QuickSpec {
                 let bodyObject = try! JSONSerialization.jsonObject(with: args.2, options: []) as! [String: AnyObject]
 
                 expect(bodyObject["articles"] as? [String: NSNumber]) == [
-                    "https://example.com/1": 1,
-                    "https://example.com/2": 0,
+                    "https://example.com/1": true,
+                    "https://example.com/2": false,
                 ]
                 expect(Array(bodyObject.keys)) == ["articles"]
             }

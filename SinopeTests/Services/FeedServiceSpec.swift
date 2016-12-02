@@ -301,6 +301,7 @@ class FeedServiceSpec: QuickSpec {
                             "\"url\": \"https://younata.github.io/feed.xml\"," +
                             "\"summary\": null," +
                             "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
+                            "\"read\": true," +
                             "\"image_url\": \"https://example.com/image.png\", \"articles\": []}]}"
                         let fixture: Data = fixtureString.data(using: String.Encoding.utf8)!
                         promise.resolve(.success(fixture))
@@ -316,7 +317,8 @@ class FeedServiceSpec: QuickSpec {
                         expect(receivedFuture.value?.value) == [
                             Feed(title: "Rachel Brindle", url: URL(string: "https://younata.github.io/feed.xml")!,
                                 summary: "", imageUrl: URL(string: "https://example.com/image.png"),
-                                lastUpdated: dateFormatter.date(from: "2015-12-23T00:00:00.000Z")!, articles: [])
+                                lastUpdated: dateFormatter.date(from: "2015-12-23T00:00:00.000Z")!, read: true,
+                                articles: [])
                         ]
                     }
                 }
