@@ -8,12 +8,14 @@ class RepositorySpec: QuickSpec {
     override func spec() {
         var subject: PasiphaeRepository!
         var userService: FakeUserService!
-        var feedsService: FakeFeedsService!
+        var feedService: FakeFeedService!
+        var articleService: FakeArticleService!
 
         beforeEach {
             userService = FakeUserService()
-            feedsService = FakeFeedsService()
-            subject = PasiphaeRepository(userService: userService, feedsService: feedsService)
+            feedService = FakeFeedService()
+            articleService = FakeArticleService()
+            subject = PasiphaeRepository(userService: userService, feedService: feedService, articleService: articleService)
         }
 
         describe("creating an account") {
@@ -265,14 +267,14 @@ class RepositorySpec: QuickSpec {
                     _ = subject.login("foo", password: "bar")
 
                     subscribePromise = Promise<Result<[URL], SinopeError>>()
-                    feedsService.subscribeReturns(subscribePromise.future)
+                    feedService.subscribeReturns(subscribePromise.future)
 
                     receivedFuture = subject.subscribe([URL(string: "https://example.com")!])
                 }
 
                 it("makes a request to the user service to add the device token") {
-                    expect(feedsService.subscribeCallCount) == 1
-                    let args = feedsService.subscribeArgsForCall(0)
+                    expect(feedService.subscribeCallCount) == 1
+                    let args = feedService.subscribeArgsForCall(0)
 
                     expect(args.0) == [URL(string: "https://example.com")!]
                     expect(args.1) == loginToken
@@ -330,14 +332,14 @@ class RepositorySpec: QuickSpec {
                     _ = subject.login("foo", password: "bar")
 
                     unsubscribePromise = Promise<Result<[URL], SinopeError>>()
-                    feedsService.unsubscribeReturns(unsubscribePromise.future)
+                    feedService.unsubscribeReturns(unsubscribePromise.future)
 
                     receivedFuture = subject.unsubscribe([URL(string: "https://example.com")!])
                 }
 
                 it("makes a request to the user service to add the device token") {
-                    expect(feedsService.unsubscribeCallCount) == 1
-                    let args = feedsService.unsubscribeArgsForCall(0)
+                    expect(feedService.unsubscribeCallCount) == 1
+                    let args = feedService.unsubscribeArgsForCall(0)
 
                     expect(args.0) == [URL(string: "https://example.com")!]
                     expect(args.1) == loginToken
@@ -380,26 +382,26 @@ class RepositorySpec: QuickSpec {
                 beforeEach {
                     // make the request
                     checkPromise = Promise<Result<CheckResult, SinopeError>>()
-                    feedsService.checkReturns(checkPromise.future)
+                    feedService.checkReturns(checkPromise.future)
 
                     receivedFuture = subject.check(url)
                 }
 
                 it("makes a request to the user service to add the device token") {
-                    expect(feedsService.checkCallCount) == 1
+                    expect(feedService.checkCallCount) == 1
 
-                    guard feedsService.checkCallCount == 1 else { return }
+                    guard feedService.checkCallCount == 1 else { return }
 
-                    let args = feedsService.checkArgsForCall(0)
+                    let args = feedService.checkArgsForCall(0)
 
                     expect(args) == url
                 }
 
                 it("returns the exact same future when we try to fetch again") {
-                    feedsService.checkReturns(Promise<Result<CheckResult, SinopeError>>().future)
+                    feedService.checkReturns(Promise<Result<CheckResult, SinopeError>>().future)
 
                     expect(subject.check(url)).to(beIdenticalTo(receivedFuture))
-                    expect(feedsService.checkCallCount) == 1
+                    expect(feedService.checkCallCount) == 1
 
                     expect(subject.check(URL(string: "https://example.com")!)).toNot(beIdenticalTo(receivedFuture))
                 }
@@ -470,14 +472,14 @@ class RepositorySpec: QuickSpec {
                     _ = subject.login("foo", password: "bar")
 
                     fetchPromise = Promise<Result<[Feed], SinopeError>>()
-                    feedsService.fetchReturns(fetchPromise.future)
+                    feedService.fetchReturns(fetchPromise.future)
 
                     receivedFuture = subject.fetch([url: date])
                 }
 
                 it("makes a request to the user service to add the device token") {
-                    expect(feedsService.fetchCallCount) == 1
-                    let args = feedsService.fetchArgsForCall(0)
+                    expect(feedService.fetchCallCount) == 1
+                    let args = feedService.fetchArgsForCall(0)
 
                     expect(args.0) == loginToken
                     expect(args.1) == [url: date]
@@ -505,6 +507,78 @@ class RepositorySpec: QuickSpec {
                         fetchPromise.resolve(.failure(.unknown))
                     }
                     
+                    it("forwards the error") {
+                        expect(receivedFuture.value?.error) == SinopeError.unknown
+                    }
+                }
+            }
+        }
+
+        describe("marking articles as read") {
+            var receivedFuture: Future<Result<Void, SinopeError>>!
+
+            describe("when not logged in") {
+                beforeEach {
+                    receivedFuture = subject.markRead(articles: [:])
+                }
+
+                it("returns a resolved promise with error .NotLoggedIn") {
+                    expect(receivedFuture.value?.error).to(equal(SinopeError.notLoggedIn))
+                }
+            }
+
+            describe("when logged in") {
+                let loginToken = "login_token"
+                var markReadPromise: Promise<Result<Void, SinopeError>>!
+                let url1 = URL(string: "https://example.com/1")!
+                let url2 = URL(string: "https://example.com/2")!
+
+                beforeEach {
+                    let loginPromise = Promise<Result<String, SinopeError>>()
+                    loginPromise.resolve(.success(loginToken))
+                    userService.loginReturns(loginPromise.future)
+
+                    _ = subject.login("foo", password: "bar")
+
+                    markReadPromise = Promise<Result<Void, SinopeError>>()
+                    articleService.markReadReturns(markReadPromise.future)
+
+                    receivedFuture = subject.markRead(articles: [url1: true, url2: false])
+                }
+
+                it("makes a request to the article service to mark those articles as (un)read") {
+                    expect(articleService.markReadCallCount) == 1
+                    guard articleService.markReadCallCount == 1 else { return }
+
+                    let args = articleService.markReadArgsForCall(0)
+
+                    expect(args.0) == [url1: true, url2: false]
+                    expect(args.1) == loginToken
+                }
+
+                it("returns the exact same future when we try to mark those same articles as read again") {
+                    expect(subject.markRead(articles: [url1: true, url2: false])).to(beIdenticalTo(receivedFuture))
+                    expect(subject.markRead(articles: [url2: false, url1: true])).to(beIdenticalTo(receivedFuture))
+
+                    expect(subject.markRead(articles: [url1: false, url2: true])).to(beIdenticalTo(receivedFuture))
+                }
+
+                describe("when the call succeeds") {
+                    beforeEach {
+                        markReadPromise.resolve(.success())
+                    }
+
+                    it("resolves the promise") {
+                        expect(receivedFuture.value).toNot(beNil())
+                        expect(receivedFuture.value?.value).toNot(beNil())
+                    }
+                }
+
+                describe("when tha call fails") {
+                    beforeEach {
+                        markReadPromise.resolve(.failure(.unknown))
+                    }
+
                     it("forwards the error") {
                         expect(receivedFuture.value?.error) == SinopeError.unknown
                     }

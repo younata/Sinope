@@ -2,7 +2,7 @@ import Result
 import CBGPromise
 import Freddy
 
-public protocol FeedsService {
+public protocol FeedService {
     func check(url: URL) -> Future<Result<CheckResult, SinopeError>>
     func subscribe(feeds: [URL], authToken: String) -> Future<Result<[URL], SinopeError>>
     func unsubscribe(feeds: [URL], authToken: String) -> Future<Result<[URL], SinopeError>>
@@ -10,7 +10,7 @@ public protocol FeedsService {
     func fetch(authToken: String, feeds: [URL: Date]) -> Future<Result<[Feed], SinopeError>>
 }
 
-public struct PasiphaeFeedsService: FeedsService {
+public struct PasiphaeFeedService: FeedService {
     private let baseURL: URL
     private let networkClient: NetworkClient
     private let appToken: String
@@ -64,7 +64,7 @@ public struct PasiphaeFeedsService: FeedsService {
     }
 
     public func fetch(authToken: String, feeds: [URL: Date]) -> Future<Result<[Feed], SinopeError>> {
-        let urlComponents = URLComponents(url: self.baseURL.appendingPathComponent("api/v1/feeds/fetch"), resolvingAgainstBaseURL: false)!
+        let urlComponents = URLComponents(url: self.baseURL.appendingPathComponent("api/v1/feeds/fetch", isDirectory: false), resolvingAgainstBaseURL: false)!
         let dateFormatter = DateFormatter.sharedFormatter
         let queryDict = feeds.mapPairs { url, date in
             return (url.absoluteString, dateFormatter.string(from: date))

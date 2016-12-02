@@ -5,15 +5,15 @@ import Result
 import CBGPromise
 import Freddy
 
-class FeedsServiceSpec: QuickSpec {
+class FeedServiceSpec: QuickSpec {
     override func spec() {
-        var subject: PasiphaeFeedsService!
+        var subject: PasiphaeFeedService!
         let baseURL = URL(string: "https://example.com/")!
         var networkClient: FakeNetworkClient!
 
         beforeEach {
             networkClient = FakeNetworkClient()
-            subject = PasiphaeFeedsService(baseURL: baseURL, networkClient: networkClient, appToken: "app_token")
+            subject = PasiphaeFeedService(baseURL: baseURL, networkClient: networkClient, appToken: "app_token")
         }
 
         describe("check") {
