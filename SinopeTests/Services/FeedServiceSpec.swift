@@ -16,7 +16,7 @@ class FeedServiceSpec: QuickSpec {
             subject = PasiphaeFeedService(baseURL: baseURL, networkClient: networkClient, appToken: "app_token")
         }
 
-        describe("check") {
+        describe("check(url:)") {
             var receivedFuture: Future<Result<CheckResult, SinopeError>>!
             var promise: Promise<Result<Data, NSError>>!
 
@@ -110,7 +110,7 @@ class FeedServiceSpec: QuickSpec {
             }
         }
 
-        describe("subscribe") {
+        describe("subscribe(feeds:authToken:)") {
             var receivedFuture: Future<Result<[URL], SinopeError>>!
             var promise: Promise<Result<Data, NSError>>!
 
@@ -174,7 +174,7 @@ class FeedServiceSpec: QuickSpec {
             }
         }
 
-        describe("unsubscribe") {
+        describe("unsubscribe(feeds:authToken:)") {
             var receivedFuture: Future<Result<[URL], SinopeError>>!
             var promise: Promise<Result<Data, NSError>>!
 
@@ -238,7 +238,75 @@ class FeedServiceSpec: QuickSpec {
             }
         }
 
-        describe("fetch") {
+        describe("subscribedFeeds(authToken:)") {
+            var receivedFuture: Future<Result<[URL], SinopeError>>!
+            var promise: Promise<Result<Data, NSError>>!
+
+            beforeEach {
+                promise = Promise<Result<Data, NSError>>()
+                networkClient.getStub = { _ in promise.future }
+
+                receivedFuture = subject.subscribedFeeds(authToken: "auth_token")
+            }
+
+            it("returns an in-progress future") {
+                expect(receivedFuture.value).to(beNil())
+            }
+
+            it("returns an in-progress future") {
+                expect(receivedFuture.value).to(beNil())
+            }
+
+            it("makes a request to feeds") {
+                expect(networkClient.getCallCount) == 1
+
+                guard networkClient.getCallCount == 1 else { return }
+
+                let args = networkClient.getArgsForCall(0)
+                expect(args.0) == URL(string: "https://example.com/api/v1/feeds/feeds")
+                expect(args.1) == ["X-APP-TOKEN": "app_token",
+                                   "Authorization": "Token token=\"auth_token\"",
+                                   "Content-Type": "application/json"]
+            }
+
+            describe("when the network call succeeds") {
+                describe("with a valid json object") {
+                    beforeEach {
+                        let fixture = "[\"https://example.org/feed1\", \"https://example.org/feed2\"]".data(using: String.Encoding.utf8)!
+                        promise.resolve(.success(fixture))
+                    }
+
+                    it("resolves the future with the list of subscribed feeds") {
+                        expect(receivedFuture.value?.value) == [
+                            URL(string: "https://example.org/feed1")!,
+                            URL(string: "https://example.org/feed2")!
+                        ]
+                    }
+                }
+
+                describe("with an invalid json object") {
+                    beforeEach {
+                        promise.resolve(.success(Data()))
+                    }
+
+                    it("resolves the future with a json error") {
+                        expect(receivedFuture.value?.error) == .json
+                    }
+                }
+            }
+
+            describe("when the network call fails") {
+                beforeEach {
+                    promise.resolve(.failure(NSError(domain: "", code: 0, userInfo: nil)))
+                }
+
+                it("resolves the future with a network error") {
+                    expect(receivedFuture.value?.error) == .network
+                }
+            }
+        }
+
+        describe("fetch(authToken:feeds:)") {
             var receivedFuture: Future<Result<[Feed], SinopeError>>!
             var promise: Promise<Result<Data, NSError>>!
 

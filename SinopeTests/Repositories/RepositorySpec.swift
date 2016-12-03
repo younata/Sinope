@@ -372,6 +372,72 @@ class RepositorySpec: QuickSpec {
             }
         }
 
+        describe("fetching the list of subscribed feeds") {
+            var receivedFuture: Future<Result<[URL], SinopeError>>!
+
+            describe("when not logged in") {
+                beforeEach {
+                    receivedFuture = subject.subscribedFeeds()
+                }
+
+                it("returns a resolved promise with error .NotLoggedIn") {
+                    expect(receivedFuture.value?.error).to(equal(SinopeError.notLoggedIn))
+                }
+            }
+
+            describe("when logged in") {
+                let loginToken = "login_token"
+                var promise: Promise<Result<[URL], SinopeError>>!
+
+                beforeEach {
+                    let loginPromise = Promise<Result<String, SinopeError>>()
+                    loginPromise.resolve(.success(loginToken))
+                    userService.loginReturns(loginPromise.future)
+
+                    _ = subject.login("foo", password: "bar")
+
+                    promise = Promise<Result<[URL], SinopeError>>()
+                    feedService.subscribedFeedsReturns(promise.future)
+
+                    receivedFuture = subject.subscribedFeeds()
+                }
+
+                it("makes a request to the feed service for all subscribed feeds") {
+                    expect(feedService.subscribedFeedsCallCount) == 1
+
+                    guard feedService.subscribedFeedsCallCount == 1 else { return }
+                    let args = feedService.subscribedFeedsArgsForCall(0)
+
+                    expect(args) == loginToken
+                }
+
+                it("returns the exact same future when we try to fetch the list of subscribed feeds while still waiting for a result") {
+                    expect(subject.subscribedFeeds()).to(beIdenticalTo(receivedFuture))
+                }
+
+                describe("when the call succeeds") {
+                    beforeEach {
+                        promise.resolve(.success([URL(string: "https://example.com")!]))
+                    }
+
+                    it("resolves the promise") {
+                        expect(receivedFuture.value).toNot(beNil())
+                        expect(receivedFuture.value?.value) == [URL(string: "https://example.com")!]
+                    }
+                }
+
+                describe("when the call fails") {
+                    beforeEach {
+                        promise.resolve(.failure(.unknown))
+                    }
+                    
+                    it("forwards the error") {
+                        expect(receivedFuture.value?.error) == SinopeError.unknown
+                    }
+                }
+            }
+        }
+
         describe("checking if a url is a feed") {
             var receivedFuture: Future<Result<CheckResult, SinopeError>>!
             var checkPromise: Promise<Result<CheckResult, SinopeError>>!

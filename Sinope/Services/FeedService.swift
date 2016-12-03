@@ -7,6 +7,8 @@ public protocol FeedService {
     func subscribe(feeds: [URL], authToken: String) -> Future<Result<[URL], SinopeError>>
     func unsubscribe(feeds: [URL], authToken: String) -> Future<Result<[URL], SinopeError>>
 
+    func subscribedFeeds(authToken: String) -> Future<Result<[URL], SinopeError>>
+
     func fetch(authToken: String, feeds: [URL: Date]) -> Future<Result<[Feed], SinopeError>>
 }
 
@@ -61,6 +63,33 @@ public struct PasiphaeFeedService: FeedService {
 
     public func unsubscribe(feeds: [URL], authToken: String) -> Future<Result<[URL], SinopeError>> {
         return self.subunsub(action: "unsubscribe", feeds: feeds, authToken: authToken)
+    }
+
+    public func subscribedFeeds(authToken: String) -> Future<Result<[URL], SinopeError>> {
+        let url = self.baseURL.appendingPathComponent("api/v1/feeds/feeds", isDirectory: false)
+        let headers = [
+            "X-APP-TOKEN": self.appToken,
+            "Authorization": "Token token=\"\(authToken)\"",
+            "Content-Type": "application/json"
+        ]
+        return self.networkClient.get(url, headers: headers).map { res -> Result<[URL], SinopeError> in
+            switch (res) {
+            case let .success(data):
+                if String(data: data, encoding: String.Encoding.utf8) == "HTTP Token: Access denied.\n" {
+                    return .failure(.notLoggedIn)
+                }
+                do {
+                    let json = try JSON(data: data)
+                    let array: [String] = try json.decodedArray()
+                    let urls = array.flatMap { URL(string: $0) }
+                    return .success(urls)
+                } catch {
+                    return .failure(.json)
+                }
+            case .failure(_):
+                return .failure(.network)
+            }
+        }
     }
 
     public func fetch(authToken: String, feeds: [URL: Date]) -> Future<Result<[Feed], SinopeError>> {

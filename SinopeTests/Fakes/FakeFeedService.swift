@@ -61,6 +61,23 @@ class FakeFeedService : FeedService, Equatable {
         return self.unsubscribeStub!(feeds, authToken)
     }
 
+    private(set) var subscribedFeedsCallCount : Int = 0
+    var subscribedFeedsStub : ((String) -> (Future<Result<[URL], SinopeError>>))?
+    private var subscribedFeedsArgs : Array<(String)> = []
+    func subscribedFeedsReturns(_ stubbedValues: (Future<Result<[URL], SinopeError>>)) {
+        self.subscribedFeedsStub = {(authToken: String) -> (Future<Result<[URL], SinopeError>>) in
+            return stubbedValues
+        }
+    }
+    func subscribedFeedsArgsForCall(_ callIndex: Int) -> (String) {
+        return self.subscribedFeedsArgs[callIndex]
+    }
+    func subscribedFeeds(authToken: String) -> (Future<Result<[URL], SinopeError>>) {
+        self.subscribedFeedsCallCount += 1
+        self.subscribedFeedsArgs.append((authToken))
+        return self.subscribedFeedsStub!((authToken))
+    }
+
     private(set) var fetchCallCount : Int = 0
     var fetchStub : ((String, [URL: Date]) -> (Future<Result<([Feed]), SinopeError>>))?
     private var fetchArgs : Array<(String, [URL: Date])> = []

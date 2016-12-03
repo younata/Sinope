@@ -13,6 +13,7 @@ public protocol Repository: class {
     // actual data methods
     func subscribe(_ feeds: [URL]) -> Future<Result<[URL], SinopeError>>
     func unsubscribe(_ feeds: [URL]) -> Future<Result<[URL], SinopeError>>
+    func subscribedFeeds() -> Future<Result<[URL], SinopeError>>
 
     func check(_ url: URL) -> Future<Result<CheckResult, SinopeError>>
 
@@ -132,6 +133,20 @@ public final class PasiphaeRepository: Repository {
         self.unsubscribePromise = self.feedService.unsubscribe(feeds: feeds, authToken: self.authToken!)
         return self.unsubscribePromise!.then { _ in
             self.unsubscribePromise = nil
+        }
+    }
+
+    private var subscribedFeedsPromise: Future<Result<[URL], SinopeError>>?
+    public func subscribedFeeds() -> Future<Result<[URL], SinopeError>> {
+        if let logInFuture = self.errorIfLoggedOut([URL].self) {
+            return logInFuture
+        }
+        if let subscribedFeedsPromise = self.subscribedFeedsPromise {
+            return subscribedFeedsPromise
+        }
+        self.subscribedFeedsPromise = self.feedService.subscribedFeeds(authToken: self.authToken!)
+        return self.subscribedFeedsPromise!.then { _ in
+            self.subscribedFeedsPromise = nil
         }
     }
 
