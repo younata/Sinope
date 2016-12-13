@@ -96,6 +96,9 @@ class RepositoryIntegrationSpec: QuickSpec {
                                 return article.url == automatingReleasesURL
                             }
                             expect(article).toNot(beNil())
+                            if article == nil {
+                                dump(feeds)
+                            }
                             expect(article?.read) == true
                         }
                     }
