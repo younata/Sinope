@@ -70,6 +70,35 @@ class RepositoryIntegrationSpec: QuickSpec {
                             expect(feed.url) == URL(string: "http://younata.github.io/feed.xml")
                         }
                     }
+
+                    describe("marking articles as read") {
+                        let automatingReleasesURL = URL(string: "http://younata.github.io/2016/11/02/automating-releases/")!
+                        var markReadResponse: Result<Void, SinopeError>?
+                        beforeEach {
+                            markReadResponse = subject.markRead(articles: [automatingReleasesURL: true]).wait()
+                        }
+
+                        it("doesn't return an error") {
+                            expect(markReadResponse?.error).to(beNil())
+                        }
+
+                        it("notes that the article is marked as read on the next fetch") {
+                            let toFetch = [
+                                URL(string: "http://younata.github.io/feed.xml")!: Date(timeIntervalSinceNow: -10)
+                            ]
+
+                            let response = subject.fetch(toFetch).wait()
+                            expect(response).toNot(beNil())
+                            expect(response?.value).toNot(beNil())
+                            guard let feeds = response?.value else { return }
+
+                            let article = feeds.first?.articles.first { article in
+                                return article.url == automatingReleasesURL
+                            }
+                            expect(article).toNot(beNil())
+                            expect(article?.read) == true
+                        }
+                    }
                 }
             }
         }

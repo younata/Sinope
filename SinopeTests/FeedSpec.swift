@@ -14,7 +14,6 @@ class FeedSpec: QuickSpec {
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"image_url\": \"https://example.com/image.png\"," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"read\": 0," +
                 "\"articles\": []}"
             let validFixtureNoArticles: Data = validFixtureStringNoArticles.data(using: String.Encoding.utf8)!
 
@@ -23,7 +22,6 @@ class FeedSpec: QuickSpec {
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"image_url\": \"https://example.com/image.png\"," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"read\": false," +
                 "\"articles\": [" +
                 "{\"title\": \"Example 1\", \"url\": \"https://example.com/1/\", \"summary\": \"test\", \"published\": \"2015-12-23T00:00:00.000Z\", \"updated\": null, \"content\": null, \"authors\": []}" +
                 "]}"
@@ -33,7 +31,6 @@ class FeedSpec: QuickSpec {
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"read\": 1," +
                 "\"image_url\": null, \"articles\": []}"
             let validFixtureNoArticlesNoImageUrl: Data = validFixtureStringNoArticlesNoImageUrl.data(using: String.Encoding.utf8)!
 
@@ -41,7 +38,6 @@ class FeedSpec: QuickSpec {
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": null," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"read\": true," +
                 "\"image_url\": \"https://example.com/image.png\", \"articles\": []}"
             let validFixtureNoArticlesNoSummary: Data = validFixtureStringNoArticlesNoSummary.data(using: String.Encoding.utf8)!
 
@@ -49,7 +45,6 @@ class FeedSpec: QuickSpec {
                 "\"url\": null," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"read\": false," +
                 "\"image_url\": null, \"articles\": []}"
             let invalidFixtureNoUrl: Data = invalidFixtureStringNoUrl.data(using: String.Encoding.utf8)!
 
@@ -57,7 +52,6 @@ class FeedSpec: QuickSpec {
                 "\"url\": \"\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"read\": false," +
                 "\"image_url\": null, \"articles\": []}"
             let invalidFixtureEmptyUrl: Data = invalidFixtureStringEmptyUrl.data(using: String.Encoding.utf8)!
 
@@ -65,7 +59,6 @@ class FeedSpec: QuickSpec {
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"read\": false," +
                 "\"image_url\": null, \"articles\": []}"
             let invalidFixtureNoTitle: Data = invalidFixtureStringNoTitle.data(using: String.Encoding.utf8)!
 
@@ -73,7 +66,6 @@ class FeedSpec: QuickSpec {
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"read\": false," +
                 "\"image_url\": null, \"articles\": []}"
             let invalidFixtureEmptyTitle: Data = invalidFixtureStringEmptyTitle.data(using: String.Encoding.utf8)!
 
@@ -82,7 +74,6 @@ class FeedSpec: QuickSpec {
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"image_url\": \"https://example.com/image.png\"," +
                 "\"last_updated\": \"\"," +
-                "\"read\": false," +
                 "\"articles\": []}"
             let invalidFixtureEmptyLastUpdated: Data = invalidFixtureStringEmptyLastUpdated.data(using: String.Encoding.utf8)!
 
@@ -90,26 +81,8 @@ class FeedSpec: QuickSpec {
                 "\"url\": \"https://younata.github.io/feed.xml\"," +
                 "\"summary\": \"OSX, iOS and Robotics developer\"," +
                 "\"image_url\": \"https://example.com/image.png\"," +
-                "\"read\": false," +
                 "\"articles\": []}"
             let invalidFixtureNoLastUpdated: Data = invalidFixtureStringNoLastUpdated.data(using: String.Encoding.utf8)!
-
-            let invalidFixtureStringEmptyRead = "{\"title\": \"Rachel Brindle\"," +
-                "\"url\": \"https://younata.github.io/feed.xml\"," +
-                "\"summary\": \"OSX, iOS and Robotics developer\"," +
-                "\"image_url\": \"https://example.com/image.png\"," +
-                "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"read\": null," +
-                "\"articles\": []}"
-            let invalidFixtureEmptyRead: Data = invalidFixtureStringEmptyRead.data(using: .utf8)!
-
-            let validFixtureStringNoRead = "{\"title\": \"Rachel Brindle\"," +
-                "\"url\": \"https://younata.github.io/feed.xml\"," +
-                "\"summary\": \"OSX, iOS and Robotics developer\"," +
-                "\"image_url\": \"https://example.com/image.png\"," +
-                "\"last_updated\": \"2015-12-23T00:00:00.000Z\"," +
-                "\"articles\": []}"
-            let validFixtureNoRead: Data = validFixtureStringNoRead.data(using: .utf8)!
 
             it("can be init'd from json") {
                 let json = try! JSON(data: validFixtureNoArticles)
@@ -123,7 +96,6 @@ class FeedSpec: QuickSpec {
                     expect(subject.summary) == "OSX, iOS and Robotics developer"
                     expect(subject.imageUrl) == URL(string: "https://example.com/image.png")!
                     expect(subject.lastUpdated) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
-                    expect(subject.read) == false
                     expect(subject.articles).to(beEmpty())
                 }
             }
@@ -140,7 +112,6 @@ class FeedSpec: QuickSpec {
                     expect(subject.summary) == "OSX, iOS and Robotics developer"
                     expect(subject.imageUrl) == URL(string: "https://example.com/image.png")!
                     expect(subject.lastUpdated) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
-                    expect(subject.read) == false
                     expect(subject.articles).to(haveCount(1))
                     if let article = subject.articles.first {
                         expect(article.title) == "Example 1"
@@ -152,6 +123,7 @@ class FeedSpec: QuickSpec {
                         let publishedDate = dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
                         expect(article.published) == publishedDate
                         expect(article.updated).to(beNil())
+                        expect(article.read) == false
                         expect(article.authors).to(beEmpty())
                     }
                 }
@@ -169,7 +141,6 @@ class FeedSpec: QuickSpec {
                     expect(subject.summary) == "OSX, iOS and Robotics developer"
                     expect(subject.imageUrl).to(beNil())
                     expect(subject.lastUpdated) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
-                    expect(subject.read) == true
                     expect(subject.articles).to(beEmpty())
                 }
             }
@@ -186,7 +157,6 @@ class FeedSpec: QuickSpec {
                     expect(subject.summary) == ""
                     expect(subject.imageUrl) == URL(string: "https://example.com/image.png")!
                     expect(subject.lastUpdated) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
-                    expect(subject.read) == true
                     expect(subject.articles).to(beEmpty())
                 }
             }
@@ -231,30 +201,6 @@ class FeedSpec: QuickSpec {
 
                 let subject = try? Feed(json: json)
                 expect(subject).to(beNil())
-            }
-
-            it("throws if read is empty") {
-                let json = try! JSON(data: invalidFixtureEmptyRead)
-
-                let subject = try? Feed(json: json)
-                expect(subject).to(beNil())
-            }
-
-            it("doesn't throw if read doesn't exist as a key") {
-                let json = try! JSON(data: validFixtureNoRead)
-
-                let subject = try? Feed(json: json)
-                expect(subject).toNot(beNil())
-
-                if let subject = subject {
-                    expect(subject.title) == "Rachel Brindle"
-                    expect(subject.url) == URL(string: "https://younata.github.io/feed.xml")!
-                    expect(subject.summary) == "OSX, iOS and Robotics developer"
-                    expect(subject.imageUrl) == URL(string: "https://example.com/image.png")!
-                    expect(subject.lastUpdated) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
-                    expect(subject.read) == false
-                    expect(subject.articles).to(beEmpty())
-                }
             }
         }
     }

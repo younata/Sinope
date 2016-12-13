@@ -8,6 +8,7 @@ public struct Article: JSONDecodable, Equatable {
     public let content: String
     public let published: Date
     public let updated: Date?
+    public let read: Bool
     public private(set) var authors: [Author]
 
     public init(json: JSON) throws {
@@ -33,8 +34,18 @@ public struct Article: JSONDecodable, Equatable {
         }
 
         self.updated = dateFormatter.date(from: (try? json.getString(at: "updated")) ?? "")
-        self.authors = ((try? json.getArray(at: "authors")) ?? []).flatMap { try? Author(json: $0) }
 
+        if let readBool = try? json.getBool(at: "read") {
+            self.read = readBool
+        } else if let readInt = try? json.getInt(at: "read") {
+            self.read = readInt != 0
+        } else if json["read"] == nil {
+            self.read = false
+        } else {
+            throw JSON.Error.keyNotFound(key: "read")
+        }
+
+        self.authors = ((try? json.getArray(at: "authors")) ?? []).flatMap { try? Author(json: $0) }
     }
 }
 

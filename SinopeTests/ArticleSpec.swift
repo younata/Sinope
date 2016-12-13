@@ -15,6 +15,7 @@ class ArticleSpec: QuickSpec {
                 "\"published\": \"2015-12-23T00:00:00.000Z\"," +
                 "\"updated\": \"2015-12-25T00:00:00.000Z\"," +
                 "\"content\": \"test content\"," +
+                "\"read\": true," +
                 "\"authors\": [{\"name\": \"Moritz Walter\", \"email\": null}]}"
             let valid: Data = validString.data(using: String.Encoding.utf8)!
 
@@ -108,6 +109,16 @@ class ArticleSpec: QuickSpec {
                 "\"authors\": []}"
             let invalidEmptyUrl: Data = invalidStringEmptyUrl.data(using: String.Encoding.utf8)!
 
+            let invalidStringEmptyRead = "{\"title\": \"Example 1\"," +
+                " \"url\": \"https://example.com/1/\"," +
+                "\"summary\": \"test summary\"," +
+                "\"published\": \"2015-12-23T00:00:00.000Z\"," +
+                "\"updated\": \"2015-12-25T00:00:00.000Z\"," +
+                "\"content\": \"test content\"," +
+                "\"read\": null," +
+                "\"authors\": [{\"name\": \"Moritz Walter\", \"email\": null}]}"
+            let invalidFixtureEmptyRead = invalidStringEmptyRead.data(using: .utf8)!
+
             it("can be init'd from json") {
                 let json = try! JSON(data: validNoAuthors)
 
@@ -121,6 +132,7 @@ class ArticleSpec: QuickSpec {
                     expect(subject.published) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
                     expect(subject.updated) == dateFormatter.date(from: "2015-12-25T00:00:00.000Z")
                     expect(subject.content) == "test content"
+                    expect(subject.read) == false
                     expect(subject.authors).to(beEmpty())
                 }
             }
@@ -138,6 +150,7 @@ class ArticleSpec: QuickSpec {
                     expect(subject.published) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
                     expect(subject.updated) == dateFormatter.date(from: "2015-12-25T00:00:00.000Z")
                     expect(subject.content) == "test content"
+                    expect(subject.read) == true
                     expect(subject.authors).to(haveCount(1))
                     if let author = subject.authors.first {
                         expect(author.name) == "Moritz Walter"
@@ -159,6 +172,7 @@ class ArticleSpec: QuickSpec {
                     expect(subject.published) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
                     expect(subject.updated).to(beNil())
                     expect(subject.content) == "test content"
+                    expect(subject.read) == false
                     expect(subject.authors).to(beEmpty())
                 }
             }
@@ -176,6 +190,7 @@ class ArticleSpec: QuickSpec {
                     expect(subject.published) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
                     expect(subject.updated) == dateFormatter.date(from: "2015-12-25T00:00:00.000Z")
                     expect(subject.content) == ""
+                    expect(subject.read) == false
                     expect(subject.authors).to(beEmpty())
                 }
             }
@@ -193,6 +208,7 @@ class ArticleSpec: QuickSpec {
                     expect(subject.published) == dateFormatter.date(from: "2015-12-23T00:00:00.000Z")
                     expect(subject.updated) == dateFormatter.date(from: "2015-12-25T00:00:00.000Z")
                     expect(subject.content) == "test content"
+                    expect(subject.read) == false
                     expect(subject.authors).to(beEmpty())
                 }
             }
@@ -234,6 +250,13 @@ class ArticleSpec: QuickSpec {
 
             it("throws if url is empty") {
                 let json = try! JSON(data: invalidEmptyUrl)
+
+                let subject = try? Article(json: json)
+                expect(subject).to(beNil())
+            }
+
+            it("throws if read is null") {
+                let json = try! JSON(data: invalidFixtureEmptyRead)
 
                 let subject = try? Article(json: json)
                 expect(subject).to(beNil())

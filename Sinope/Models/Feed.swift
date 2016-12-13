@@ -7,16 +7,14 @@ public struct Feed: JSONDecodable, Equatable {
     public let summary: String
     public let imageUrl: URL?
     public let lastUpdated: Date
-    public let read: Bool
     public fileprivate(set) var articles: [Article]
 
-    init(title: String, url: URL, summary: String, imageUrl: URL?, lastUpdated: Date, read: Bool, articles: [Article]) {
+    init(title: String, url: URL, summary: String, imageUrl: URL?, lastUpdated: Date, articles: [Article]) {
         self.title = title
         self.url = url
         self.summary = summary
         self.imageUrl = imageUrl
         self.lastUpdated = lastUpdated
-        self.read = read
         self.articles = articles
     }
 
@@ -43,16 +41,6 @@ public struct Feed: JSONDecodable, Equatable {
             self.lastUpdated = lastUpdated
         } else {
             throw JSON.Error.keyNotFound(key: "last_updated")
-        }
-
-        if let readBool = try? json.getBool(at: "read") {
-            self.read = readBool
-        } else if let readInt = try? json.getInt(at: "read") {
-            self.read = readInt != 0
-        } else if json["read"] == nil {
-            self.read = false
-        } else {
-            throw JSON.Error.keyNotFound(key: "read")
         }
         
         self.articles = ((try? json.getArray(at: "articles")) ?? []).flatMap { try? Article(json: $0) }
