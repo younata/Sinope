@@ -1,5 +1,10 @@
 #!/bin/bash -l
 
+
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 pushd pasiphae_github
 bundle install --gemfile=./Gemfile
 bundle exec rake db:migrate
