@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 
 pushd pasiphae_github
 bundle install --gemfile=./Gemfile

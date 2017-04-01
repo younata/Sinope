@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -el
 
 cd sinope_github
 bundle
